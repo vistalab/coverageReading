@@ -1,0 +1,57 @@
+karen bookKeeping
+
+
+% list_session = {
+%     'kd20140508'      % 11
+
+
+%     [num2str(list_sessionPath{11}) ]             % kd     11
+
+
+
+list_sub = {
+    'kd'    % 11
+
+
+
+list_sessionPath = {
+    '/biac4/wandell/data/reading_prf/karen/20140508_1319/'                          % kd
+
+
+
+%% mesh names and path
+list_meshL = {
+    'leftSmooth_400.mat'        % kd
+
+
+list_meshR = {
+    'rightSmooth_400.mat'       % kd
+
+
+list_meshPath = {
+    '/biac4/wandell/data/anatomy/kduan/'                                        % kd
+
+
+%% prfModels: their names and which dataType they are in
+
+list_retModName = {
+     'retModel-20140715-231828-fFit.mat'                    % kd
+
+
+list_retModFolderPath = {
+    [num2str(list_sessionPath{11}) 'Gray/Averages/']        % kd
+
+
+
+%% GLMS paths and contrast names
+
+list_glmFolderPath = cell(length(list_sessionPath),1);
+for ii = 1:length(list_glmFolderPath)
+   list_glmFolderPath{ii} = [num2str(list_sessionPath{ii}) 'Gray/GLMs/'];  
+end
+
+
+%% roi local path and names of rois
+list_roiLocalPath = {
+    [num2str(list_sessionPath{11}) 'Gray/ROIs/']            % kd
+
