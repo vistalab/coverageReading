@@ -37,8 +37,9 @@ listDirRmModels = {
     }; 
 
 % directories of meshes
-dirLeftMesh = '/biac4/wandell/data/anatomy/rosemary/mesh/left_inflated_400.mat';
-dirRightMesh = '/biac4/wandell/data/anatomy/rosemary/mesh/right_inflated_400.mat';
+dirMeshLeft = '/biac4/wandell/data/anatomy/rosemary/mesh/left_inflated_400.mat';
+dirMeshRight = '/biac4/wandell/data/anatomy/rosemary/mesh/right_inflated_400.mat';
+
 
 %% do work here
 
@@ -48,8 +49,7 @@ chdir(dirData);
 % call mrVista or initialize hidden inplane
 vw = mrVista('3'); 
 
-% set data structure properties
-vw = viewSet(vw, 'CurrentDataType', dataType); 
+
 
 % load all the rois
 for ii = 1:length(listDirRois)
@@ -71,19 +71,25 @@ for ii = 1:length(listRoiNames)
     % get the ROI coords
     roiCoords = viewGet(vw, 'roi coords'); 
     
+    %% Plot the mean time series for localizer sitmuli
+    % set data structure properties
+    vw = viewSet(vw, 'CurrentDataType', 'GLMs'); 
+    
     % get the time series from the roi
     % [roitSeries, subCoords] = getTseriesOneROI(vw,ROIcoords,scanNum, getRawTseriesFlag(=0 default), removeRedundantFlag(=1 default) )
     tSeriesRoi = getTseriesOneROI(vw, roiCoords); 
     
     % Average the time series across all the voxels in this roi
-     tSeriesRoiMean = mean(tSeriesRoi{1}(:,:),2);
+    tSeriesRoiMean = mean(tSeriesRoi{1}(:,:),2);
     
-    % Plot the time series
+    % Do the plotting
     figure();
     plot(tSeriesRoiMean)
-    title(['Mean tSeries: ' thisRoi]); 
+    title(['GLM Mean tSeries: ' thisRoi]); 
     xlabel('Time')
     ylabel('% Change in BOLD Signal')
+    
+    
     
 end
 
@@ -95,7 +101,8 @@ vw = rmLoadDefault(vw);
 
 
 % load left and right meshes
-vw = meshLoad()
+vw = meshLoad(vw, dirMeshLeft,1); 
+vw = meshLoad(vw, dirMeshRight, 1); 
 
 
 
