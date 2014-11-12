@@ -43,6 +43,9 @@ list_comments = {
 
 %% do work
 
+% initialize for mean tseries
+s_tseriesMean = cell(length(list_sessions), length(list_roiNames)); 
+
 % for each session
 for ii = 1:length(list_sessions)
     
@@ -67,6 +70,8 @@ for ii = 1:length(list_sessions)
         
         % average time series across all voxels
         tSeriesRoiMean = mean(tSeriesRoi{1}(:,:),2);
+        % save mean tseries
+        s_tseriesMean{ii,jj} = tSeriesRoiMean; 
         
         %% plot the mean time series
         figure(); 
@@ -79,3 +84,47 @@ for ii = 1:length(list_sessions)
     
     close all; 
 end
+
+
+%% an overlay of the tSeries
+% the 1st and 4th sessions have the same number of frames
+% the 2nd and 3rd have the same number of frames
+
+%% overlay 1st and 4th
+for jj = 1:length(list_roiNames)
+    
+    figure(); 
+    plot(s_tseriesMean{1,jj},'k')
+    hold on
+    plot(s_tseriesMean{4,jj})
+    hold off
+    title([list_roiNames{jj} ' mean tSeries'])
+    legend(list_comments{1},list_comments{4})
+    xlabel('Frames')
+    ylabel('Percent Modulation')
+    grid on
+    
+    saveas(gcf, ['~/Pictures/overlay144frames_roi' num2str(jj)], 'png')
+end
+
+%% overlay 2nd and 3rd
+for jj = 1:length(list_roiNames)
+    
+    figure(); 
+    plot(s_tseriesMean{2,jj},'k')
+    hold on
+    plot(s_tseriesMean{3,jj})
+    hold off
+    title([list_roiNames{jj} ' mean tSeries'])
+    legend(list_comments{2},list_comments{3})
+    xlabel('Frames')
+    ylabel('Percent Modulation')
+    grid on
+    
+    saveas(gcf, ['~/Pictures/overlay96frames_roi' num2str(jj)], 'png')
+    
+end
+
+
+
+

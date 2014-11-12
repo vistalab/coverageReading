@@ -59,6 +59,8 @@ for ii = 1:length(listDirRois)
 
 end
 
+% initialize mean tseries struct
+
 % plot the time series for each roi
 for ii = 1:length(listRoiNames)
     
