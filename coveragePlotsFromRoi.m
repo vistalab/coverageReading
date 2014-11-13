@@ -62,6 +62,6 @@ for ii = 1:length(list_roiNames)
     
     % plot the coverage map
     % [RFcov figHandle all_models weight data]  = rmPlotCoverage(vw, varargin)
-    rmPlotCoverage(vw, 'cothresh', val_cothresh)
+    rmPlotCoverage(vw, 'cothresh', val_cothresh); 
    
 end
