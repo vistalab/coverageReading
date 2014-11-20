@@ -6,9 +6,9 @@ clear all; close all; clc;
 %% modify  --------------------------------------------------------------------------
 
 % scan numbers to average over (scans which have bar/wedgering ret)
-path_session = '/biac4/wandell/data/reading_prf/rosemary/20141026_1148'; 
-tem.barScans = [1 2]; 
-tem.name = 'WordRetinotopy'; 
+path_session = '/biac4/wandell/data/reading_prf/rosemary/20141113_1311/'; 
+tem.retScans = [1 2 3]; 
+tem.name = 'allWordRet'; 
 
 % datatype name to average over, if we don't have an average
 % so this involves loading mrSESSION and checking through dataTYPES.name
@@ -41,7 +41,7 @@ if ~match
     vw = viewSet(vw, 'current dt', tem.dtToAverage);
     
     % average the time series
-    averageTSeries(vw, tem.barScans, tem.name, 'Average of ret scans');
+    averageTSeries(vw, tem.retScans, tem.name, 'Average of ret scans');
     
 end
 
@@ -74,9 +74,9 @@ if isempty(fnames), error('We need a file of images and image sequence within St
 
 %% no need to modify: getting parameter values for prf model fit ----------------------
 
-tem.nFrames             = mrSESSION.functionals(tem.barScans(1)).nFrames; 
-tem.framePeriod         = mrSESSION.functionals(tem.barScans(1)).framePeriod; 
-tem.totalFrames         = mrSESSION.functionals(tem.barScans(1)).totalFrames;  
+tem.nFrames             = mrSESSION.functionals(tem.retScans(1)).nFrames; 
+tem.framePeriod         = mrSESSION.functionals(tem.retScans(1)).framePeriod; 
+tem.totalFrames         = mrSESSION.functionals(tem.retScans(1)).totalFrames;  
 tem.prescanDuration     = (tem.totalFrames - tem.nFrames)*tem.framePeriod; 
 
 %% modify these: parameter values for prf model fit -------------------------------------
@@ -100,7 +100,7 @@ params.hrfParams        = {[1.6800 3 2.0500] [5.4000 5.2000 10.8000 7.3500 0.350
 params.imFile           = 'Stimuli/images_knk.mat'; 
 params.imfilter         = 'binary';
 params.jitterFile       = 'Stimuli/none';
-params.paramsFile       = 'Stimuli/params_knkfull_wedgering.mat';  
+params.paramsFile       = 'Stimuli/params_knkfull_multibar.mat';  
 
     
 %% no need to modify, closing up
