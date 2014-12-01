@@ -6,62 +6,43 @@ clear all; close all; clc;
 %% modify  --------------------------------------------------------------------------
 
 % scan numbers to average over (scans which have bar/wedgering ret)
-path_session = '/biac4/wandell/data/reading_prf/rosemary/20141113_1311/'; 
-tem.retScans = [1 2 3]; 
-tem.name = 'allWordRet'; 
+path_session  = '/biac4/wandell/data/reading_prf/rosemary/20141026_1148'; 
+tem.barScans  = [1 2]; 
+tem.retDtName = 'WordRetinotopy'; 
 
-% datatype name to average over, if we don't have an average
-% so this involves loading mrSESSION and checking through dataTYPES.name
-% go for the one that is motion and sliced-timed corrected
-tem.dtToAverage = 'MotionComp'; 
+% if we want to run the model only on an roi as opposed to all gray voxels, specify path here
+tem.roiFileName = []; 
+
+% name of params file
+p.paramsFile    = 'Stimuli/params_knkfull_multibar.mat'; 
+
+% image file
+p.imFile        = 'Stimuli/images_knk_fliplr.mat'; 
+
+% radius of circle retinotopy in visual angle degrees
+p.stimSize      = 16; 
+
+% reminders --------------------- 
+% make a dataTYPE in the inplane view that is the average of the ret runs
+% transforms these time series in the gray (prf fits should be run on the gray)
 
 %% checking things here, no need to modify
 
 % open the session
 cd(path_session); 
-vw = mrVista; 
+vw = mrVista;
+% need some global variables later
 load mrSESSION; 
 
-% see if we have a dataTYPE named tem.name ...
-match = false;
-for ii = 1:length(dataTYPES)
-    
-    thisdt = dataTYPES(ii).name;
-    if strcmpi(tem.name, thisdt), 
-        match = true; 
-        vw = viewSet(vw, 'current dt', thisdt); 
-    end
-    
-end
+% set correct dataTYPE 
+vw = viewSet(vw, 'current dt', tem.retDtName); 
+% double check that we are in correct datatype
+tem.num1 = viewGet(vw, 'current dt'); 
+tem.num2 = viewGet(vw, 'dtnum', tem.retDtName); 
+if tem.num1 ~= tem.num2, error('mis-matched dataTYPE!'), end
+% get the data type number for later
+dataNum = viewGet(vw, 'curdt'); 
 
-
-% - if we haven't averaged over vista ret bar time series, do it here
-if ~match
-    % change to the datatype we want to be in to average
-    vw = viewSet(vw, 'current dt', tem.dtToAverage);
-    
-    % average the time series
-    averageTSeries(vw, tem.retScans, tem.name, 'Average of ret scans');
-    
-end
-
-% - set dataNum to be that of tem.name
-for ii = 1:length(dataTYPES)
-    if strcmpi(dataTYPES(ii).name, tem.name)
-        % dataNum is the datayTYPE number of tem.name
-        dataNum = ii;
-        vw = viewSet(vw, 'current dt', dataNum); 
-    end
-end
-
-% if we have not xformed these time series in Gray, do it here
-vol = mrVista('3');
-vol = viewSet(vol, 'current dt', dataNum); 
-
-if ~exist(['Gray/' tem.name '/TSeries/Scan1'], 'dir')
-    tem.whichScans = viewGet(vw, 'current scan');
-    vol = ip2volTSeries(vw, vol, tem.whichScans, 'linear'); 
-end
 
 % - check whether we have stimulus files
 if ~exist('Stimuli', 'dir')
@@ -72,21 +53,15 @@ fnames = dir('Stimuli/*.mat');
 if isempty(fnames), error('We need a file of images and image sequence within Stimulu directory'); end
 
 
-%% no need to modify: getting parameter values for prf model fit ----------------------
+%% getting parameter values for prf model fit ----------------------
+params.nFrames              = mrSESSION.functionals(tem.barScans(1)).nFrames; 
+params.framePeriod          = mrSESSION.functionals(tem.barScans(1)).framePeriod; 
+tem.totalFrames             = mrSESSION.functionals(tem.barScans(1)).totalFrames;  
+params.prescanDuration      = (tem.totalFrames - params.nFrames)*params.framePeriod; 
 
-tem.nFrames             = mrSESSION.functionals(tem.retScans(1)).nFrames; 
-tem.framePeriod         = mrSESSION.functionals(tem.retScans(1)).framePeriod; 
-tem.totalFrames         = mrSESSION.functionals(tem.retScans(1)).totalFrames;  
-tem.prescanDuration     = (tem.totalFrames - tem.nFrames)*tem.framePeriod; 
-
-%% modify these: parameter values for prf model fit -------------------------------------
-params.framePeriod      = tem.framePeriod;  % framePeriod
-params.nFrames          = tem.nFrames;      % including clipped. mrSESSION.functionals.nFrames. will crash otherwise.
-params.prescanDuration  = tem.prescanDuration; 
-
+params.stimSize         = p.stimSize; 
 params.fliprotate       = [0 0 0]; 
 params.stimType         = 'StimFromScan';
-params.stimSize         = 12; 
 params.stimWidth        = 90;               % wedgeDeg
 params.stimStart        = 0;                % startScan
 params.stimDir          = 0;                % probably referring to clockwise or counter clockwise, for now go with Jon's
@@ -95,12 +70,13 @@ params.nStimOnOff       = 0;                % going with Jon
 params.nUniqueRep       = 1;                % going with Jon
 params.nDCT             = 1;                % going with Jon
 
+params.paramsFile       = p.paramsFile; 
+params.imFile           = p.imFile; 
 params.hrfType          = 'two gammas (SPM style)';
 params.hrfParams        = {[1.6800 3 2.0500] [5.4000 5.2000 10.8000 7.3500 0.3500]}; % got this from Jon's wiki
-params.imFile           = 'Stimuli/images_knk.mat'; 
 params.imfilter         = 'binary';
 params.jitterFile       = 'Stimuli/none';
-params.paramsFile       = 'Stimuli/params_knkfull_multibar.mat';  
+ 
 
     
 %% no need to modify, closing up
@@ -118,9 +94,8 @@ vw = rmLoadParameters(vw);
 % rmStimulusMatrix(viewGet(vw, 'rmparams'), [],[],2,false);
 
 
-
 %% Run it!
-vw = rmMain(vol,[],3);
+vw = rmMain(vw,tem.roiFileName,3);
 
 % Now we've got a dataTYPE to use
 updateGlobal(vw);

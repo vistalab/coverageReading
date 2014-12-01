@@ -12,29 +12,30 @@ clear all; close all; clc;
 %% modify here
 
 % what/where we want to save the wrapped variable as
-pathKnkWrapped = '/biac4/wandell/data/reading_prf/rosemary/20140818_1211/rl0818_knk_wrapped.mat'; 
+pathKnkWrapped = '/biac4/wandell/data/reading_prf/rosemary/20141026_1148/rl20141026_knk_wrapped.mat'; 
 
 % absolute path of the session
-pathSession = '/biac4/wandell/data/reading_prf/rosemary/20140818_1211';
+pathSession = '/biac4/wandell/data/reading_prf/rosemary/20141026_1148/';
 
 % absolute paths of where the motion and time slice correction data is stored
-% should be a  nx 1 cell where n is the number of runs
+% should be a  n x 1 cell where n is the number of runs
 pathsData = { ...
     [pathSession 'Inplane/MotionComp/TSeries/tSeriesScan1.nii.gz']
     [pathSession 'Inplane/MotionComp/TSeries/tSeriesScan2.nii.gz']
-    [pathSession 'Inplane/MotionComp/TSeries/tSeriesScan3.nii.gz']
-    [pathSession 'Inplane/MotionComp/TSeries/tSeriesScan4.nii.gz']
    };
 
 % paths where the stimulus (bars and/or ringswedges) file is stored
-pathStimulus = [pathSession 'Stimuli/Parfiles/images_8barswithblank.mat']; 
+pathStimulus = '/biac4/wandell/data/reading_prf/forAnalysis/knkret/stimuliBars_flipped.mat'; 
 
 % a functional run number that involves retinotopy
 % will look at mrVista to figure out how many frames to clip
 retScanNum  = 1; 
 
-% repitition time in seconds
-trTime      = 2; 
+% repitition time in seconds, when data is acquired
+trOrig      = 2; 
+
+% tr time that we interpolate
+trNew       = 1; 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% format the data so that it can be analyzed with knkAnalyze
@@ -79,7 +80,7 @@ for ii = 1:numRuns
         % <numsamples> (optional) is the number of desired samples.
         % default to the number of samples that makes the duration of the new
         % data match or minimally exceed the duration of the original data.
-    tSeriesInterp = tseriesinterp(tSeries.data,2,1,4,288); 
+    tSeriesInterp = tseriesinterp(tSeries.data,trOrig,trNew,4,288); 
     
     data{ii} = tSeriesInterp; 
     
@@ -99,7 +100,7 @@ clear stimulus
 % clip the stimulus series
 % in the functional, we clip 6 frames (each frame is 2 seconds).
 % so we want to clip 12 seconds from the stimulus series
-barsClipped = bars(:,:,(clipFrames*trTime+1):end);
+barsClipped = bars(:,:,(clipFrames*trOrig+1):end);
 
 % intialize empty
 stimulus = cell(1, numRuns);
@@ -110,7 +111,7 @@ end
 
 %% prep the <tr> input. Note that this is not necessarily the TR of the
 % functional data, but the tr of the newly interpolated time series (so in this case, 1 second)
-tr = 1; 
+tr = trNew; 
 
 %% prep the <options> input. 
 % <options> (optional) is a struct with the following fields:
@@ -128,6 +129,7 @@ options = struct('seedmode', -2);
 save(pathKnkWrapped, 'stimulus', 'data', 'tr', 'options');
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % load the wrapped variables: 'stimulus', 'data', 'tr', 'options'
 load(pathKnkWrapped)
 
