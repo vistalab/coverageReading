@@ -1,12 +1,14 @@
 function [vw,v] = ff_pRFknkIntoVistaMatFile(vw,path,v)
 %% takes kendrick's prf results and transforms into a mat file that is compatible with mrVista
 % does this by loading an example ret model mat file, then replacing the
-% relevant fields
+% relevant fields. 
+%
+% TODO: define a complete empty vista ret model mat file (as opposed to loading an existing one)
 %
 % INPUTS
 % 1. vw:    hidden gray
 % 2. path:  struct with path names
-% 3. v:     other variables
+% 3. v:     other variables, more info below
 %
 % more about INPUTS
 % v.fieldSize       % radius of the field of view
@@ -397,40 +399,19 @@ params.stim.imFile = [];
 params.stim.instimwindow = []; 
 params.stim.images_org = []; 
 
-%% save everything as a mrVista ret model mat file: should include 2 variables: <model> and <params>
+%% save everything as a mrVista ret model mat file: 
+% vista needs 2 variables: <model> and <params>
+% bunch of variables used in the conversion, save those in the struct
+% css2vista, which will have the following fields
+% <path> <v> <wrap>
 
-save([path.css2vistaFileDir path.css2vistaFileName],'params','model','path','v')
+wrap = load(path.KnkWrapped); 
+css2vista.path  = path; 
+css2vista.v     = v; 
+css2vista.wrap  = wrap; 
 
-
-%% there was a weird issue with loading eccentricity into the parameter map and loading rfsize into the amplitude map.
-% the problem was that the clipMode was set to 0 as opposed to a range, so
-% everything was assigned one color. Change the clip modes here
-% the only downfall is that the next 2 cells of code has to be run whenever
-% loading kendrick's rm model
-
-%% changing clip mode for eccentricity (parameter map field)
-% v.mapMode             = viewGet(VOLUME{end},'mapMode');
-% v.mapModeNew          = v.mapMode; 
-% v.mapModeNew.clipMode = [0 v.fieldSize];
-% VOLUME{end} = viewSet(VOLUME{end}, 'mapMode', v.mapModeNew);  
-% VOLUME{end} = refreshView(VOLUME{end});
-% VOLUME{end} = refreshScreen(VOLUME{end});
-% 
-%% change the clip mode for the amplitude map
-% v.ampMode             = viewGet(VOLUME{end},'ampMode');
-% v.ampModeNew          = v.ampMode; 
-% v.ampModeNew.clipMode = [0 2*v.fieldSize] ;
-% VOLUME{end} = viewSet(VOLUME{end},'ampMode',v.ampModeNew);
-% VOLUME{end} = refreshView(VOLUME{end});
-% VOLUME{end} = refreshScreen(VOLUME{end});
-% 
-% 
-%% making more parameter maps ---------------------------------------------------
-%% can make a new parameter map that is the expt parameter, since there
-% isn't a clear place for it in the mrVista framework
-
-%% make a new parameter map that is kendrick's intrepetation of prfsize
-% results.rfsize
+save([path.css2vistaFileDir path.css2vistaFileName],'params','model','css2vista')
+ 
 
 end
 
