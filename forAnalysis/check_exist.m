@@ -3,10 +3,10 @@
 % Unfound file is printed to screen
 %
 % INPUTS
-% 1. fpaths is a structure of strings specifying paths
+% 1. fpaths is a cell array of strings specifying paths
 %
 % OUTPUTS
-%1. If any file inside structure does not exist, throws an error and aborts
+%1. If any file inside cell array does not exist, throws an error and aborts
 %
 % rl, summer 2014
 

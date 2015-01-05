@@ -4,9 +4,9 @@
 
 
 %% modify
-newroi.color   = 'b';
-newroi.name    = 'LV1'; 
-newroi.comment = ''; 
+newroi.color   = 'k';
+newroi.name    = 'RV3d'; 
+newroi.comment = 'defined with word retinotopy: /biac4/wandell/data/reading_prf/rosemary/20140507_0842/Gray/AveragesBars/rmImported_retModel-15degWords_fixation_grayBg.mat.'; 
 
 
 %% no need to modify
@@ -38,7 +38,7 @@ VOLUME{end} = ROIanotb(VOLUME{end}, roiA, roiB, newroi.name, newroi.color);
 
 
 %% save roi in local directory
-saveROI(VOLUME{1}, 'selected', 1)
+saveROI(VOLUME{1}, 'selected', 0)
 
 % refresh screen
 VOLUME{end} = refreshScreen(VOLUME{end}); 

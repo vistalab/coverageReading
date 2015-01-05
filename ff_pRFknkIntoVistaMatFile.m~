@@ -1,91 +1,58 @@
-%% script that takes kendrick's prf results and transforms into a mat file that is compatible with mrVista
+function [vw,v] = ff_pRFknkIntoVistaMatFile(vw,path,v)
+%% takes kendrick's prf results and transforms into a mat file that is compatible with mrVista
 % does this by loading an example ret model mat file, then replacing the
 % relevant fields
 %
+% INPUTS
+% 1. vw:    hidden gray
+% 2. path:  struct with path names
+% 3. v:     other variables
+%
+% more about INPUTS
+% v.fieldSize       % radius of the field of view
+% v.mapList         % the data that we want to create parameter maps of 
+                    % (so that we can xform them into the gray view)
+% v.dtName          % a functional run number that involves retinotopy
+                    % will look at mrVista to figure out how many frames to clip
+% v.visualDist      % distance between subject and screen, in cm                 
+% v.cmScrHeight     % height of the screen, in cm 
+% v.cmScrWidth      % width of the screen, in cm
+% v.numPixHeight    % num pixels in the vertical direction
+% v.numPixWidth     % num pixels in the horizontal direction
+% v.flipMap         % what transformation needs to be made to kendricks results
+% v.mapNameR2       % name of the R2 map, to go into the co field
+% v.clipFrames      % number of clipped frames. the output of
+                    % ff_makeWrapped... actually defines this
+% v.totalFrames     % total number of frames. output of ff_makeWrapped defines this               
+% v.framePeriod     % frame period 
+% v.numPixStimNative% resolution of a side (assumes square) of the stimulus
+                    % that is input into showmulticlass
+                    
 
-clear all; close all; clc; 
-%% modify here
-% kendrick's prf results. 
-path.knkResults = '/biac4/wandell/data/reading_prf/rosemary/20140425_1020/prfresultsSMALL1.mat';
-
-% path of mrSESSION variables, cd here
-path.mrSESSION  = '/biac4/wandell/data/reading_prf/rosemary/20140425_1020/'; 
-
-% mapList. the data that we want to create parameter maps of 
-% (so that we can xform them into the gray view)
-mapList = {'ang', 'ecc', 'expt','rfsize','R2','meanvol'};
-
-% field size -- visual angle degrees of RADIUS
-tem.fieldSize = 6;                                            
-
-% scan numbers to average over, when making a new datatype by averaging
-% over ret scans (check mrSESSION.functionals(tem.dtnumRet).PfileName)
-tem.retScans = 1:2; 
-
-% name of the dataTYPE that is the average of all the ret scans
-tem.retDtName = 'Averages'; 
+% path.css2vistaFileDir    % where we want the converted ret file to be saved
+% path.css2vistaFileName   % what we want the converted ret file to be called 
 
 % !!! reminder! makes sure the average tseries is xformed in the gray view
-
-% paths and directories where we want the tranformed prf parameters to be stored
-save_KnkRetMatFileDir    = [path.mrSESSION '/Gray/' tem.retDtName '/'];
-save_KnkRetMatFileName   = 'retmodel-knk2vista-rl20140425_version5.mat'; 
-
-
-% theknk prf model fits
-% for eccentricity is in units of pixels, so we need to know things like
-% the dimension of the screen in pixels and cm
-
-% distance between subject and screen, in cm
-tem.visualDist  = 277;  %%* large tv: 277cm | hemi circle projector: 41 (rl)
-
-% height of the screen, in cm
-tem.cmScrHeight = 58.6; %%* large tv: 58.6 | hemi circle projector: 30
-
-% width of the screen, in cm
-tem.cmScrWidth  =  103.8; %%* large tv: 103.8 | hemi circle: 48 
-
-% num pixels in the vertical direction
-tem.numPixHeight = 1080;  %%* large tv: 1080 | hemi circle: 1200 | macair: 900
-
-% num pixels in the horizontal direction
-tem.numPixWidth  = 1920;  %%* large tv: 1920 | hemi circle: 1920 | macair: 1440
-
-% what transformation needs to be made to kendricks results, which are
-% saved in a 80 x 80 x 36 matrix. could be a multitude of orientations. 
-% the way to figure this out is to look at the meanvol field of kendrick's
-% results, see how it is flipped with respect to the T1-weighted anatomy
-% 0 - no transformation needs to be made
-% 1 - 90 degrees clockwise and flipped across the y axis
-% 2 = 90 degrees clockwise
-tem.flipMap = 1; 
-
-% the name of the R2 map
-tem.mapNameR2 = 'knkR2';
 
 %% no need to modify below this
 
 %% cd and load : an example ret model file, kendrick's ret file, mrSESSION file
-cd(path.mrSESSION);
 path_exretmodel = '/biac4/wandell/data/reading_prf/rosemary/20140425_version2/Gray/BarsA/retModel-20140901-023304-fFit.mat'; 
 load(path_exretmodel); % loads <model> <params>
 
-load(path.knkResults); % loads <results>
-load([path.mrSESSION 'mrSESSION.mat']); 
+load(path.KnkResultsSave); % loads <results>
 
 %% some visual angle calculations
-    
-
 % we can calculate how many cm each pixel physically takes up if we know
 % the resolution and the dimensions of the screen
-tem.cmPerPixHeight = tem.cmScrHeight/tem.numPixHeight;  
-tem.cmPerPixWidth  = tem.cmScrWidth/tem.numPixWidth; 
+v.cmPerPixHeight = v.cmScrHeight/v.numPixHeight;  
+v.cmPerPixWidth  = v.cmScrWidth/v.numPixWidth; 
 
 % life is easier if the pixels are square. if the pixels are square, than
 % these 2 numbers should be more or less equal. 
 % multiply by 100 and then round to see that they are basically equal in
 % the hundredth's place
-isotropicPix = (round(100*tem.cmPerPixHeight) == round(100*tem.cmPerPixWidth)); 
+isotropicPix = (round(100*v.cmPerPixHeight) == round(100*v.cmPerPixWidth)); 
 
 % if the pixels are not reasonablly isotropic, this may throw off some
 % calculations, so abort for now. 
@@ -94,11 +61,34 @@ if ~isotropicPix
 else
     % define a new field in tem that is the length of a side of an
     % isotropic pixel
-    tem.cmPerPix = tem.cmPerPixHeight; 
+    v.cmPerPix = v.cmPerPixHeight; 
 end
 
+%% adjusting between native resolution and stimulus input into analyzePRF
+% the native resolution as shown to the subject is not the same as the
+% resolution that is input into analyzePRF. need to make the adjustment
+% here.
+
+% scaling factor
+tem = load(path.outputParams); % should be a field called dres
+v.scfactor = -tem.dres; 
+clear tem
+
+% multiply scaling factor by the native resolution to get resolution that
+% was shown
+v.numPixStimActual  = round(v.numPixStimNative * v.scfactor); 
+v.cmPerPixActual    
+
+% size of the stimulus as input into analyzePRF
+tem.Stimulus        = load(path.Stimulus); 
+v.numPixStimInput   = size(tem.Stimulus{1},1);
+v.ratio
+
+% the number of cms that a single pixel (as input into analyzePRF, takes up)
+v.cmPerPixAdjust = v.cmPerPixActual * v.ratioActualToInput
+
 % this is for some sanity checking, not really used in the code per se
-tem.pixPerCm = tem.numPixHeight / tem.cmScrHeight; 
+v.pixPerCm = v.numPixHeight / v.cmScrHeight; 
 
 
 %% parameters that we need to modify
@@ -208,14 +198,7 @@ tem.pixPerCm = tem.numPixHeight / tem.cmScrHeight;
 % mrVista prf mat file is restricted to gray. so let's xform
 % this function loads kendricks's results and writes them to mat files in
 % inplane, and then xforms them to gray
-ff_knkIntoVistaParamMaps(mapList, path, tem);
-
-%% define some variables based on mrSESSION
-p_nFrames           = mrSESSION.functionals(tem.retScans).nFrames; 
-p_totalFrames       = mrSESSION.functionals(tem.retScans).totalFrames; 
-p_framePeriod       = mrSESSION.functionals(tem.retScans).framePeriod;  
-p_prescanDuration   = p_framePeriod * (p_totalFrames - p_nFrames); 
-
+ff_knkIntoVistaParamMaps(v.mapList, path, v);
 
 %% variables to change --------------------------------------
 
@@ -231,13 +214,13 @@ model{1}.sigma  = [];
 
 % load ecc parameter map (this should be in units of visual angle degrees)
 % this loads a variable <map>
-load([path.mrSESSION 'Gray/' tem.retDtName '/knkecc.mat']) 
+load([path.Session 'Gray/' v.dtName '/knkecc.mat']) 
 % store ecc info in vector
 vecEcc = map{1}; 
 
 % load ang parameter map (values range between 0 and 360 degrees)
 % this loads a variable <map>
-load([path.mrSESSION 'Gray/' tem.retDtName '/knkang.mat']) 
+load([path.Session 'Gray/' v.dtName '/knkang.mat']) 
 % store ang info in vector
 vecAngDeg = map{1}; 
 % pol2cart requires angle info to be in radians
@@ -262,12 +245,12 @@ vecAngRad = deg2rad(vecAngDeg);
 % vis ang deg) .* sqrt(n)
 
 % load rf size GRAY parameter map
-load([path.mrSESSION 'Gray/' tem.retDtName '/knkrfsize.mat']); 
+load([path.Session 'Gray/' v.dtName '/knkrfsize.mat']); 
 % store rfsize info in a vector
 vecRfsize = map{1}; 
 
 % load expt GRAY parameter map
-load([path.mrSESSION 'Gray/' tem.retDtName '/knkexpt.mat']); 
+load([path.Session 'Gray/' v.dtName '/knkexpt.mat']); 
 vecExpt = map{1}; 
 
 model{1}.sigma.major = vecRfsize.*sqrt(vecExpt); 
@@ -294,9 +277,9 @@ model{1}.rss = [];
 model{1}.varexp = []; 
 
 % load R2 parameter map in GRAY form
-load([path.mrSESSION 'Gray/' tem.retDtName '/knkR2.mat']); 
+load([path.Session 'Gray/' v.dtName '/knkR2.mat']); 
 % store in varexp
-model{1}.varexp = map{1}/100; 
+model{1}.varexp = map{1}; 
     
 % define model{1}.rawrss to be all ones
 model{1}.rawrss = ones(size(model{1}.varexp)); 
@@ -336,12 +319,12 @@ model{1}.hrf = [];
 % assign a dummy field to hopefully keep the code from crashing
 % from observation it looks like beta is 1 x n x 4, where n is length
 % of gray coords list 
-tem.numGrayCoords = length(model{1}.x0);
-model{1}.beta = zeros(1,tem.numGrayCoords,4);
+v.numGrayCoords = length(model{1}.x0);
+model{1}.beta = zeros(1,v.numGrayCoords,4);
 
 %% npoints
 % an easy one! get from mrSESSION
-model{1}.npoints = p_nFrames; 
+model{1}.npoints = v.nFrames; 
 
 %% roi
 % the example ret model we load has an roi field. clear this. (future
@@ -352,16 +335,16 @@ model{1} = rmfield(model{1},'roi');
 %% param variables -- actually probably not necessary ----------------------------------------
 % params.matFileName
 params.matFileName      = cell(1,2); % matFileName is the mat file that encloses all prf model fit information
-params.matFileName{1}   = [save_KnkRetMatFileDir save_KnkRetMatFileName]; % fullpath (including file name)
-params.matFileName{2}   = [save_KnkRetMatFileName]; % just the file name
+params.matFileName{1}   = [path.css2vistaFileDir path.css2vistaFileName]; % fullpath (including file name)
+params.matFileName{2}   = [path.css2vistaFileName]; % just the file name
 
 % stimulus variables
-params.stim.framePeriod     = p_framePeriod;
+params.stim.framePeriod     = v.framePeriod;
 params.stim.imfilter        = 'binary'; 
 params.stim.stimType        = 'StimFromScan'; 
-params.stim.stimSize        = tem.fieldSize; 
-params.stim.nFrames         = p_nFrames; 
-params.stim.prescanDuration = p_prescanDuration; 
+params.stim.stimSize        = v.fieldSize; 
+params.stim.nFrames         = v.nFrames; 
+params.stim.prescanDuration = v.prescanDuration; 
 
 
 %% variables to clear -----------------------------------------
@@ -412,7 +395,7 @@ params.stim.images_org = [];
 
 %% save everything as a mrVista ret model mat file: should include 2 variables: <model> and <params>
 
-save([save_KnkRetMatFileDir save_KnkRetMatFileName],'params','model')
+save([path.css2vistaFileDir path.css2vistaFileName],'params','model')
 
 
 %% there was a weird issue with loading eccentricity into the parameter map and loading rfsize into the amplitude map.
@@ -422,28 +405,28 @@ save([save_KnkRetMatFileDir save_KnkRetMatFileName],'params','model')
 % loading kendrick's rm model
 
 %% changing clip mode for eccentricity (parameter map field)
-tem.mapMode             = viewGet(VOLUME{end},'mapMode');
-tem.mapModeNew          = tem.mapMode; 
-tem.mapModeNew.clipMode = [0 tem.fieldSize];
-VOLUME{end} = viewSet(VOLUME{end}, 'mapMode', tem.mapModeNew);  
-VOLUME{end} = refreshView(VOLUME{end});
-VOLUME{end} = refreshScreen(VOLUME{end});
-
+% v.mapMode             = viewGet(VOLUME{end},'mapMode');
+% v.mapModeNew          = v.mapMode; 
+% v.mapModeNew.clipMode = [0 v.fieldSize];
+% VOLUME{end} = viewSet(VOLUME{end}, 'mapMode', v.mapModeNew);  
+% VOLUME{end} = refreshView(VOLUME{end});
+% VOLUME{end} = refreshScreen(VOLUME{end});
+% 
 %% change the clip mode for the amplitude map
-tem.ampMode             = viewGet(VOLUME{end},'ampMode');
-tem.ampModeNew          = tem.ampMode; 
-tem.ampModeNew.clipMode = [0 2*tem.fieldSize] ;
-VOLUME{end} = viewSet(VOLUME{end},'ampMode',tem.ampModeNew);
-VOLUME{end} = refreshView(VOLUME{end});
-VOLUME{end} = refreshScreen(VOLUME{end});
-
-
+% v.ampMode             = viewGet(VOLUME{end},'ampMode');
+% v.ampModeNew          = v.ampMode; 
+% v.ampModeNew.clipMode = [0 2*v.fieldSize] ;
+% VOLUME{end} = viewSet(VOLUME{end},'ampMode',v.ampModeNew);
+% VOLUME{end} = refreshView(VOLUME{end});
+% VOLUME{end} = refreshScreen(VOLUME{end});
+% 
+% 
 %% making more parameter maps ---------------------------------------------------
 %% can make a new parameter map that is the expt parameter, since there
 % isn't a clear place for it in the mrVista framework
 
-
 %% make a new parameter map that is kendrick's intrepetation of prfsize
 % results.rfsize
 
+end
 

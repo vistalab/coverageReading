@@ -1,3 +1,4 @@
+function [figHandle] = ff_pRFasContours(rf, vfc)
 % INPUT:
 % 1. rf, something like a 128x128 matrix of values. a required parameter
 % 2. contourBounds, a vector of "levels". If blank. uses the default of
@@ -9,32 +10,32 @@
 % if making changes to this function, also make changes to:
 % make_pRFcontours
 % make_pRFcontoursWithError
+%%
 
 
-function [figHandle] = ff_pRFasContours(rf, contourBounds, varargin)
+% [figHandle] = ff_pRFasContours(rf, contourBounds, varargin)
 
-
+% number of ticks in the axes
+numTicks = 4;
 
 figure(); 
+[rf, figHandle] = contourf(rf,[0:0.1:1]); 
 
-
-if nargin == 1
-    [rf, figHandle] = contourf(rf); 
-end
-
-if nargin == 2
-    [rf, figHandle] = contourf(rf, contourBounds); 
-end
-
-% make square, turn axes labels off
+% make square, 
 axis square
-set(gca,'xtick',[], 'ytick',[]); 
+
+% format ticks and axis labels
+Lim = get(gca,'XLim');
+axlabelvec = [-vfc.fieldRange:2*vfc.fieldRange/numTicks:vfc.fieldRange]; 
+set(gca,'XTick', Lim(1):range(Lim)/numTicks:Lim(2))
+set(gca,'XTickLabel',axlabelvec)
+
+set(gca,'YTick', Lim(1):range(Lim)/numTicks:Lim(2))
+set(gca,'YTickLabel',axlabelvec)
+
 
 % label the contour plot and make label readable
-labHandle = clabel(rf,figHandle, 'FontSize', 24, 'FontWeight', 'bold'); 
-
-
-% decrease number of contour labels
+labHandle = clabel(rf,figHandle, 'FontSize', 12, 'FontWeight', 'bold'); 
 
 
 % change colormap

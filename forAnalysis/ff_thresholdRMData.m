@@ -6,29 +6,34 @@ function thresholdedData = ff_thresholdRMData(rm,h)
 % threshold to keep nans and empty matrices from crashing other functions
 goodsubs = 1;
 
-%     loop across subjects and get data from rm struct you just loaded
+% loop across subjects and get data from rm struct you just loaded
 for r=1:length(rm)
     
-    %     get index to values satisfying thresholds
+    % get index to values satisfying thresholds
     indx = 1:length(rm{r}.co);
-    %     threshold by coherence
+    
+    % threshold by coherence
     coindx = find(rm{r}.co>=h.threshco);
-    %     good voxels by coherence
+    
+    % good voxels by coherence
     indx = intersect(indx,coindx);
+    
     % threshold by ecc
     eccindx = intersect(find(rm{r}.ecc>=h.threshecc(1)),...
-        find( rm{r}.ecc<=h.threshecc(2)));
-    %     goodvoxels by eccentricity
-    indx = intersect(indx,eccindx);
-    %     good voxels by sigma
-    sigindx = intersect(find(rm{r}.sigma1>=h.threshsigma(1)),...
-        find(rm{r}.sigma1<=h.threshsigma(2)));
+    find( rm{r}.ecc<=h.threshecc(2)));
     
+    % goodvoxels by eccentricity
+    indx = intersect(indx,eccindx);
+    
+    % threshold by sigma
+    sigindx = intersect(find(rm{r}.sigma1>=h.threshsigma(1)),...
+    find(rm{r}.sigma1<=h.threshsigma(2)));
+    
+    % good voxels by sigma
     indx = intersect(indx,sigindx);
     
     
-    %     store thresholded data if there are more than minimum number of
-    %     voxels
+    % store thresholded data if there are more than minimum number of voxels
     if length(indx)>h.minvoxelcount
         thresholdedData{goodsubs}.name = rm{r}.name;
         thresholdedData{goodsubs}.vt = rm{r}.vt;

@@ -16,9 +16,6 @@ list_roiNames = {
 
 % list of sessions
 list_sessions = {
-    '/biac4/wandell/data/reading_prf/rosemary/20140425_version2';
-    '/biac4/wandell/data/reading_prf/rosemary/20140507_0842';
-    '/biac4/wandell/data/reading_prf/rosemary/20140818_1211'
     '/biac4/wandell/data/reading_prf/rosemary/20141026_1148/';
     };
 
@@ -26,18 +23,12 @@ list_sessions = {
 % there should be a dataTYPE in each session that is the average of the
 % scans we want. list that dataTYPE number here
 list_dtname = {
-    'AllBarsAverages';
-    'AveragesBars'; 
-    'AveragesBars'; 
     'WordRetinotopy';
     }; 
 
 % what type of stimuli in each session
 list_comments = {
-    'conglomeration bars 2 runs';
-    'checker bars 3 runs'; 
-    'checker bars 4 runs'; 
-    'word retinotopy 2 runs';
+    'Checkers 15 deg ';
     };
 
 
@@ -104,7 +95,7 @@ for jj = 1:length(list_roiNames)
     ylabel('Percent Modulation')
     grid on
     
-    saveas(gcf)
+    saveas(gcf, ['~/Pictures/overlay144frames_roi' num2str(jj)], 'png')
 end
 
 %% overlay 2nd and 3rd
@@ -120,6 +111,8 @@ for jj = 1:length(list_roiNames)
     xlabel('Frames')
     ylabel('Percent Modulation')
     grid on
+    
+    saveas(gcf, ['~/Pictures/overlay96frames_roi' num2str(jj)], 'png')
     
 end
 

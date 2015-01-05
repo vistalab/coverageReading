@@ -11,6 +11,8 @@ function Vdeg = ff_cm2deg(visualDist, sz)
 
 % this is in radians
 Vrad = 2*atan(sz/(2*visualDist)); 
+% Vrad = 2*atan(sz/(visualDist));
+
 
 
 % this is in degrees
