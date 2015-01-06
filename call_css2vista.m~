@@ -73,7 +73,7 @@ v.mapList = {'ang', 'ecc', 'expt','rfsize','R2','meanvol'};
 
 % paths and directories where we want the tranformed prf parameters to be stored
 path.css2vistaFileDir    = [path.Session '/Gray/' v.dtName '/'];
-path.css2vistaFileName   = 'retmodel-knk2vista-rl20141114_Average_15degCheckerRet.mat'; 
+path.css2vistaFileName   = 'retmodel-knk2vista-rl20141114_Average_15degCheckerRet_withEmpty.mat'; 
 
 % what transformation needs to be made to kendricks results, which are
 % saved in a 80 x 80 x 36 matrix. could be a multitude of orientations. 
@@ -113,3 +113,24 @@ save(path.KnkResultsSave,'results')
 VOLUME{1} = rmSelect(VOLUME{1},1,[path.css2vistaFileDir path.css2vistaFileName]); 
 VOLUME{1} = rmLoadDefault(VOLUME{1});
 
+%% there was a weird issue with loading eccentricity into the parameter map and loading rfsize into the amplitude map.
+% the problem was that the clipMode was set to 0 as opposed to a range, so
+% everything was assigned one color. Change the clip modes here
+% the only downfall is that the next 2 cells of code has to be run whenever
+% loading kendrick's rm model
+
+% changing clip mode for eccentricity (parameter map field)
+tem.mapMode             = viewGet(VOLUME{end},'mapMode');
+tem.mapModeNew          = tem.mapMode; 
+tem.mapModeNew.clipMode = [0 v.fieldSize];
+VOLUME{end} = viewSet(VOLUME{end}, 'mapMode', tem.mapModeNew);  
+VOLUME{end} = refreshView(VOLUME{end});
+VOLUME{end} = refreshScreen(VOLUME{end});
+
+% change the clip mode for the amplitude map
+tem.ampMode             = viewGet(VOLUME{end},'ampMode');
+tem.ampModeNew          = tem.ampMode; 
+tem.ampModeNew.clipMode = [0 2*v.fieldSize] ;
+VOLUME{end} = viewSet(VOLUME{end},'ampMode',tem.ampModeNew);
+VOLUME{end} = refreshView(VOLUME{end});
+VOLUME{end} = refreshScreen(VOLUME{end});
