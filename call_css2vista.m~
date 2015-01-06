@@ -109,3 +109,7 @@ save(path.KnkResultsSave,'results')
 % make it into a vista mat file
 [vw,v] = ff_css2vistaRetMatFile(vw,path,v);
 
+% load the newly created retmodel!
+VOLUME{1} = rmSelect(VOLUME{1},1,[path.css2vistaFileDir path.css2vistaFileName]); 
+VOLUME{1} = rmLoadDefault(VOLUME{1});
+

@@ -101,7 +101,7 @@ clear stimulus
 barsClipped = bars(:,:,(v.clipFrames*v.trOrig+1):end);
 % check that size of the clipped stimulus is equal to length of the time
 % series
-if size(barsClipped)~ size(data{1},4)
+if size(barsClipped,3) ~= size(data{1},4)
     error('Input stimulus not equal to time series!')
 end
 
