@@ -4,11 +4,9 @@
 
 
 %% modify
-newroi.color   = 'k';
-newroi.name    = 'RV3d'; 
-newroi.comment = 'defined with word retinotopy: /biac4/wandell/data/reading_prf/rosemary/20140507_0842/Gray/AveragesBars/rmImported_retModel-15degWords_fixation_grayBg.mat.'; 
-
-
+newroi.color   = 'b';
+newroi.name    = 'lVWFA_test'; 
+newroi.comment = 'guessing';
 %% no need to modify
 % assuming that mrVista and a mesh is loaded, there should exist a 
 % variable called VOLUME. check this, and abort if not found.

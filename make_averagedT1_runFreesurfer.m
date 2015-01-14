@@ -11,16 +11,20 @@ pathNiftis = {
     };
 
 % what to save the averaged T1 as
-pathSaveAsT1 = '/biac4/wandell/biac2/wandell2/data/anatomy/khazenzon/t1.nii.gz';
+pathSaveAsT1 = '/biac4/wandell/biac2/wandell2/data/anatomy/khazenzon/t1_canonical.nii.gz';
 
 % directory name for freesurfer outputs
 % at the moment, not sure if it accepts full path name
 % TODO: look into this later, and just specify directory name
 dirNameFreesurfer = 'khazenzon';
 
-% running freesurver results in an aseg.mgz file
-% what and where this file is located (with extension)
-inputMGZfile = '/biac4/wandell/data/reading_prf/anatomy/khazenzon/mri/aseg.mgz';
+% % running freesurver results in an aseg.mgz file
+% % what and where this file is located (with extension)
+% inputMGZfile = '/biac4/wandell/data/reading_prf/anatomy/khazenzon/mri/aseg.mgz';
+
+% running freesurfer results in an ribbon.mgz file
+% what and where its stored, with extension
+inputRibbonFile = '/biac4/wandell/data/reading_prf/anatomy/khazenzon/mri/ribbon.mgz';
 
 % what and where we want the class file to be saved (with extension)
 outputNii = '/biac4/wandell/data/anatomy/khazenzon/t1_class.nii.gz';
@@ -57,8 +61,9 @@ ni.data = DataAverage;
 ni.fname = []; 
 ni.fname = pathSaveAsT1;
 
-% save as a nifti file
-writeFileNifti(ni);
+% restore standard save as a nifti file 
+niftiWrite(niftiApplyCannonicalXform(niftiRead(ni.fname)), ni.fname);
+% writeFileNifti(ni);
 
 
 %% run freesurfer
@@ -67,6 +72,13 @@ writeFileNifti(ni);
 % <SUBJECT_ID> is the folder name
 eval(['! recon-all -i ' pathSaveAsT1 ' -subjid ' dirNameFreesurfer ' -all'])
 
-%% convert to nifti
-% mri_convert --out_orientation RAS  -rt nearest --reslice_like <reference.nii or reference.nii.gz> <input.mgz> <output.nii>
-eval(['! mri_convert --out_orientation RAS  -rt nearest --reslice_like ' pathSaveAsT1 ' ' inputMGZfile ' ' outputNii ])
+% %% convert to nifti
+% % mri_convert --out_orientation RAS  -rt nearest --reslice_like <reference.nii or reference.nii.gz> <input.mgz> <output.nii>
+% eval(['! mri_convert --out_orientation RAS  -rt nearest --reslice_like ' pathSaveAsT1 ' ' inputMGZfile ' ' outputNii ])
+
+% ^ line above may be incorrect
+% fs_ribbon2itk(<subjid>, <outfile>, [], <PATH_TO_YOUR_T1_NIFTI_FILE>)
+fs_ribbon2itk(inputRibbonFile, outputNii, [], pathSaveAsT1);
+
+
+

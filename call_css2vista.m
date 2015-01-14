@@ -3,32 +3,32 @@ clear all; close all; clc;
 
 %% modify here
 % absolute path of the session
-path.Session = '/biac4/wandell/data/reading_prf/rosemary/20141114/';
+path.Session = '/biac4/wandell/data/reading_prf/rosemary/20141026_1148/';
 
 % running knk stimuli results in output parameters (one of which is dres)
 % specify the name and path of the params struct here
 % there is a params struct that is saved out for each run
 % just specifying one of them is fine, very unlikely that the scaling
 % factor was changed between runs
-path.outputParams = [path.Session '20141113T232746.mat'];
+path.outputParams = [path.Session '20141026120042_subj116_run101_exp115.mat'];
 
 % specify which type of stimuli was run - vista ret or knk ret.
 % different codes result in different output params, adjust accordingly
-v.knkStim = 0; 
+v.knkStim = 1; 
 
 % absolute paths of where the motion and time slice correction data is stored
 % should be a  n x 1 cell where n is the number of runs
 % the time series in these niftis (in the data field) are already clipped
 path.Data = { ...
-    [path.Session 'Inplane/Average_15degCheckerRet/TSeries/tSeriesScan1.nii.gz']
+    [path.Session 'Inplane/WordRetinotopy/TSeries/tSeriesScan1.nii.gz']
    };
 
 % paths where the stimulus (bars and/or ringswedges) file is stored
-path.Stimulus = [path.Session 'Stimuli/stimuliBarsVista204.mat']; 
+path.Stimulus = [path.Session 'Stimuli/stimuliBars_flipped.mat']; 
 
 % a functional run number that involves retinotopy
 % will look at mrVista to figure out how many frames to clip
-v.dtName  = 'Average_15degCheckerRet'; 
+v.dtName  = 'WordRetinotopy'; 
 
 % repitition time in seconds, when data is acquired
 v.trOrig      = 2; 
@@ -41,13 +41,13 @@ v.trNew       = 1;
 v.retFuncNum  = 1; 
 
 % what/where we want the wrapped variable, with the .mat extension
-path.KnkWrapped = [path.Session 'Gray/' v.dtName '/knkwrapped_rl20141114.mat'];
+path.KnkWrapped = [path.Session 'Gray/' v.dtName '/knkwrapped_rl20141026.mat'];
 
 % what to save the analyzePRF results as
 path.KnkResultsSave = [path.Session 'resultsknk.mat'] ;
 
 % radius of field of view
-v.fieldSize = 15; 
+v.fieldSize = 16; 
 
 % distance between subject and screen, in cm
 v.visualDist = 41;         %%* large tv: 277cm | hemi circle projector: 41 (rl)                  
@@ -66,14 +66,14 @@ v.numPixWidth  = 1920;      %%* large tv: 1920 | hemi circle: 1920 | macair: 144
    
 % num pixels (of a side, assumes square) that is input into analyzePRF
 % only need to specify if using knk stimuli
-v.numPixStimNative = []; 
+v.numPixStimNative = 768; 
 
 % fields of css <results> that we want to make param maps of
 v.mapList = {'ang', 'ecc', 'expt','rfsize','R2','meanvol'};
 
 % paths and directories where we want the tranformed prf parameters to be stored
 path.css2vistaFileDir    = [path.Session '/Gray/' v.dtName '/'];
-path.css2vistaFileName   = 'retmodel-knk2vista-rl20141114_Average_15degCheckerRet_withEmpty.mat'; 
+path.css2vistaFileName   = 'retmodel-knk2vista-rl20141026_WordRetinotopy.mat'; 
 
 % what transformation needs to be made to kendricks results, which are
 % saved in a 80 x 80 x 36 matrix. could be a multitude of orientations. 

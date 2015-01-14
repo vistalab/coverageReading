@@ -4,9 +4,9 @@
 
 
 %% modify
-newroi.color   = 'k';
-newroi.name    = 'rightVWFA'; 
-newroi.comment = 'p = 0.001'; 
+newroi.color   = 'w';
+newroi.name    = 'RV3d'; 
+newroi.comment = 'defined from checker ret'; 
 
 
 %% no need to modify

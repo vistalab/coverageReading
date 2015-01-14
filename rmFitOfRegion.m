@@ -34,6 +34,16 @@ p.imFile        = 'Stimuli/images_8barswithblank.mat';
 
 %% don't modify here
 
+%% make sure we are in the correct git version
+% in the branch prfregion of the vistasoft git directory,
+% loading an roi into the view before running prf model will fit the region
+% as a whole
+
+chdir('/biac4/wandell/data/rkimle/BrainSoftware/vistasoft')
+eval('! git checkout prfregion')
+chdir(dirVista)
+
+%%
 cd(dirVista); 
 % need some globals, namely mrSESSION and dataTYPES
 load mrSESSION
