@@ -10,7 +10,7 @@ clear all; close all; clc;
 %% modify  --------------------------------------------------------------------------
 
 % scan numbers to average over (scans which have bar/wedgering ret)
-path_session  = '/biac4/wandell/data/reading_prf/jg/20150106_1910/'; 
+path_session  = '/biac4/wandell/data/reading_prf/jg/20150113_1947/'; 
 tem.barScans  = [1]; 
 tem.retDtName = 'Checkers'; 
 
@@ -18,7 +18,7 @@ tem.retDtName = 'Checkers';
 tem.roiFileName = []; 
 
 % name of params file
-p.paramsFile    = 'Stimuli/20150106T191026.mat'; 
+p.paramsFile    = 'Stimuli/20150113T200620.mat'; 
 
 % image file
 p.imFile        = 'Stimuli/images_8barswithblank_fliplr.mat'; 

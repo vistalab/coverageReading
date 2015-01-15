@@ -4,8 +4,8 @@
 
 
 %% modify
-newroi.color   = 'k';
-newroi.name    = 'RV3d'; 
+newroi.color   = 'w';
+newroi.name    = 'lface1'; 
 newroi.comment = 'from201501062_debug3';
 %% no need to modify
 % assuming that mrVista and a mesh is loaded, there should exist a 

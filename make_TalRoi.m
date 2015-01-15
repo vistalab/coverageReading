@@ -1,16 +1,16 @@
-%% modiy here
+%% modify here
 
 % which roi we want to define
 % lVWFA_tal1    [-42,-57,-6]
 % lVWFA_tal2    [-42,-57,-15]
 
-roiName = 'lVWFA_tal2';
+roiName = 'lVWFA_tal1';
 
 % how large we want the roi to be
 radSize = 3;
 
 % whether or not we want to save the roi
-saveRoi = 0; 
+saveRoi = 1; 
 
 % if we do test coords, define them here
 testCoords = [0,0,0];
