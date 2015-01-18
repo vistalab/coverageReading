@@ -1,11 +1,7 @@
-function S = ff_rmRoisStruct(vw, list_rmFiles, list_roiNames, path)
+function S = ff_rmRoisStructThresh(S, h)
 % INPUTS:
-% 1. vw: mrVista view
-% 2. list of ret model paths
-% 3. list of rois
-% 4. path : struct of variables
-%         dirRoi - directory with rois
-%         session - where the mrVista session is
+% 1. S
+% 2. h: contains the fields that we want to threshold by
 % 
 % OUTPUTS:
 % 1. S: a length(rmFiles) x length (rois) cell where S{i,j} has the ith rm info for the jth roi

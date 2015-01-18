@@ -13,41 +13,41 @@ listDirVista = {
 listRoisInd = {
     1;
     2;
-    3;
-    4;
-    5;
+%     3;
+%     4;
+%     5;
     6;
     7;
-    8;
-    9;
-    10;
+%     8;
+%     9;
+%     10;
     };
 
 % color of each roi
 listRoiColor = {
     [0 .2 1];
-    [1 0 .5];
-    [.5 .5 .5];
-    [.4 .2 0];
-    [.2 .8 1];
+    [1 0 .5];roiInd
+%     [.5 .5 .5];
+%     [.4 .2 0];
+%     [.2 .8 1];
     [0 .5 .2];
     [.6 0 1];
-    [.5 1 .5];
-    [.7 .2 .5];
-    [.4 .4 .9];
+%     [.5 1 .5];
+%     [.7 .2 .5];
+%     [.4 .4 .9];
     };
 
 listRoisComment = {
     'leftVWFA';     % 1
     'LV1';          % 2
-    'LV2d';         % 3
-    'LV2v';         % 4
-    'leftFFA';      % 5
+%     'LV2d';         % 3
+%     'LV2v';         % 4
+%     'leftFFA';      % 5
     'rightVWFA';    % 6
     'RV1';          % 7
-    'RV2d';         % 8
-    'RV2v';         % 9
-    'rightFFA';     % 10
+%     'RV2d';         % 8
+%     'RV2v';         % 9
+%     'rightFFA';     % 10
     };
 
 % condition number. 
@@ -149,7 +149,7 @@ for jj = 1:numRois
     % preliminary plotting
     figure()
     plot(VarExp_xy{jj}(1,:),VarExp_xy{jj}(2,:),'k.' )
-    title([listRoisComment{jj} '. all voxels'])
+    title([listRoisComment{roiInd} '. all voxels'])
     identityLine
 end
 
@@ -261,7 +261,7 @@ for jj = 1:numRois
     im(c==0) = 0; % make black outer circle
     imagesc(im); 
     colormap hot;
-    title(sprintf([listRoisComment{jj} '\n  ' listCondsComment{1}]), 'FontSize', 14);
+    title(sprintf([listRoisComment{roiInd} '\n  ' listCondsComment{1}]), 'FontSize', 14);
     colormap hot; axis square; axis off
   
     subplot(3,numRois,jj+numRois)
@@ -270,7 +270,7 @@ for jj = 1:numRois
     im(c==0) = 0; % make black outer circle
     imagesc(im); 
     colormap hot; 
-    title(sprintf([listRoisComment{jj} '\n ' listCondsComment{2}]), 'FontSize', 14);
+    title(sprintf([listRoisComment{roiInd} '\n ' listCondsComment{2}]), 'FontSize', 14);
     colormap hot; axis square; axis off
 
     subplot(3,numRois,jj+2*numRois)
@@ -279,7 +279,7 @@ for jj = 1:numRois
     im(c==0) = 0; % make black outer circle
     imagesc(im); 
     colormap hot;
-    title(sprintf([listRoisComment{jj} '\n ' listCondsComment{3}]), 'FontSize', 14);
+    title(sprintf([listRoisComment{roiInd} '\n ' listCondsComment{3}]), 'FontSize', 14);
     colormap hot; axis square; axis off
 
 end
