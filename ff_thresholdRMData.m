@@ -33,24 +33,26 @@ indx = intersect(indx,sigindx);
     
 % store thresholded data if there are more than minimum number of voxels
 if length(indx)>h.minvoxelcount
-    thresholdedData{goodsubs}.name = rm{1}.name;
-    thresholdedData{goodsubs}.vt = rm{1}.vt;
+    thresholdedData{1}.name = rm{1}.name;
+    thresholdedData{1}.vt = rm{1}.vt;
+    thresholdedData{1}.session = rm{1}.session; 
 
-    thresholdedData{goodsubs}.coords   = rm{1}.coords(indx);
-    thresholdedData{goodsubs}.indices  = rm{1}.indices(indx);
-    thresholdedData{goodsubs}.co       = rm{1}.co(indx);
-    thresholdedData{goodsubs}.sigma1   = rm{1}.sigma1(indx);
-    thresholdedData{goodsubs}.sigma2   = rm{1}.sigma2(indx);
-    thresholdedData{goodsubs}.theta    = rm{1}.theta(indx);
-    thresholdedData{goodsubs}.beta     = rm{1}.beta(indx);
-    thresholdedData{goodsubs}.x0       = rm{1}.x0(indx);
-    thresholdedData{goodsubs}.y0       = rm{1}.y0(indx);
-    thresholdedData{goodsubs}.ph       = rm{1}.ph(indx);
-    thresholdedData{goodsubs}.ecc      = rm{1}.ecc(indx);
+    thresholdedData{1}.coords   = rm{1}.coords(indx);
+    thresholdedData{1}.indices  = rm{1}.indices(indx);
+    thresholdedData{1}.co       = rm{1}.co(indx);
+    thresholdedData{1}.sigma1   = rm{1}.sigma1(indx);
+    thresholdedData{1}.sigma2   = rm{1}.sigma2(indx);
+    thresholdedData{1}.theta    = rm{1}.theta(indx);
+    thresholdedData{1}.beta     = rm{1}.beta(indx);
+    thresholdedData{1}.x0       = rm{1}.x0(indx);
+    thresholdedData{1}.y0       = rm{1}.y0(indx);
+    thresholdedData{1}.ph       = rm{1}.ph(indx);
+    thresholdedData{1}.ecc      = rm{1}.ecc(indx);
 
 % else, define an empty struct
 else
-    thresholdedData = []; 
+    thresholdedData = cell(1,1); 
+    
     
 end
 

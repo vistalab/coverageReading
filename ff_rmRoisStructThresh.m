@@ -1,45 +1,35 @@
-function S = ff_rmRoisStructThresh(S, h)
+function Sth = ff_rmRoisStructThresh(S, h)
+% thresholds S by values specified in h
+% S can be 3 dimensional or less
 % INPUTS:
 % 1. S
 % 2. h: contains the fields that we want to threshold by
 % 
 % OUTPUTS:
-% 1. S: a length(rmFiles) x length (rois) cell where S{i,j} has the ith rm info for the jth roi
-% 2. vw: mrVista view
+% 1. Sth: thresholded S
 
+Sth = cell(size(S)); 
 
+dim1 = size(S,1); 
+dim2 = size(S,2);
+dim3 = size(S,3); 
 
-S = cell(length(list_rmFiles), length(list_roiNames));
-
-for ii = 1:length(list_rmFiles)
-    
-    % load the retintopic model
-    vw = rmSelect(vw,1,list_rmFiles{ii}); 
-    vw = rmLoadDefault(vw); 
-    
-    for jj = 1:length(list_roiNames)
-        % load the rois (automatically selects the one that is just loaded)
-        vw = loadROI(vw, [path.dirRoi list_roiNames{jj}], [],[],1,0);
-        % vw = viewSet(vw,'selectedRoi',list_roiNames{jj}); 
-        
-        % if that roi does not exist, it cannot be loaded, so we want to
-        % define an empty rmROI
-        if ~strcmp(viewGet(vw,'roiname'),list_roiNames)
-            rmROI{1} = []; 
-        else
-            % this loads co, sigma1, sigma2, theta, beta, x0, y0, coords,
-            % indices, name
-            % make it a struct because of rmGetParamsFromROI
-            rmROI{1} = rmGetParamsFromROI(vw); 
-            % and give it a session and subject name
-            rmROI{1}.session = path.session;  
-            rmROI{1}.subject = ''; 
+for ii = 1:dim1
+    for jj = 1:dim2
+        for kk = 1:dim3
+            
+            % grab the appropriate element
+            s = S(ii,jj,kk); 
+            
+            % threshold it
+            sth = ff_thresholdRMData(s,h); 
+            
+            Sth{ii,jj,kk} = sth{1}; 
+            
         end
-        
-        % store it in the struct
-        S{ii,jj} = rmROI{1}; 
-    
-    end    
+    end
 end
+
+
 
 end

@@ -1,10 +1,10 @@
 %% define an empty ret model param 
 % previously was loading an empty one ...
 
-clear all; close all; clc; 
+function [model, params] = ff_makeEmptyVisatRetModel()
 
 % what and where to save the empty ret model file as
-pathSave = '/biac4/wandell/data/reading_prf/forAnalysis/knkret/retModel-empty.mat';
+% pathSave = '/biac4/wandell/data/reading_prf/forAnalysis/knkret/retModel-empty.mat';
 
 %% model
 model                   = cell(1,1); 
@@ -97,8 +97,9 @@ params.stim.nUniqueRep                      = [];
 params.stim.nDCT                            = [];
 
 %% save it!
-save(pathSave, 'model','params')
+% save(pathSave, 'model','params')
 
+end
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% parameters that we need to modify
 % should be of the following form:

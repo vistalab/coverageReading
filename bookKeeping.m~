@@ -55,7 +55,7 @@ list_sessionPath = {
     '/biac4/wandell/data/reading_prf/lb/20150107_1730';         % lb
     '/biac4/wandell/data/reading_prf/rosemary/20141026_1148';   % rl
     '/biac4/wandell/data/reading_prf/ad/20150120_ret';          % ad 
-    '/biac4/wandell/data/reading_prf/cc/20150122_ret';          % cc 
+    '/biac4/wandell/data/reading_prf/cc/20150122_ret';          % ad 
 };
 
 
@@ -63,12 +63,12 @@ list_sessionPath = {
 
 
 list_meshPath = {
-    '/biac4/wandell/data/anatomy/khazenzon/';           % ak
-    '/biac4/kgs/biac2/kgs/3Danat/jesse/';               % jg 
-    '/biac4/kgs/biac2/kgs/3Danat/lior/';                % lb
-    '/biac4/wandell/data/anatomy/rosemary/';            % rl
-    '/biac4/wandell/data/anatomy/dames/';               % ad
-    '/biac4/wandell/data/anatomy/camacho/';             % cc
+    'biac4/wandell/data/anatomy/khazenzon/';           % ak
+    'biac4/kgs/biac2/kgs/3Danat/jesse/';               % jg 
+    'biac4/kgs/biac2/kgs/3Danat/lior/';                % lb
+    'biac4/wandell/data/anatomy/rosemary/';            % rl
+    'biac4/wandell/data/anatomy/dames/';               % ad
+    'biac4/wandell/data/anatomy/camacho/';             % cc
     };
 
 % standardized mesh names

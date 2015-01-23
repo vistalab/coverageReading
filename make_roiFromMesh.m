@@ -19,7 +19,7 @@ if ~exist('VOLUME', 'var'); error('Must have VOLUME variable defined!'); end
 VOLUME{end} = meshROI2Volume(VOLUME{end}, 3); 
 
 % restrict roi to functional acitivity
-VOLUME{end} = restrictROIfromMenu(VOLUME{end}); 
+% VOLUME{end} = restrictROIfromMenu(VOLUME{end}); 
 
 % grab selected roi
 roi = viewGet(VOLUME{end}, 'curRoi'); 
