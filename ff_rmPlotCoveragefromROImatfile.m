@@ -102,7 +102,8 @@ y0 = rm.y0;
 ph = rm.ph;
 ecc = rm.ecc;
 
-
+% flippage because ugh
+y0 = -y0;
 
 
 
@@ -196,7 +197,9 @@ if vfc.smoothSigma
     end
     
     % check sigma1==sigma2
-    if subSize1 == subSize2
+    % also check that the roi is large enough so that median smoothing
+    % makes sense
+    if (logical(sum(subSize1 ~= subSize2) == 0)) && (vfc.smoothSigma < length(rm.co))
         %         for every voxel
         for ii = 1:length(subSize1)
             %spatial smoothing, hard cooded to 3, not sure the units (gray
@@ -326,16 +329,27 @@ drawnow;
 % in here is the where the rfs are made.  in case we want them to swap
 % sides
 % so for each step up to the last one
-for n=1:numel(s)-1,
-    % make rfs
-    rf   = rfGaussian2d(X(:), Y(:),...
-        subSize1(s(n):s(n+1)-1), ...
-        subSize2(s(n):s(n+1)-1), ...
-        subTheta(s(n):s(n+1)-1), ...
-        subX(s(n):s(n+1)-1), ...
-        subY(s(n):s(n+1)-1));
-    all_models(:,s(n):s(n+1)-1) = rf;
-end;
+% -- (rl) if the ROI is only voxel, skip this step
+if n ~=1 
+    for n=1:numel(s)-1,
+        % make rfs
+        rf   = rfGaussian2d(X(:), Y(:),...
+            subSize1(s(n):s(n+1)-1), ...
+            subSize2(s(n):s(n+1)-1), ...
+            subTheta(s(n):s(n+1)-1), ...
+            subX(s(n):s(n+1)-1), ...
+            subY(s(n):s(n+1)-1));
+        all_models(:,s(n):s(n+1)-1) = rf;
+    end;
+else
+    rf = rfGaussian2d(X(:), Y(:),...
+            subSize1, ...
+            subSize2, ...
+            subTheta, ...
+            subX, ...
+            subY);
+        all_models(:,1) = rf;
+end
 
 n; % debugging purposes, remove anytime 
 
@@ -693,7 +707,7 @@ dlg(end).string = 'Add dots to show pRF centers';
 dlg(end).value = vfc.(dlg(end).fieldName);
 
 
-[resp ok] = generalDialog(dlg, mfilename);
+[resp, ok] = generalDialog(dlg, mfilename);
 if ~ok
     error('User Aborted.')
 end

@@ -1,13 +1,9 @@
+function hf = ff_pRFasCircles(rm, vfc, plotOnlyCenters)
 %% plots prf as circles
-% input rm should contain fields
-%
-% x0
-% y0
-% sigma1
-% sigma2
-
-function hf = ff_pRFasCircles(rm)
-
+% INPUTS
+% 1. rmroi struct
+% 2. vfc
+% 3. whether or not to plot only centers
 
 % check that x0, y0, sigma1, and sigma2 have the same lengths
 if (length(rm.x0) ~= length(rm.y0)) || (length(rm.sigma1) ~= length(rm.sigma2)) || (length(rm.x0) ~= length(rm.sigma1))
@@ -16,32 +12,32 @@ end
 
 set(0, 'DefaultTextInterpreter', 'none'); 
 
-figure();
 
 %% plot the circle centers
 % plot the centers: (rm.x0(ii), rm.y0(ii))
-hf = plot(rm.x0, rm.y0,'.k');
+hf = plot(rm.x0, rm.y0,'.', 'Color',[.7 .7 .7]);
 hold on
 
 t = 0:0.01:2*pi;
     
 
-%% plotting the circles
+%% plotting the circles if indicated
+if ~plotOnlyCenters
+    for ii = 1:length(rm.x0)
 
-for ii = 1:length(rm.x0)
+        x0     = rm.x0(ii); 
+        y0     = rm.y0(ii); 
+        sigma1 = rm.sigma1(ii); 
+        sigma2 = rm.sigma2(ii); 
 
-    x0     = rm.x0(ii); 
-    y0     = rm.y0(ii); 
-    sigma1 = rm.sigma1(ii); 
-    sigma2 = rm.sigma2(ii); 
-    
-    X = x0 + sigma1*cos(t); 
-    Y = y0 + sigma2*sin(t); 
-    
-    % plot each circle
-    % plot(X,Y,'k')
-    patch(X,Y,'k', 'EdgeColor','none','FaceAlpha', 0.1); 
+        X = x0 + sigma1*cos(t); 
+        Y = y0 + sigma2*sin(t); 
 
+        % plot each circle
+        % plot(X,Y,'k')
+        patch(X,Y,'k', 'EdgeColor','none','FaceAlpha', 0.1); 
+
+    end
 end
 
 %% figure properties
@@ -65,8 +61,15 @@ axis square
 line([-themax themax], [0 0], 'Color', [0 0 0]); 
 line([0 0], [-themax themax], 'Color', [0 0 0]);
 
-% title
-title([rm.name ' - ' rm.subject], 'FontSize', 24);
+%% polar plot
+% add polar grid on top
+p.ringTicks = (1:3)/3*vfc.fieldRange;
+p.color = 'k';
+polarPlot([], p);
+
+%% Limit plot to visual field circle
+axis([-vfc.fieldRange vfc.fieldRange -vfc.fieldRange vfc.fieldRange])
+
 
 
 end

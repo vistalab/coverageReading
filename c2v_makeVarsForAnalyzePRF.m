@@ -1,36 +1,26 @@
-function [vw,v, stimulus, data, tr, options] = c2v_makeVarsForAnalyzePRF(vw,path,v)
-
-%% takes data collected from the scanner
-% INPUTS
-% 1. vw: the hidden gray
-% 2. path: struct with many path names
-% 3. v: struct specifying other variables
-% OUTPUTS
-% 1. vw: the hidden gray
-% 2. v: variables that we grab, like number of clipped frames
-
-% more about the INPUTS
-% path.KnkWrapped       what/where we want to save the wrapped variable as
-% path.Session          absolute path of the session  
-% path.Data             absolute paths of where the motion and time slice correction data is stored
-                        % should be a  n x 1 cell where n is the number of runs
-% path.Stimulus         paths where the stimulus (bars and/or ringswedges) file is stored
-
-% v.retFuncNum           run functional number that has ret. need to know
-                        % for grabbing the total frame number of a ret scan 
-% v.dtName              dataTYPE number of the averaged ret time series                           
-% v.trOrig              repitition time in seconds, when data is acquired
-% v.trNew               tr time that we interpolate
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function [vw, pth, v, stimulus, data, tr, options] = c2v_makeVarsForAnalyzePRF(vw,pth,v)
 %% format the data so that it can be analyzed with knkAnalyze
+% TODO:  fill this out!
+% INPUTS
+% OUTPUTS
 
 % move to session directory
-cd(path.Session);
+cd(pth.session);
 
+%% names of files and where they will be saved
+% pths and directories where we want the tranformed prf parameters to be stored
+pth.css2vistaFileDir    = fullfile(pth.session,'Gray', v.dtName);
+pth.css2vistaFileName   = ['retmodel-knk2vista-' datestr(now,'yyyy-mm-dd') '.mat'] ; 
 
-% the number of runs that we are analyzing
-numRuns = length(path.Data);
+% the wrapped variable mat file has all the parameters that are input into
+% the knk function analyzePRF. a copy of these variables are also saved in
+% the converted vista ret model file. Here we specify
+% what/where we want the wrapped variable, with the .mat extension
+% TODO: get rid of this eventually
+pth.knkWrapped = fullfile(pth.session, ['knkwrapped-' datestr(now,'yyyy-mm-dd') '.mat']);
+
+% what to save the analyzePRF results as
+pth.knkResultsSave = fullfile(pth.session,'resultsknk.mat');
 
 
 %% prep the <data> input. 
@@ -61,30 +51,34 @@ numSamples  = (v.trOrig/v.trNew)*v.nFrames;
 v.prescanDuration = v.clipFrames * v.framePeriod; 
 
 % initialize
-data = cell(1, numRuns);
+data = cell(1, 1);
 
-for ii = 1:numRuns
-    
-    % read in the nifti files 
-    % should have a field called 'data' of size  80    80    36   144
-    tSeries = readFileNifti(path.Data{ii});
-    
-    % interpolate the data time series to match that of the stimuli (288 time points as opposed to 144)
-    % m = tseriesinterp(m,trorig,trnew,dim,numsamples)
-        % <m> is a matrix with time-series data along some dimension.
-        % can also be a cell vector of things like that.
-        % <trorig> is the sampling time of <m> (e.g. 1 second)
-        % <trnew> is the new desired sampling time
-        % <dim> (optional) is the dimension of <m> with time-series data.
-        % default to 2 if <m> is a row vector and to 1 otherwise.
-        % <numsamples> (optional) is the number of desired samples.
-        % default to the number of samples that makes the duration of the new
-        % data match or minimally exceed the duration of the original data.
-    tSeriesInterp = tseriesinterp(tSeries.data,v.trOrig,v.trNew,4,numSamples); 
-    
-    data{ii} = tSeriesInterp; 
-    
-end
+% absolute pths of where the time series is stored (ideally motion-corrected)
+% should be a  n x 1 cell where n is the number of runs
+% the time series in these niftis (in the data field) are already clipped
+pth.Data = { ...
+    fullfile(pth.session,['Inplane/' v.dtName '/TSeries/tSeriesScan1.nii.gz']); 
+   };
+   
+% read in the nifti files 
+% should have a field called 'data' of size  80    80    36   144
+tSeries = readFileNifti(pth.Data{1});
+
+% interpolate the data time series to match that of the stimuli (288 time points as opposed to 144)
+% m = tseriesinterp(m,trorig,trnew,dim,numsamples)
+    % <m> is a matrix with time-series data along some dimension.
+    % can also be a cell vector of things like that.
+    % <trorig> is the sampling time of <m> (e.g. 1 second)
+    % <trnew> is the new desired sampling time
+    % <dim> (optional) is the dimension of <m> with time-series data.
+    % default to 2 if <m> is a row vector and to 1 otherwise.
+    % <numsamples> (optional) is the number of desired samples.
+    % default to the number of samples that makes the duration of the new
+    % data match or minimally exceed the duration of the original data.
+tSeriesInterp = tseriesinterp(tSeries.data,v.trOrig,v.trNew,4,numSamples); 
+
+data{1} = tSeriesInterp; 
+
 
 %% prep the <stimulus> input.
 % <stimulus> provides the apertures as a cell vector of R x C x time.
@@ -93,7 +87,7 @@ end
 % load the untouched stimulus file
 % this originally has 300 time points -- 1 for each second
 % TODO: this makes some assumptions about the stimulus mat (like the fact that it has 300 time points)
-load(path.Stimulus); 
+load(pth.stimulus); 
 bars = stimulus; 
 clear stimulus
 
@@ -106,11 +100,9 @@ if size(barsClipped,3) ~= size(data{1},4)
 end
 
 % intialize empty
-stimulus = cell(1, numRuns);
+stimulus = cell(1, 1);
+stimulus{1} = barsClipped; 
 
-for ii = 1:numRuns
-    stimulus{ii} = barsClipped; 
-end
 
 
 %% prep the <tr> input. Note that this is not necessarily the TR of the
@@ -130,6 +122,6 @@ options = struct('seedmode', -2);
 %% save all these variables
 
 % function results = analyzePRF(stimulus,data,tr,options)
-save(path.KnkWrapped, 'stimulus', 'data', 'tr', 'options');
+save(pth.knkWrapped, 'stimulus', 'data', 'tr', 'options');
 
 end

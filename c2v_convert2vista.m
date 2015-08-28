@@ -1,41 +1,8 @@
-function [vw,pth,v] = c2v_convert2vista(vw,pth,v)
+function [vw,pth,v] = c2v_convert2vista(vw,pth,v, results)
 %% takes kendrick's prf results and transforms into a mat file that is compatible with mrVista
-% does this by loading an example ret model mat file, then replacing the
-% relevant fields. 
-%
-% TODO: define a complete empty vista ret model mat file (as opposed to loading an existing one)
-%
-% INPUTS
-% 1. vw:    hidden gray
-% 2. pth:  struct with pth names
-% 3. v:     other variables, more info below
-%
-% more about INPUTS
-% v.fieldSize       % radius of the field of view
-% v.mapList         % the data that we want to create parameter maps of 
-                    % (so that we can xform them into the gray view)
-% v.dtName          % a functional run number that involves retinotopy
-                    % will look at mrVista to figure out how many frames to clip
-% v.visualDist      % distance between subject and screen, in cm                 
-% v.cmScrHeight     % height of the screen, in cm 
-% v.cmScrWidth      % width of the screen, in cm
-% v.numPixHeight    % num pixels in the vertical direction
-% v.numPixWidth     % num pixels in the horizontal direction
-% v.flipMap         % what transformation needs to be made to kendricks results
-% v.mapNameR2       % name of the R2 map, to go into the co field
-% v.clipFrames      % number of clipped frames. the output of
-                    % ff_makeWrapped... actually defines this
-% v.totalFrames     % total number of frames. output of ff_makeWrapped defines this               
-% v.framePeriod     % frame period 
-% v.numPixStimNative% resolution of a side (assumes square) of the stimulus
-                    % that is input into showmulticlass
-                    
-
-% pth.css2vistaFileDir    % where we want the converted ret file to be saved
-% pth.css2vistaFileName   % what we want the converted ret file to be called 
-
-% !!! reminder! makes sure the average tseries is xformed in the gray view
-
+% TODO: fill this out!
+% INPUTS:
+% OUTPUTS:
 
 %% cd and load : an example ret model file, mrSESSION file
 % define an empty vista ret model file
@@ -66,9 +33,19 @@ end
 %% different variables need to be defined depending on
 % whether knk or vista stimuli was used
 
+% determine by the outputParams file (the params file that is saved to the desktop or equivalent)
+% whether mrVista ret code or knk stim code was used. 
+tem = load(pth.outputParams); 
+if isfield(tem,'mashcycles') % 'mashcycles' is a field name NOT in vista ret params model AND is in knk ret params
+    v.knkStim = true; 
+else % right now, assumes only 2 types of ret display code are used. 
+    v.knkStim = false; 
+end
+
 if v.knkStim
-    tem = load(pth.outputParams); % should be a field called dres
+    % TODO: there should be some formula that makes this simpler, maybe
     v.scfactor = -tem.dres; 
+    if isempty(v.scfactor), v.scfactor = 1; end
     clear tem
 end
 
@@ -84,7 +61,7 @@ end
 % here.
 
 % the number of pixels (of a side, assumes square) that is input into analyzePRF
-tem = load(pth.Stimulus); 
+tem = load(pth.stimulus); 
 v.pixStimInput = size(tem.stimulus,1);
 clear tem
 
@@ -125,13 +102,13 @@ model{1}.sigma  = [];
 
 % load ecc parameter map (this should be in units of visual angle degrees)
 % this loads a variable <map>
-load([pth.Session 'Gray/' v.dtName '/knkecc.mat']) 
+load(fullfile(pth.session,'Gray', v.dtName, 'knkecc.mat'));
 % store ecc info in vector
 vecEcc = map{1}; 
 
 % load ang parameter map (values range between 0 and 360 degrees)
 % this loads a variable <map>
-load([pth.Session 'Gray/' v.dtName '/knkang.mat']) 
+load(fullfile(pth.session, 'Gray', v.dtName, 'knkang.mat')); 
 % store ang info in vector
 vecAngDeg = map{1}; 
 % pol2cart requires angle info to be in radians
@@ -160,12 +137,12 @@ end
 % vis ang deg) .* sqrt(n)
 
 % load rf size GRAY parameter map
-load([pth.Session 'Gray/' v.dtName '/knkrfsize.mat']); 
+load(fullfile(pth.session, 'Gray', v.dtName, 'knkrfsize.mat')); 
 % store rfsize info in a vector
 vecRfsize = map{1}; 
 
 % load expt GRAY parameter map
-load([pth.Session 'Gray/' v.dtName '/knkexpt.mat']); 
+load(fullfile(pth.session, 'Gray', v.dtName, 'knkexpt.mat')); 
 vecExpt = map{1}; 
 
 model{1}.sigma.major = vecRfsize.*sqrt(vecExpt); 
@@ -192,7 +169,7 @@ model{1}.rss = [];
 model{1}.varexp = []; 
 
 % load R2 parameter map in GRAY form
-load([pth.Session 'Gray/' v.dtName '/knkR2.mat']); 
+load(fullfile(pth.session, 'Gray', v.dtName, 'knkR2.mat')); 
 % store in varexp
 model{1}.varexp = map{1}; 
     
@@ -245,12 +222,14 @@ model{1}.npoints = v.nFrames;
 % the example ret model we load has an roi field. clear this. (future
 % versions of this code will not need to load an example ret model, and
 % will just define a rm model)
-model{1} = rmfield(model{1},'roi');
+if isfield(model{1},'roi'), 
+    model{1} = rmfield(model{1},'roi');
+end
     
 %% param variables -- actually probably not necessary ----------------------------------------
 % params.matFileName
 params.matFileName      = cell(1,2); % matFileName is the mat file that encloses all prf model fit information
-params.matFileName{1}   = [pth.css2vistaFileDir pth.css2vistaFileName]; % fullpth (including file name)
+params.matFileName{1}   = fullfile(pth.css2vistaFileDir, pth.css2vistaFileName); % fullpth (including file name)
 params.matFileName{2}   = [pth.css2vistaFileName]; % just the file name
 
 % stimulus variables
@@ -314,12 +293,12 @@ params.stim.images_org = [];
 % css2vista, which will have the following fields
 % <pth> <v> <wrap>
 
-wrap = load(pth.KnkWrapped); 
-css2vista.pth  = pth; 
+wrap = load(pth.knkWrapped); 
+css2vista.pth   = pth; 
 css2vista.v     = v; 
 css2vista.wrap  = wrap; 
 
-save([pth.css2vistaFileDir pth.css2vistaFileName],'params','model','css2vista')
+save(fullfile(pth.css2vistaFileDir,pth.css2vistaFileName),'params','model','css2vista', 'results')
  
 
 end

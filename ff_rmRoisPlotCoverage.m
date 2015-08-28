@@ -9,6 +9,9 @@ function ff_rmRoisPlotCoverage(S, list, hCoverage, vfc)
 % 5. vfc: specifies parameters for visual field coverage plotting props 
 
 for jj = 1:length(list.roiNames)
+    
+    roiName = list.roiNames{jj}; 
+    
     for ii = 1:length(list.rmFiles)
         this_m = S{ii,jj};
         [~,tem_hcoverage] = rmPlotCoveragefromROImatfile(this_m, vfc); 
@@ -32,7 +35,7 @@ for jj = 1:length(list.roiNames)
         copyobj(fig1, tem_hsubplot); 
         colormap hot
         axis off
-        title([list.roiNames{jj} ' ' list.comments{ii}])
+        title([roiName(1:(end-3)) ' ' list.comments{ii}])
     end
 end
 

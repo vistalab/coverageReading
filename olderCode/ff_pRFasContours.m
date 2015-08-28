@@ -1,8 +1,7 @@
-function [figHandle] = ff_pRFasContours(rf, vfc)
-% INPUT:
-% 1. rf, something like a 128x128 matrix of values. a required parameter
-% 2. contourBounds, a vector of "levels". If blank. uses the default of
-% contourf
+function [figHandle] = ff_pRFasContours(RFcov, vfc)
+% INPUTS:
+% 1. rf: something like a 128x128 matrix of values. a required parameter
+% 2. vfc: visual field coverage parameters
 %
 % OUTPUT:
 %
@@ -19,7 +18,7 @@ function [figHandle] = ff_pRFasContours(rf, vfc)
 numTicks = 4;
 
 figure(); 
-[rf, figHandle] = contourf(rf,[0:0.1:1]); 
+[RFcov, figHandle] = contourf(RFcov,[0:0.1:1]); 
 
 % make square, 
 axis square
@@ -35,7 +34,7 @@ set(gca,'YTickLabel',axlabelvec)
 
 
 % label the contour plot and make label readable
-labHandle = clabel(rf,figHandle, 'FontSize', 12, 'FontWeight', 'bold'); 
+labHandle = clabel(RFcov,figHandle, 'FontSize', 12, 'FontWeight', 'bold'); 
 
 
 % change colormap

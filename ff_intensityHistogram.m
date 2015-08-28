@@ -2,10 +2,9 @@ function ff_intensityHistogram(modelx, modely, lims)
 
 % Draw the intensity histogram
 
-% modelx: Nx1 matrix, and each cell describe individual data value
-% modely: Another Nx1 matrix
-% lims is a 1 x 2 vector: [minAxis maxAxis]. If lims is defined, assumes
-% both x and y axes are the same
+% modelx: Nx1 matrix
+% modely: Nx1 matrix
+% lims is a 1 x 2 vector: [minAxis maxAxis]. 
 
 % Goal is to make 2D histogram across modelx and modely
 

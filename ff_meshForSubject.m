@@ -45,7 +45,8 @@ if strcmp(whichHemisphere,'right') || strcmp(whichHemisphere,'r') ||  whichHemis
 end
 
 
-
+if length(varargin) ~= 0
+    
 %% load the specified ret model
 % if checkers
 if strcmpi(retType, 'c') || strcmpi(retType,'checker') || strcmpi(retType,'checkers') || strcmpi(retType,'checks') || strcmpi(retType,'check')
@@ -67,6 +68,8 @@ end
 
 % update all meshes
 vw = meshUpdateAll(vw); 
+
+end
 
 end
 

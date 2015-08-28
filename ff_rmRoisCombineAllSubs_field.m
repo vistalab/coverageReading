@@ -42,6 +42,28 @@ for kk = 1:numConds
         else
             temField 	= []; 
         end
+        
+        % the beta parameter is a special case
+        % possible cases: 1xnumCoords, numCoordsx1, numTrendsxnumCoords,
+        % numCoordsxnumTrends
+        % the first dimension is always the gain (amplitude)
+        % we can figure out by the dimensions which values are gain
+        if strcmp(nameOfField, 'beta') && ~isempty(temField)
+            % number of coordinate points
+            numCoords = (size(tem.x0,2)); 
+            
+            % the beta weights are either along the first row or along the
+            % first column. figure out which.
+            if size(tem.beta,1) == numCoords 
+                % betas are in a column, must transpose
+                temField = tem.beta(:,1)'; 
+            end
+            if size(tem.beta,2) == numCoords 
+                % no need to transpose, just grab first row
+                temField = tem.beta(1,:); 
+            end
+        end
+        
         temall = [temall, temField]; 
 
         end

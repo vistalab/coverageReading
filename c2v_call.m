@@ -19,7 +19,7 @@ pth.outputParams = [pth.session '20141026120042_subj116_run101_exp115.mat'];
 % different codes result in different output params, adjust accordingly
 v.knkStim = true; 
 
-% absolute pths of where the motion and time slice correction data is stored
+% absolute pths of where the time series is stored (ideally motion-corrected)
 % should be a  n x 1 cell where n is the number of runs
 % the time series in these niftis (in the data field) are already clipped
 pth.Data = { ...
@@ -33,26 +33,13 @@ pth.stimulus = [pth.session 'Stimuli/stimuliBars_flipped.mat'];
 % will look at mrVista to figure out how many frames to clip
 v.dtName  = 'WordRetinotopy'; 
 
-
 % run functional number that has ret. need to know
 % for grabbing the total frame number of a ret scan 
 v.retFuncNum  = 1; 
 
-
-
-% what/where we want the wrapped variable, with the .mat extension
-% keep for now, for debugging purposes
-pth.knkWrapped = [pth.session 'Gray/' v.dtName '/knkwrapped_rl20141026.mat'];
-
-% what to save the analyzePRF results as
-pth.knkResultsSave = [pth.session 'resultsknk.mat'] ;
-
-
 % the name of the R2 map
 v.mapNameR2 = 'knkR2';
 
-
-v.flipPhaseOverYAxis = 1; 
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 chdir(pth.session)
@@ -78,6 +65,7 @@ VOLUME{1} = rmLoadDefault(VOLUME{1});
 % everything was assigned one color. Change the clip modes here
 % the only downfall is that the next 2 cells of code has to be run whenever
 % loading kendrick's rm model
+% TODO: maybe make into a function. 
 
 % changing clip mode for eccentricity (parameter map field)
 tem.mapMode             = viewGet(VOLUME{end},'mapMode');

@@ -48,11 +48,11 @@ dataNum = viewGet(ip, 'curdt');
 
 % load kendrick's results, should load a variable called <results> with
 % these fields: ang, ecc, expt, rfsize, R2, meanvol
-load(path.KnkResultsSave); 
+load(path.knkResultsSave); 
 
 % Inplane and Gray directory where we want kendricks' parameter maps to be stored
-path_knkParamMapsIp = [path.Session 'Inplane/' v.dtName '/']; 
-path_knkParamMapsVol = [path.Session 'Gray/' v.dtName '/'];
+path_knkParamMapsIp = [path.session 'Inplane/' v.dtName '/']; 
+path_knkParamMapsVol = [path.session 'Gray/' v.dtName '/'];
 
 
 % this will go in the co field of each param mat file
@@ -174,7 +174,7 @@ load([path_knkParamMapsIp v.mapNameR2 '.mat'])
     
 % load the xformed R2 map
 % this will be saved into the co field for each parameter map
-load([path.Session 'Gray/' v.dtName '/' v.mapNameR2 '.mat'])
+load([path.session 'Gray/' v.dtName '/' v.mapNameR2 '.mat'])
 cofield = map{1};
 clear clipMode cmap map mapName mapUnits numColors numGrays
 
