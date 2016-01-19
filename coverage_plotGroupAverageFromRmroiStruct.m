@@ -5,21 +5,20 @@ bookKeeping;
 
 %% modify here
 
-% rois we want to look at
-list_roiNames = {
-    'LV2v_rl'
-    'rh_ventral_BodyLimb_rl'
-    'rh_lateral_BodyLimb_rl'
-    'lh_ventral_BodyLimb_rl'
-    'lh_lateral_BodyLimb_rl'
-    };
+% rmrois we want to look at
+list_rmroiNames = {
+    'left_VWFA_rl-Words-css'
+    'right_VWFA_rl-Words-css'
+    'combined_VWFA_rl-Words-css'
+    
+    'lh_VWFA'
 
-
-% stim types we want to look at
-list_rmNames = {
-    'Checkers';
-    'Words';
-    'FalseFont';
+%     'left_VWFA_rl-Checkers-css'
+%     'left_VWFA_rl-Words-css'
+%     'LV1_rl-Checkers-css'
+%     'LV1_rl-Words-css'
+%     'left_VWFA_rl-WordLarge-css'
+%     'left_VWFA_rl-WordSmall-css'
     };
 
 % visual field plotting thresholds
@@ -43,44 +42,79 @@ vfc.addCenters      = false;
 vfc.verbose         = prefsVerboseCheck;
 vfc.dualVEthresh    = 0;
 
+% rm thresholding
+h.threshecc = vfc.eccthresh; 
+h.threshco = vfc.cothresh; 
+h.threshsigma = [0 15];
+h.minvoxelcount = 1; 
+
 % rmroi directory
-rmroiPath = '/biac4/wandell/data/reading_prf/forAnalysis/rmrois/';
+rmroiDir = '/biac4/wandell/data/reading_prf/forAnalysis/rmrois/';
 
 % save
 % saveDir = '/biac4/wandell/data/reading_prf/forAnalysis/images/working/';
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/coverages';
 
+% save in dropbox?
+saveDropbox = true; 
+
 %% define things
-numRois = length(list_roiNames);
-numRms = length(list_rmNames);
+
+% number of rmroi structs
+numRmrois = length(list_rmroiNames);
 
 
 %% loop
 
-
-for jj = 1:numRois
+for rr = 1:numRmrois
     
-    % load the rmroi struct
-    % should load a variable called rmroi that is numRms x numSubs
-    roiName = list_roiNames{jj};
-    load(fullfile(rmroiPath, [roiName '.mat']))
-        
-    for kk = 1:numRms
-        
-        rmName = list_rmNames{kk};
-        R = rmroi(kk,:);
-        RF_mean = ff_rmPlotCoverageGroup(R, vfc);
-        colorbar;
-        
-        % set user data to have RF_mean
-        set(gcf, 'UserData', RF_mean);
-        
-        % save 
-        titleName = ['Group Avg Coverage- ' roiName '- ' rmName];
-        title(titleName, 'FontWeight', 'Bold')
-        saveas(gcf, fullfile(saveDir, [titleName '.png']), 'png');
-        saveas(gcf, fullfile(saveDir, [titleName '.fig']), 'fig');
-        
+    % load <rmroi> 
+    rmroiName = list_rmroiNames{rr};
+    rmroiPath = fullfile(rmroiDir, [rmroiName '.mat']);
+    load(rmroiPath);
+    
+    % remove empty elements, minor bug
+    rmroi(cellfun('isempty', rmroi)) = [];
+    
+    % threshold the rmroi
+    rmroi_thresh = cell(size(rmroi)); 
+    for ii = 1:length(rmroi)
+        rmroi_thresh{ii} = ff_thresholdRMData(rmroi{ii}, h); 
+    end
+    
+    RF_mean = ff_rmPlotCoverageGroup(rmroi_thresh, vfc);
+    colorbar;
+
+    % set user data to have RF_mean
+    set(gcf, 'UserData', RF_mean);
+
+    % description, take out the '_rl' in the roi name
+    descript = ff_stringRemove(rmroiName, '_rl');
+    
+    %% save 
+    % make threshold dir if it does not exist
+    chdir(saveDir)
+    threshDir = ff_stringDirNameFromThresh(h); 
+    if ~exist(threshDir, 'dir')
+        mkdir(threshDir);
+    end
+    
+    % new save directory
+    threshSaveDir = fullfile(saveDir, threshDir);
+    
+    % title
+    titleName = ['Group Avg Coverage- ' descript];
+    title(titleName, 'FontWeight', 'Bold')
+    
+    % save png and fig file
+    saveas(gcf, fullfile(threshSaveDir, [titleName '.png']), 'png');
+    saveas(gcf, fullfile(threshSaveDir, [titleName '.fig']), 'fig');
+    
+    % save in drobox if so desired
+    if saveDropbox
+        dirDropbox = '/home/rkimle/Dropbox/TRANSFERIMAGES';
+        saveas(gcf, fullfile(dirDropbox, [titleName '.png']), 'png');
+        saveas(gcf, fullfile(dirDropbox, [titleName '.fig']), 'fig');
     end
     
 end

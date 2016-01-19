@@ -10,6 +10,11 @@ function [descript] = ff_dec2str(number)
 % RETURNS: 
 % descript
 
+if ischar(number)
+    descript = number; 
+    return
+end
+
 base = floor(number); 
 
 descript = [num2str(base)]; 

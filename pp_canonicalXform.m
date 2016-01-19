@@ -13,19 +13,14 @@ dirVista  = pwd;
 
 % nifti files we want to xform
 listToXform = {
-    fullfile(dirVista, '5_1_fMRI_Ret_knk','9727_5_1.nii.gz')
-    fullfile(dirVista, '6_1_fMRI_Ret_knk','9727_6_1.nii.gz')
-    fullfile(dirVista, '8_1_fMRI_Ret_knk','9727_8_1.nii.gz')
-    fullfile(dirVista, '9_1_fMRI_Ret_knk','9727_9_1.nii.gz')
-    fullfile(dirVista, '10_1_fMRI_Ret_bars', '9727_10_1.nii.gz')
-    fullfile(dirVista, '11_1_fMRI_Ret_bars', '9727_11_1.nii.gz')
-    fullfile(dirVista, '12_1_fMRI_Ret_bars', '9727_12_1.nii.gz')
+    fullfile(dirVista, '4_1_T1w_Whole_brain_1mm', '10928_4_1.nii.gz')
+    fullfile(dirVista, '5_1_T1w_Whole_brain_1mm', '10928_5_1.nii.gz')
     };
 % listToXform = {fullfile(dirVista, '4_1_T1_high_res_inplane_Ret_knk','9727_4_1.nii.gz')};
 
 % name of the new functional, with ext
 % newName = 'func_xform.nii.gz'; 
-newName = 'inplane_xform.nii.gz'; 
+newName = 'anatomy_xform.nii.gz'; 
 
 %% 
 

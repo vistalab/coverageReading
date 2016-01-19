@@ -3,6 +3,8 @@
 % - that a sourceDt of 'Checkers' means that there are 96 time points
 % - that anything else will have 144 time points
 % - that we want to systematically remove an 8th of the time series (a sweep of the bar)
+%
+% Do this for only a single source dt at a time
 
 clear all; close all; clc;
 chdir('/biac4/wandell/data/reading_prf/coverageReading')
@@ -10,13 +12,21 @@ bookKeeping;
 
 %% modify here
 % subjects we want to do this for, indicated by bookKeeping
-list_subInds = [2:4 6:13];
+list_subInds = 17; % [2:4 6:13];
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
-wSession = 'list_sessionPath';
+list_path = list_sessionSizeRet; 
 
 % names of the datatypes we want to create
 list_dtsToCreate = {
+    'WordLarge_RemoveSweep1'
+    'WordLarge_RemoveSweep2'
+    'WordLarge_RemoveSweep3'
+    'WordLarge_RemoveSweep4'
+    'WordLarge_RemoveSweep5'
+    'WordLarge_RemoveSweep6'
+    'WordLarge_RemoveSweep7'
+    'WordLarge_RemoveSweep8'
 %     'Checkers_Remove_Sweep1'
 %     'Checkers_Remove_Sweep2'
 %     'Checkers_Remove_Sweep3'
@@ -33,26 +43,26 @@ list_dtsToCreate = {
 %     'Words_Remove_Sweep6'
 %     'Words_Remove_Sweep7'
 %     'Words_Remove_Sweep8'
-    'FalseFont_Remove_Sweep1'
-    'FalseFont_Remove_Sweep2'
-    'FalseFont_Remove_Sweep3'
-    'FalseFont_Remove_Sweep4'
-    'FalseFont_Remove_Sweep5'
-    'FalseFont_Remove_Sweep6'
-    'FalseFont_Remove_Sweep7'
-    'FalseFont_Remove_Sweep8'
+%     'FalseFont_Remove_Sweep1'
+%     'FalseFont_Remove_Sweep2'
+%     'FalseFont_Remove_Sweep3'
+%     'FalseFont_Remove_Sweep4'
+%     'FalseFont_Remove_Sweep5'
+%     'FalseFont_Remove_Sweep6'
+%     'FalseFont_Remove_Sweep7'
+%     'FalseFont_Remove_Sweep8'
     };
 
 % source dt to be created from
 list_srcDts = {
-    'FalseFont'
-    'FalseFont'
-    'FalseFont'
-    'FalseFont'
-    'FalseFont'
-    'FalseFont'
-    'FalseFont'
-    'FalseFont'
+    'WordLarge';
+    'WordLarge';
+    'WordLarge';
+    'WordLarge';
+    'WordLarge';
+    'WordLarge';
+    'WordLarge';
+    'WordLarge';
     };
 
 % source scans from the source dt we want copy params from
@@ -106,7 +116,6 @@ for ii = 1:numSubs
     % change to subject's directory and initialize INPLANE
     subInd = list_subInds(ii);
     
-    list_path = eval(wSession);
     dirVista = list_path{subInd};
     
     chdir(dirVista);

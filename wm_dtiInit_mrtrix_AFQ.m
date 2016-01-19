@@ -1,17 +1,17 @@
-%% This script will run: dtiInit, AFQ, and LiFE for subjects individually
-% (There are scripts written that will do dtiInit and AFQ. 
-% However, those routines were run not run on isotropic data.
-% So we rerun everything, making sure to resample to isotopic voxels.
-% And we put everything in a single script to make things easier. 
-
+%% This script will run: dtiInit, mrtrix, AFQ, and LiFE on a specified list of subjects; 
+% Naming conventions -
+% For each run of DTI, subject has dti.bvec, dti.bval, and dti.nii.gz file
 
 close all; clear all; clc; 
 bookKeeping; 
 
 %% modify here
 
-% subjects we want to do this for
-list_subInds = 4; 
+% subject indices we want to do this for. see bookKeeping.m
+list_subInds = [14:16]; 
+
+% cell array of subject directories
+list_path = list_sessionDtiQmri;
 
 % dtiInit - output resolution in mm, will be isotropic. Eg. res = 4, 2, 1.4
 resolution = 2; 
@@ -27,10 +27,11 @@ clobber = 1;
 runNum = 1; 
 
 % mrtrix - number of fascicles for whole brain tractography
-nFascicles = 100000;
+nFascicles = 500000;
 
-% mrtrix - lmax parameter (cm?)
-% 8 is fine for VOF
+% mrtrix - lmax parameter
+% 8 is fine for VOF (Jason)
+% LiFE paper has 500,000 fibers and lmax of 10
 lmax = 8; 
 
 %% define and check things
@@ -38,6 +39,7 @@ lmax = 8;
 numSubs = length(list_subInds);
 
 % check that all files (dt.nii.gz, dti.bvec, dti.bval) exist!
+% some hard-coding and assumptions here
 check_exist(fullfile(list_anatomy, 't1.nii.gz'));
 check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.nii.gz'));
 check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.bvec'));
@@ -55,7 +57,7 @@ for ii = list_subInds
     
     %% initialize subject information ------------------------------------
     % subject's main dti data. go here
-    dirData = list_sessionDtiQmri{ii};
+    dirData = list_path{ii};
     chdir(dirData)
     
     % (following few lines are hard-coded)
@@ -166,15 +168,21 @@ for ii = list_subInds
     % fascicles1 is the cleaned version of fascicles
     [fascicles1, classification] = feAfqRemoveFascicleOutliers(fascicles,classification);
     
-    % write the fasicles to disk as independent files
+    %% write the fasicles to disk as independent files
+    % AFQ fascicles
     for iif = 1:length(fascicles)
         fgWrite(fascicles1(iif), fullfile(afqFolder,fascicles(iif).name),'mat')
     end
+    
+    % whole brain fiber group
+    fgWrite(fg, fullfile(afqFolder,'wholeBrain'),'mat')
     
     % Save the segemented fascicles and the indices into the Mfiber
     classFile2Save = fullfile(afqFolder,'tracts_classification_indices');
     save(classFile2Save,'fg_classified','classification','fascicles1');
     
+    %% Clear workspace (free up space when working with multiple subjects)
+    clear fascicles1 classification fg_classified fg 
     
 end
 

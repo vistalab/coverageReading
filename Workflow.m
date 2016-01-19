@@ -156,6 +156,10 @@ mshimg_displayForScrnsht.m
 % WordsExceedsCheckers
 % WordsExceeds
 
+% left_VWFA_rl 
+% both lh_VWFA_rl or lh_VWFA_fullField_rl
+% if a subject has both ... still to think about this
+
 %% Faces
 % mFus_Face     : mid fusiform. medial or on the OTS.
 % pFus_Face     : posterior fusiform. anterior or on the pTCS.
@@ -175,4 +179,33 @@ roi_combine;
 % VWFA_tal1             : [-42,-57,-6]      Cohen 2000
 % VWFA_tal2             : [-42,-57,-15]     Cohen 2002
 roi_talCreate
+
+
+%% thresholding folders
+%% save
+
+% h threshold parameters from vfc parameters
+h.threshecc
+h.threshsigma
+h.threshco
+h.minvoxelcount
+
+% where to save depending on how we threshold
+
+% name of the thresholded folder
+dirThresh = ff_stringDirNameFromThresh(h); 
+
+% does it exist? make it if no
+dirThreshExists = exist(fullfile(saveDir, dirThresh), 'dir'); 
+if ~dirThreshExists
+    chdir(saveDir)
+    mkdir(dirThresh)
+end
+
+
+savePath = fullfile(saveDir, dirThresh, titleName);
+saveas(gcf, [savePath '.png'],'png')
+saveas(gcf, [savePath '.fig'],'fig')
+
+chdir('/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/summaries')
 

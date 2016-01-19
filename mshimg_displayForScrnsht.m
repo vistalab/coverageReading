@@ -10,20 +10,21 @@ bookKeeping;
 % TODO: change the variable <input> into something else, because this is already a matlab function
 
 % path and directory with the mrSESSION
-list_dirVista = list_sessionPath; 
+list_dirVista = list_sessionRet; 
 
 % subjects we want to get mesh screenshots for. based on list_dirVista
-subsToSee = [1:4 6:13]; %1:length(list_dirVista); 
+subsToSee = [14:16, 18:19]; %1:length(list_dirVista); 
 
 % which hemisphere do we want to see? left or right
-input.hemisphere = {'right'};
+input.hemisphere = {'left'};
 
 % color map of the parameter map. Append Cmap to the end of color map
 % names. 
 % 'bicolorCmap' 'coolhotGrayCmap'
 % 'autumnCmap' or 'hotCmap':  category selectivity
 % 'jetCmap': prf amp map
-input.cmap = 'hotCmap'; 
+% 'hsvTbCmap': ecc map
+input.cmap = 'hsvTbCmap'; 
 
 % scan number. 
 input.scan_num = 1;  
@@ -31,7 +32,7 @@ input.scan_num = 1;
 % name of roi
 % if we don't want an roi, write the empty string
 % will assume that roi is in shared directory
-input.roiname = ''; %'rh_WordVAll_rl.mat'; 
+input.roiname = 'LV1_rl'; %'rh_WordVAll_rl.mat'; 
 
 % roi color
 input.roicolor = 'k'; 
@@ -39,11 +40,11 @@ input.roicolor = 'k';
 % type of map we want to load.
 % 'parameter' for parameter map
 % 'prf' for retinotopy model
-input.mapType = 'parameter'; % 'parameter'
+input.mapType = 'prf'; % 'parameter'
 
 % pick the views
 % input.angles = {'lateral_lh' 'medial_lh' 'ventral_lh'};
-input.angles = {'lateral_rh' 'medial_rh' 'ventral_rh'};
+input.angles = {'medial_lh'};
 
 % directory where we want to save
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/paramMaps';
@@ -54,7 +55,7 @@ extSave = 'png';
 %% modify here: things to define if loading a simple parameter map
 % name of parameter map
 % 'varExp_CheckersMinusWords.mat'; 
-input.map = 'BodyVAll.mat'; 
+input.map = 'WordVFace_Scrambled.mat'; 
 
 % threshold of the parameter map values: [mapWinMin, mapWinMax], % respectively. 
 % only show values greater than mapWinMin AND less than mapWinMax
@@ -74,7 +75,8 @@ input.clipMode = [];
 
 % name of the rm model. Assuming that the ret model is of the form
 % retModel-rmName.mat, and that it is in a datatype named rmName
-rmName = 'FalseFont'; 
+dtName = 'Words';
+rmName = 'retModel-Words-css.mat'; 
 
 % which prf map we want to see. Options include:
 % 'ph', 'co', 'amp', 'ipsi cov map', 'size to ecc ratio'
@@ -126,7 +128,7 @@ for ii = subsToSee
     % things to compute / define if we are loading a prf model
     if strcmp(input.mapType, 'prf')
         % path of the prf model
-        input.prfModel = fullfile(input.dirVista, 'Gray', rmName, ['retModel-' rmName '.mat']);
+        input.prfModel = fullfile(input.dirVista, 'Gray', dtName, rmName);
         
         % name of file to save as
         saveName = [thisSub '_' rmName];

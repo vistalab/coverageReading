@@ -4,7 +4,10 @@ bookKeeping;
 
 %% make any modifications here
 % subject number we want to make mesh for, as indicated by bookKeeping
-subInd = 11;
+subInd = 12;
+
+% session path
+list_path = list_sessionRet; 
 
 % number of smooth iterations
 p.smoothIters   = 400; 
@@ -16,8 +19,9 @@ p.smoothRelax   = 1;
 p.leftMeshName  = ['lh_inflated' num2str(p.smoothIters) '_smooth' num2str(p.smoothRelax) ];
 p.rightMeshName = ['rh_inflated' num2str(p.smoothIters) '_smooth' num2str(p.smoothRelax) ];
 
+
 %% mrVista
-dirVista = list_sessionPath{subInd};
+dirVista = list_path{subInd};
 chdir(dirVista);
 mrVista 3; 
 

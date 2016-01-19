@@ -15,7 +15,7 @@ list_roiNames = {
 % plot
 dtname = 'Checkers'; 
 
-%% no need to modify below here
+%% end modification section
 % change path and initialize view
 
 % set datatype

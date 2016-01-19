@@ -4,6 +4,12 @@ function thresholdedData = ff_thresholdRMData(rm,h)
 % voxel data which satisfy thresholds
 % want to remove subjects which  have no data if they have no voxels above
 % threshold to keep nans and empty matrices from crashing other functions
+%
+% h must have the following fields
+% threshco - a value between 0 and 1
+% threshecc - a 1 x 2 vector
+% threshsigma
+% minvoxelcount
 
 if iscell(rm)
     rm = rm{1};
@@ -23,12 +29,12 @@ indx = intersect(indx,coindx);
 eccindx = intersect(find(rm.ecc>=h.threshecc(1)),...
 find( rm.ecc<=h.threshecc(2)));
 
-% goodvoxels by eccentricity
+% good voxels by eccentricity
 indx = intersect(indx,eccindx);
 
 % threshold by sigma
-sigindx = intersect(find(rm.sigma1>=h.threshsigma(1)),...
-find(rm.sigma1<=h.threshsigma(2)));
+sigindx = intersect(find(rm.sigma>=h.threshsigma(1)),...
+find(rm.sigma<=h.threshsigma(2)));
 
 % good voxels by sigma
 indx = intersect(indx,sigindx);
@@ -39,11 +45,12 @@ if length(indx)>h.minvoxelcount
     thresholdedData.name = rm.name;
     thresholdedData.vt = rm.vt;
     thresholdedData.session = rm.session; 
+    thresholdedData.subInitials = rm.subInitials; 
 
     thresholdedData.coords   = rm.coords(indx);
     thresholdedData.indices  = rm.indices(indx);
     thresholdedData.co       = rm.co(indx);
-    thresholdedData.sigma1   = rm.sigma1(indx);
+    thresholdedData.sigma1   = rm.sigma(indx);
     thresholdedData.sigma2   = rm.sigma2(indx);
     thresholdedData.sigma    = rm.sigma(indx);
     thresholdedData.theta    = rm.theta(indx);
@@ -55,7 +62,8 @@ if length(indx)>h.minvoxelcount
 
 % else, define an empty struct
 else
-    thresholdedData = cell(1,1); 
+%     thresholdedData = cell(1,1); 
+    thresholdedData = []; 
 end
 
 

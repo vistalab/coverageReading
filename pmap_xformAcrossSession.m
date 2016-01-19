@@ -13,7 +13,7 @@ bookKeeping;
 %% modify here
 
 % subject number to xform -- position in bookKeeping
-list_subInds = [1:4 6:13]; 
+list_subInds = [12]; 
 
 %% end modification section
 
@@ -27,15 +27,15 @@ dirDataSource = list_sessionLocPath;
 % names of the SOURCE parameter maps, including the Gray and type of dt.
 % make sure there is an extension
 nameParamMaps   = {
-%     'WordVAll.mat';
-%     'FaceVAll.mat'; 
-%     'WordVNumber.mat'; 
-%     'NumberVAll.mat'; 
-%     'PlaceVAll.mat';
+    'WordVAll.mat';
+    'FaceVAll.mat'; 
+    'WordVNumber.mat'; 
+    'NumberVAll.mat'; 
+    'PlaceVAll.mat';
 %     'Residual Variance.mat'; 
 %     'Proportion Variance Explained.mat';  
-    'BodyVAll.mat'
-    'BodyLimbVAll.mat'
+%     'BodyVAll.mat'
+%     'BodyLimbVAll.mat'
     }; 
 
 srcScan = 1; 

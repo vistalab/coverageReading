@@ -11,7 +11,12 @@ list_subInds = [4];
 
 % names of the rois we want to do this for
 list_rois = {
-    'ch_VWFA_rl';
+%     'rect4_leftFrontal';
+%     'rect4_leftParietal';
+%     'rect4_rightParietal';
+%     'rect4_rightFrontal';
+    'rect4_leftParietal2';
+    'rect4_rightParietal2';
     };
 
 %% define things
@@ -39,7 +44,7 @@ for ii = list_subInds
         
         % where we want the roi nifti to be saved
         % for now, put in dirDiffusion/ROIs
-        roiSavePath = fullfile(dirDiffusion, 'ROIs', [roiName '.nii.gz']);
+        roiSavePath = fullfile(dirDiffusion, 'ROIs', roiName);
         
         [ni, ~] = dtiRoiNiftiFromMat(roiPath,refImage,roiSavePath,1);
     end

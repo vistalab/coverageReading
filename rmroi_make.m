@@ -1,78 +1,74 @@
 % this code will loop through all of the subjects and make
-% rmROI structs for each roi for the control and dyslexics
+% rmroi structs for each roi for the control and dyslexics
+%
+% Goes through all the subjects in bookKeeping
+% Will skip a subject of the ROI is not drawn or RM model is not run
+%
+% IT WILL MAKE A RMROI STRUCT FOR EACH RET MODEL
 
 close all; clear all; clc;
 bookKeeping; 
 
 %% modify here
 
-% check bookKeeping!!!!!
-% indices of the subjects we're interested in
-list_subInds = [1:4 6:12]; 
-
 % save directory
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/rmrois/';
 
 % names of the datatypes
 list_dtNames = {
-    'Checkers';
-    'Words';
-    'FalseFont';
+    'Checkers'
+    'Words'
+    'Checkers'
+    'Words'
+    'WordLarge'
+    'WordSmall'
+    'FaceLarge'
+    'FaceSmall'
     }; 
 
 % names of the retModel in the datatypes
 list_rmNames = {
     'retModel-Checkers.mat'
     'retModel-Words.mat'
-    'retModel-FalseFont.mat'
+    'retModel-Checkers-css.mat'
+    'retModel-Words-css.mat'
+    'retModel-WordLarge-css.mat'
+    'retModel-WordSmall-css.mat'
+    'retModel-FaceLarge-css.mat'
+    'retModel-FaceSmall-css.mat'
     };
-
-% name we want to give the rmroi mat file
-% if we specify the empty string, the rmroi struct will just have the name
-% of the roi. Otherwise, the rmroi will be saved as:
-% roiName_{rmroiDescript}
-rmroiDescript = '';
-
-
 
 % rois to make this struct for
 % list_roiNames = list_allRoiNames;
 list_roiNames = {
-    'LV2v_rl'
 
-    'rh_ventral_BodyLimb_rl'
-    'rh_lateral_BodyLimb_rl'
-    'lh_ventral_BodyLimb_rl'
-    'lh_lateral_BodyLimb_rl'      
+    'lh_VWFA_rl'
+    'rh_VWFA_rl'
+    'ch_VWFA_rl'
 
-%     'lh_PPA_Place_rl'
-%     'rh_PPA_Place_rl'
-%     'ch_PPA_Place_rl'
+    'lh_VWFA_fullField_rl'
+    'rh_VWFA_fullField_rl'
+    'ch_VWFA_fullField_rl'
+
+%     'left_FFAFace_rl'
+%     'right_FFAFace_rl'
+%     'combined_FFAFace_rl'
+
+%     'lh_FFA_fullField_rl'
+%     'rh_FFA_fullField_rl'
 % 
-%     'lh_OWFA_rl'
-%     'rh_OWFA_rl'
-%     'ch_OWFA_rl'
+%     'right_VWFA_rl' 
+%     'left_VWFA_rl'
+%     'combined_VWFA_rl'
 %     
-%     'lh_WordsExceedsCheckers_rl';
-%     'lh_VWFA_rl'
-%     'rh_VWFA_rl'     
-%     'ch_VWFA_rl'
-% 
-%     'lh_pFus_Face_rl'
-%     'rh_pFus_Face_rl'
-%     'ch_pFus_Face_rl'
-%     
-%     'lh_mFus_Face_rl'
-%     'rh_mFus_Face_rl'
-%     'ch_mFus_Face_rl'
-%     
-%     'lh_FFA_Face_rl'
-%     'rh_FFA_Face_rl'
-%     
-%     'lh_FacesVentral_rl'
-%     'rh_FacesVentral_rl'
-%     
+%     'lh_VWFA_fullField_WordVScrambled_rl'
+%     'rh_VWFA_fullField_WordVScrambled_rl'
+%     'lh_VWFA_fullField_WordVFaceScrambled_rl'
+%     'rh_VWFA_fullField_WordVFaceScrambled_rl'
+%  
 %     'LV1_rl'
+%     'RV1_rl'
+% 
 %     'LV2d_rl'
 %     'LV2v_rl'
 %     'LV3d_rl'
@@ -81,25 +77,17 @@ list_roiNames = {
 %     'LV3ab_rl'
 %     'LIPS0_rl'
 %     
-%     'RV1_rl'
 %     'RV2d_rl'
 %     'RV2v_rl'
 %     'RV3d_rl'
 %     'RV3v_rl'
 %     'RhV4_rl'
-%     'Rv3ab_rl'
+%     'RV3ab_rl'
 %     'RIPS0_rl'
-%     
-%     'CV1_rl'
-%     'CV2v_rl'
     };
 
 
 %% define some things
-
-% number of control and dyslexic subjects
-numSubsCon = indDysStart - 1;  
-numSubsDys = length(list_sessionPath) - numSubsCon; 
 
 % number of rois
 numRois = length(list_roiNames); 
@@ -108,88 +96,94 @@ numRois = length(list_roiNames);
 numRms = length(list_dtNames);
 
 % number of subjects
-numSubs = length(list_subInds); 
+numSubs = length(list_sub); 
 
 
 %% loop!
 
-for jj = 1:numRois
-    
-    % name of this roi
-    roiName     = list_roiNames{jj};
-    
-    % intialize the struct
-    rmroi = cell(3, numSubs); 
+for kk = 1:numRms
+   
+    % ret model. dt and rm file name
+    dtName = list_dtNames{kk}; 
+    rmName = list_rmNames{kk};
+    tem = rmName(10:end); % take out the "retModel-"
+    retModelName = tem(1:end-4); % take out the ".mat"
+   
+    for jj = 1:numRois
         
-    for ii = 1:numSubs
+        % roi
+        roiName = list_roiNames{jj};
         
-        % index of this subject
-        subInd = list_subInds(ii);
+        % name of the rmroi struct, which depends on roi and ret model type
+        % rmroi struct will have the following format:
+        % <roiName>-<retModelName> where retModelName is everything after
+        % "retModel-"
+        rmroiName = [roiName '-' retModelName]; 
+        counter = 0; 
         
-        % subject main and main ret directory
-        dirVista = list_sessionPath{subInd};
-        chdir(dirVista);
-                 
-       vw = initHiddenGray; 
+        % initialize to be max length; truncate at the end
+        rmroi = cell(1, numSubs); 
         
-        % subject's shared anatomy file
-        d = fileparts(vANATOMYPATH); 
-    
-        for kk = 1:numRms
-
-            % name of this data type
-            dtName = list_dtNames{kk}; 
+        for ii = 1:numSubs
+           
+            % move to subject path
+            dirAnatomy = list_anatomy{ii};
+            dirVista = list_sessionRet{ii}; 
+            chdir(dirVista); 
+                       
+            % paths of rms and rois
+            rmPath = fullfile(dirVista, 'Gray', dtName, rmName); 
+            roiPath = fullfile(dirAnatomy, 'ROIs', roiName); 
+            rmExists = exist(rmPath, 'file'); 
             
-            % name of this rm model
-            rmName = list_rmNames{kk};
+            % init the gray. load roi
+            vw = initHiddenGray; 
+            [vw, roiExists] = loadROI(vw, roiPath, [], [], 1, 0);
             
-            % name of the ret model. load it. 
-            % vw = rmSelect(vw, loadModel, rmFile)
-            vw = rmSelect(vw, 1, fullfile('Gray', dtName, rmName));
-            vw = rmLoadDefault(vw);
-            
-            % see if the roi is drawn for this subject
-            % if roi does not exist, create an empty roi struct
-            if ~exist(fullfile(d, 'ROIs', [roiName '.mat']), 'file')
-                rr = {}; 
-            else
-                % load the roi
-                % [vw, ok] = loadROI(vw, filename, select, clr, absPathFlag, local)
-                vw = loadROI(vw, fullfile(d, 'ROIs', roiName), [], [], 1, 0);
+            % grab the rmroi struct if both roi and rm exists
+            if roiExists && rmExists
                 
-                % get the rmroi struct
+                % include the subject in the rmroi struct
+                counter = counter + 1; 
+                
+                % load ret model
+                vw = rmSelect(vw, 1, rmPath); 
+                vw = rmLoadDefault(vw); 
                 rr = rmGetParamsFromROI(vw);
                 
                 % flip. this is actually a mess
                 rr.y0 = -rr.y0;
                 
-                % add initials!
+                % add intials!
                 rr.subInitials = list_sub{ii};
                 
+                % add to the struct
+                rmroi{counter} = rr; 
+                
             end
-    
-            rmroi{kk,ii} = rr; 
-
+            
         end
         
-        close all; 
+        % causing headaches. don't mess
+        % shave off the empty things at the end of the rmroi struct
+%         for r = numSubs:-1:1
+%             if ~isempty(rmroi{r})
+%                 break
+%             else
+%                rmroi = rmroi(1:end-1); 
+%             end
+%         end
         
+        %% save it
+        savePath = fullfile(saveDir, [rmroiName '.mat']);
+        save(savePath, 'rmroi')
+        
+        % print to screen
+        display(['Finished and saved ' rmroiName])
+
     end
-    
-    % save it!
-    % name of the rmroi struct changes depending on tseries that it was run on
-    if ~isempty(rmroiDescript)
-        saveName = [roiName '_' rmroiDescript];
-    else
-        saveName = roiName; 
-    end
-    
-    savePath = fullfile(saveDir, [saveName '.mat']);
-    save(savePath, 'rmroi')
-    
-    % print to screen
-    display(['Finished ' roiName])
-    
-    
     
 end
+
+%% go back to rmroi dur
+chdir(saveDir)

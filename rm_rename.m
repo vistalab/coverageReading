@@ -7,14 +7,21 @@ bookKeeping;
 %% modify here
 
 % do this for which subjects
-list_subInds = [1:13];
+list_subInds = 1:22; 
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
-wSession = 'list_sessionPath';
+% list_sessionSizeRet 
+list_path = list_sessionRet; % list_sessionPath;
 
 % the string we want to remove at the end
-% it will be replaced with .mat
+% it will be replaced with strReplace
 strRemove = '-fFit.mat';
+
+strReplace = '.mat';
+
+% whether we only want to do this within a single datatype
+% specify the empty string if we want to do for ALL datatypes
+dtTarget = ''; 
 
 
 %% end modification section
@@ -29,30 +36,44 @@ dirCurrent = pwd;
 for ii = list_subInds
     
     % current subject's vista dir and datatype dir
-    list_path = eval(wSession);
     dirVista = list_path{ii};    
     chdir(dirVista);
+    vw = initHiddenGray; 
     
     dirDt = fullfile(dirVista, 'Gray');
     chdir(dirDt);
     
-    % get the names of all datatypes
-    % these should all be directories in the Gray Folder
-    tem = dir(dirDt);
-    list_dtNames = tem(3:end);
+    
+
+    
+    % if this is the empty string, do for all dts
+    if ~size(dtTarget)
+        
+        % get the entire dt struct
+        % these should all be directories in the Gray Folder
+        tem = dir(dirDt);
+        list_dts = tem(3:end);
+        
+    else
+        
+        % only get the dt we want
+        vw = viewSet(vw, 'curdt', dtTarget); 
+        list_dts = viewGet(vw, 'dtstruct');
+        
+    end
     
     % loop over the gray datatypes
-    for kk = 1:length(list_dtNames)
-        
+    for kk = 1:length(list_dts)
+
         % current dtName. 
-        dtName = list_dtNames(kk).name;
-        
+        dtName = list_dts(kk).name;
+
         % if it is a directory ...
         if isdir(fullfile(dirVista, 'Gray', dtName))
-            
+
             % move here
             chdir(fullfile(dirVista, 'Gray', dtName));
-            
+
             % list all the files in this datatype
             tem = dir(fullfile(dirDt, dtName));
             list_files = tem(3:end);
@@ -71,13 +92,15 @@ for ii = list_subInds
                     baseName = fName(1:end-strLength);
 
                     % rename and delete file
-                    movefile(fName, [baseName '.mat']);
+                    movefile(fName, [baseName strReplace]);
                 end
 
             end
 
         end      
     end
+
+    
     
 end
 

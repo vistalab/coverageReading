@@ -10,34 +10,20 @@ bookKeeping;
 %% modify  --------------------------------------------------------------------------
 
 % subjects we want to do this for
-list_subInds = [1:4 6:13];
- 
+list_subInds = [21]; 
+
+% session list. see bookKeeping
+list_path = list_sessionRet; 
+
+% list of checker scan number, corresponding to session list
+list_numCheckers = list_scanNum_Checkers_sessionRet; 
+
+% list of knk scan number, corresponding to session list
+list_numKnk = list_scanNum_Knk_sessionRet;  
+
 % dataTYPE name. Can run for mutiple datatypes 
 list_rmName = {
-    'Checkers_Remove_Sweep1'
-    'Checkers_Remove_Sweep2'
-    'Checkers_Remove_Sweep3'
-    'Checkers_Remove_Sweep4'
-    'Checkers_Remove_Sweep5'
-    'Checkers_Remove_Sweep6'
-    'Checkers_Remove_Sweep7'
-    'Checkers_Remove_Sweep8'
-    'Words_Remove_Sweep1'
-    'Words_Remove_Sweep2'
-    'Words_Remove_Sweep3'
-    'Words_Remove_Sweep4'
-    'Words_Remove_Sweep5'
-    'Words_Remove_Sweep6'
-    'Words_Remove_Sweep7'
-    'Words_Remove_Sweep8'
-    'FalseFont_Remove_Sweep1'
-    'FalseFont_Remove_Sweep2'
-    'FalseFont_Remove_Sweep3'
-    'FalseFont_Remove_Sweep4'
-    'FalseFont_Remove_Sweep5'
-    'FalseFont_Remove_Sweep6'
-    'FalseFont_Remove_Sweep7'
-    'FalseFont_Remove_Sweep8'
+    'Checkers1and2'
     }; 
 
 % roi name. assumes in shared directory
@@ -49,7 +35,7 @@ list_rmName = {
 list_rois = ''; 
 
 % prf model. Specify in a cell. Options: 
-% {'one oval gaussian' | 'onegaussian'}
+% {'one oval gaussian' | 'onegaussian' | 'css'}
 % Note: if we want to specify multiple models, change the naming
 % convention. See outFileName
 prfModel = {'css'}; 
@@ -94,7 +80,7 @@ params.jitterFile       = 'Stimuli/none';
 for ii = list_subInds
     
     % directory with ret vista session. move here
-    dirVista = list_sessionPath{ii};
+    dirVista = list_path{ii};
     chdir(dirVista);
     
     % open the session
@@ -108,15 +94,15 @@ for ii = list_subInds
     
     % ret parameters based on the subject
     % scan number with checkers and knk, for clip frame information
-    p.scanNum_Knk                  = list_scanNum_Knk(ii);
-    p.scanNum_Checkers             = list_scanNum_Checkers(ii);
+    p.scanNum_Knk                  = list_numKnk(ii);
+    p.scanNum_Checkers             = list_numCheckers(ii);
     
     %% loop over the datatypes
     for kk = 1:length(list_rmName)
 
         % set current dataTYPE 
         rmName = list_rmName{kk};
-        vw = viewSet(vw, 'current dt', rmName); 
+        vw = viewSet(vw, 'curdt', rmName); 
 
         % get the dataType struct
         dtstruct = viewGet(vw, 'dtstruct'); 
@@ -125,7 +111,7 @@ for ii = list_subInds
         dataNum = viewGet(vw, 'curdt'); 
 
         % some variables depend on whether checkers or knk was run  
-        if strcmp(rmName, 'Checkers')
+        if length(rmName) > 7 && strcmp(rmName(1:8), 'Checkers')
             params.paramsFile       = p.paramsFile_Checkers; 
             params.imFile           = p.imFile_Checkers; 
             p.scanNum               = p.scanNum_Checkers; 

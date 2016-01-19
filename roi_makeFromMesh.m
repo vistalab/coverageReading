@@ -4,11 +4,11 @@
 
 
 %% modify
-newroi.color   = 'g';
-newroi.name    = 'lh_VWFA_rl'; % 'rh_WordsExceedsCheckers_rl' % 'lh_prfSize_WordsExceedsCheckers_rl'
-newroi.comment = '';
-restrictToFunc = 0;  % 0 for visual field maps, 1 for categories
-
+newroi.color    = 'b';
+newroi.name     = 'LV1_example'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 
+newroi.comment  = '';
+restrictToFunc  = 0;  % 0 for visual field maps, 1 for categories
+saveWhere       = 0; % 1 = local, 0 = shared
 % 'lh_VWFA_rl'          : on the inferior temporal sulcus (iTS), posterior of
 %       the mid-fusiform suclus. also sometimes on posterior fusiform
 %       gyrus. the iTS kind of curves upwards and is L-shaped
@@ -58,3 +58,7 @@ saveROI(VOLUME{1}, 'selected', 0)
 VOLUME{end} = refreshScreen(VOLUME{end}); 
 % refresh mesh
 VOLUME{end} = meshColorOverlay(VOLUME{end}); 
+
+
+% %% plot the coverage
+% coverage_plot

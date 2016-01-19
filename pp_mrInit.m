@@ -12,35 +12,36 @@ params = mrInitDefaultParams;
 %% modify here
 
 % specify session path. usually this script is saved right there 
-path_session = pwd; 
+dirVista = pwd; 
 
 % specify inplane
-path_inplane = fullfile(path_session,'4_1_24mm_Inplane_MUX','inplane_xform.nii.gz'); 
+path_inplane = fullfile(dirVista,'5_1_24mm_Inplane_MUX','inplane_xform.nii.gz'); 
 
 % specify 3DAnatomy file
-path_anatomy = '/biac4/wandell/data/anatomy/veil/t1.nii.gz'; 
+% will look in /biac4/wandell/data/anatomy/{lastName}/t1.nii.gz;
+lastName = 'khazenzon'; 
 
 % specify the functional files
 path_functionals = {
-    fullfile(path_session, '6_1_BOLD_mux3_24mm_1sec','func_xform.nii.gz');
-    fullfile(path_session, '7_1_BOLD_mux3_24mm_1sec','func_xform.nii.gz');
-    fullfile(path_session, '8_1_BOLD_mux3_24mm_1sec','func_xform.nii.gz');
+    fullfile(dirVista, '7_1_BOLD_mux3_24mm_1sec', 'func_xform.nii.gz')
+    fullfile(dirVista, '8_1_BOLD_mux3_24mm_1sec', 'func_xform.nii.gz')
+    fullfile(dirVista, '9_1_BOLD_mux3_24mm_1sec', 'func_xform.nii.gz')
     }; 
 
 % session code
-params.sessionCode  = 'ad_2015012_localizer0'; 
+params.sessionCode  = 'ak_loc'; 
 
 % subject name
-params.subject      = 'ad';
+params.subject      = 'ak';
 
 % description
-params.description  = 'localizer'; 
+params.description  = 'ak_loc'; 
 
 % note for each of the functional scans
 params.annotations  = {
-    [];
-    [];
-    [];
+    'loc_run1';
+    'loc_run2';
+    'loc_run3';
     }; 
 
 % specify frames to keep. nScans x 2 matrix describing which frames to keep from 
@@ -52,29 +53,32 @@ params.annotations  = {
 % localizer: clip 6 seconds, TR of 2. so clip 3 frames
 % retinotopy: clip 12 seconds, TR of 2. so clip 6 frames
 params.keepFrames = [
-    [2, -1];
-    [2, -1];
-    [2, -1];
+    [3, -1];
+    [3, -1];
+    [3, -1];
     ];
 
 % specify parfiles (for localizer) {1 x nScans}
 % paths can be absolute or relative to Stimuli/parfile
-params.parfile = {
-    [];
-    [];
-    [];
-    };
+% params.parfile = {
+%     [];
+%     [];
+%     [];
+%     };
 
 %%  no need to modify below here 
 
+% t1 path
+path_anatomy = fullfile('/biac4/wandell/data/anatomy/', lastName, 't1.nii.gz'); 
+
 % check that all specified files exist
-check_exist(path_session);
+check_exist(dirVista);
 check_exist(path_inplane);
 check_exist(path_anatomy);
 check_exist(path_functionals);
 
 % ... and insert the required parameters
-params.sessionDir   = path_session; 
+params.sessionDir   = dirVista; 
 params.inplane      = path_inplane; 
 params.vAnatomy     = path_anatomy; 
 params.functionals  = path_functionals; 

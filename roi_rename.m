@@ -1,31 +1,32 @@
 %% script that will rename rois - makes a copy of an roi and gives it a new name, 
-% and deletes the original
+% have the option to delete the original
 
-close all; clear all; clc; 
+% close all; clear all; clc; 
 bookKeeping; 
 
 %% modify here
 
 % subjects to do this for, see bookKeeping
-list_subInds = [1:4 6:13];
+list_subInds = [12];
 
 % original roi name
+% rh_mFusFace_rl
 list_roiOriginal = {
-    'lh_ventral_Body_rl'
-    'lh_lateral_Body_rl'
-    'rh_ventral_Body_rl'
-    'rh_lateral_Body_rl'
+    'rh_mFusFace_rl'
     };
   
 % new roi name
 list_roiNew = {
-    'lh_ventral_BodyLimb_rl'
-    'lh_lateral_BodyLimb_rl'
-    'rh_ventral_BodyLimb_rl'
-    'rh_lateral_BodyLimb_rl'
+    'right_mFusFace_rl'
     };
 
+% delete the original? IMPORTANT CHECK THIS
+deleteOriginal = false; 
+
 %% end modification section
+
+% to put us back where we started
+curDir = pwd; 
 
 %% loop over subjects
 for ii = list_subInds
@@ -56,9 +57,16 @@ for ii = list_subInds
 
             % clear so we don't overwrite things
             clear ROI; 
+            
+            % delete if so desired
+            if deleteOriginal
+                delete(roiPathOriginal)
+            end
         end
        
     end
     
 end
 
+% put us back where we started
+chdir(curDir)

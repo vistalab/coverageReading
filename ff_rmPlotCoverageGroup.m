@@ -18,11 +18,16 @@ function RF_mean = ff_rmPlotCoverageGroup(M, vfc)
 numSubs     = size(M,2); 
 numToAvg    = numSubs; 
 
-% store each subject's rf (prior to averaging)
-RF      = zeros(128,128, numSubs); 
+% % store each subject's rf (prior to averaging)
+% RF      = zeros(128,128, numSubs); 
+% 
+% % initialize the mean visual field coverage
+% RF_mean = zeros(128,128); 
+RF = []; 
+RF_mean = [];
 
-% initialize the mean visual field coverage
-RF_mean = zeros(128,128); 
+% initalize number of valid subjects
+counter = 0; 
 
 % initialize vector: centers across all subjects
 centersx0 = []; 
@@ -39,18 +44,21 @@ for ii = 1:numSubs
             data.suby0 = -data.suby0;
         end
         
-        % check that rf isn't all nans. 
-        % if it is ...
-        % decrease the number of subjects we have to average over
-        % and replace nans with zeros so as to not break the code
-        if sum(sum(~isnan(rf))) == 0
-            numToAvg = numToAvg - 1; 
-            rf = zeros(128,128); 
-        end
+        % check that rf isn't all nans. (this happens when we don't have a ret model or roi defined?)
+        coverageHasNans = (sum(sum(~isnan(rf))) == 0);
         
-        % store it in RF
-        RF(:,:,ii) = rf; 
-        close
+        % also check that there voxels pass the threshold!!! (otherwise the coverage will be all 0s)
+        % if no voxels pass threshold, <data> from rmPlotCoveragefromROImatfile is empty
+        noVoxelsPassThreshold = isempty(data);
+        
+        
+        if ~coverageHasNans && ~noVoxelsPassThreshold  
+            counter = counter + 1;
+            
+            % store it in RF
+            RF(:,:,counter) = rf; 
+            close
+        end
         
         % grab location of rf centers
         if ~isempty(data)
@@ -60,42 +68,54 @@ for ii = 1:numSubs
         
    end
 end
-       
-%% and average them together ...
-% not an simple average because have to take into account that some
-% subjects have nans
-RF_mean = sum(RF,3)./numToAvg; 
 
-% flip about the y axis
-RF_mean = flipud(RF_mean);
-centersy0 = -centersy0;
-   
-% plot the average coveraged
-figure();
-% to make the black outer circle thing
-c = makecircle(128);  
-% to make the polar angle plot
-inc = linspace(-vfc.fieldRange,vfc.fieldRange, vfc.nSamples);
-     
+if ~isempty(RF)
 
-RF_mean = RF_mean.*c; % make black outer circle
-imagesc(inc,inc',RF_mean); 
+    %% and average them together ...
 
-% add polar grid on top
-p.ringTicks = (1:3)/3*vfc.fieldRange;
-p.color = 'w';
-polarPlot([], p);
+    RF_mean = mean(RF,3); 
 
-colormap hot;
-title(['Group Average.'], 'FontSize', 14);
-colormap hot; axis off
+    % flip about the x axis
+    RF_mean = flipud(RF_mean);
+    centersy0 = -centersy0;
 
-%% add the centers if requested
-if vfc.addCenters
-    plot(centersx0, centersy0,'.','Color',[.5 .5 .5], 'MarkerSize', 4);
+    % plot the average coveraged
+    figure();
+    % to make the black outer circle thing
+    c = makecircle(vfc.nSamples);  
+    % to make the polar angle plot
+    inc = linspace(-vfc.fieldRange,vfc.fieldRange, vfc.nSamples);
+
+
+    RF_mean = RF_mean.*c; % make black outer circle
+    imagesc(inc,inc',RF_mean); 
+
+    % add polar grid on top
+    p.ringTicks = (1:3)/3*vfc.fieldRange;
+    p.color = 'w';
+    polarPlot([], p);
+
+    title(['Group Average.'], 'FontSize', 14);
+    axis off
+
+    %% colorbar things
+
+    % when averaging, values don't necessarily take the full range of 0 - 1
+    % but we want the average plots to look the same, so we have the colormap
+    % range from 0-1
+    c = colorbar;
+    colormap(vfc.cmap);
+    caxis([0 1]);
+
+
+
+
+
+    %% add the centers if requested
+    if vfc.addCenters
+        plot(centersx0, centersy0,'.','Color',[.5 .5 .5], 'MarkerSize', 4);
+    end
+ 
 end
-
-% add color bar
-colorbar; 
 
 end

@@ -5,17 +5,13 @@ bookKeeping;
 %% modify here
 
 % subject index, see bookKeeping 
-subInd = 1; 
+subInd = 10; 
 
 % list of rois to load
 % specify the empty string if we don't want to load rois
 list_rois = {
-    % 'lh_VWFA_rl_old'
-    'LhV4_rl'
-    'LVO1_rl'
-    % 'rh_VWFA_rl_old'
-    'RhV4_rl'
-    'RVO1_rl'
+    'left_VWFA_rl'
+    'right_VWFA_rl'
     };
 
 % name of the parameter map WITHOUT .mat extension

@@ -15,13 +15,13 @@ list_subInds = [2];
 numSubs = length(list_subInds);
 
 % check that all files (dt.nii.gz, dti.bvec, dti.bval) exist!
-check_exist(fullfile(list_anatomy, 't1.nii.gz'));
-check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.nii.gz'));
-check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.bvec'));
-check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.bval'));
-check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run2', 'dti.nii.gz'));
-check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run2', 'dti.bvec'));
-check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run2', 'dti.bval'));
+% check_exist(fullfile(list_anatomy, 't1.nii.gz'));
+% check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.nii.gz'));
+% check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.bvec'));
+% check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run1', 'dti.bval'));
+% check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run2', 'dti.nii.gz'));
+% check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run2', 'dti.bvec'));
+% check_exist(fullfile(list_sessionDtiQmri(list_subInds), 'DTI_2mm_96dir_2x_b2000_run2', 'dti.bval'));
 
 %% do things
 for ii = list_subInds

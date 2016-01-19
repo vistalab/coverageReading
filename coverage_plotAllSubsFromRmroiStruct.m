@@ -6,51 +6,27 @@ bookKeeping;
 
 % rois we want to look at
 list_roiNames = {
-    'lh_PPA_Place_rl'
-    'rh_PPA_Place_rl'
-    'ch_PPA_Place_rl'
+%     'lh_PPA_Place_rl'
+%     'rh_PPA_Place_rl'
+%     'ch_PPA_Place_rl'
+    
+    'lh_VWFA_fullField_WordVScrambled_rl'
+    'rh_VWFA_fullField_WordVScrambled_rl'
+    'lh_VWFA_fullField_WordVFaceScrambled_rl'
+    'rh_VWFA_fullField_WordVFaceScrambled_rl'
 
-    'lh_OWFA_rl'
-    'rh_OWFA_rl'
-    'ch_OWFA_rl'
-    
-    'lh_WordsExceedsCheckers_rl';
-    'lh_VWFA_rl'
-    'rh_VWFA_rl'     
-    'ch_VWFA_rl'
-
-    'lh_pFus_Face_rl'
-    'rh_pFus_Face_rl'
-    'ch_pFus_Face_rl'
-    
-    'lh_mFus_Face_rl'
-    'rh_mFus_Face_rl'
-    'ch_mFus_Face_rl'
-    
-    'lh_FFA_Face_rl'
-    'rh_FFA_Face_rl'
-    
-    'lh_FacesVentral_rl'
-    'rh_FacesVentral_rl'
-    
-    'LV1_rl'
-    'LV2d_rl'
-    'LV2v_rl'
-    'LV3d_rl'
-    'LV3v_rl'
-    'LhV4_rl'
-    'LV3ab_rl'
-    'LIPS0_rl' 
-    'RV1_rl'
-    'RV2d_rl'
-    'RV2v_rl'
-    'RV3d_rl'
-    'RV3v_rl'
-    'RhV4_rl'
-    'Rv3ab_rl'
-    'RIPS0_rl'    
-    'CV1_rl'
-    'CV2v_rl'
+%     'lh_OWFA_rl'
+%     'rh_OWFA_rl'
+%     'ch_OWFA_rl'
+%     
+%     'lh_WordsExceedsCheckers_rl';
+%     'lh_VWFA_rl'
+%     'rh_VWFA_rl'     
+%     'ch_VWFA_rl'
+% 
+%     'lh_pFus_Face_rl'
+%     'rh_pFus_Face_rl'
+%     'ch_pFus_Face_rl'
     };
 
 

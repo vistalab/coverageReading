@@ -6,7 +6,7 @@ vfc.prf_size        = true;
 vfc.fieldRange      = 15;
 vfc.method          = 'max';         
 vfc.newfig          = true;                      
-vfc.nboot           = 50;                          
+vfc.nboot           = 50;                        
 vfc.normalizeRange  = true;              
 vfc.smoothSigma     = true;                
 vfc.cothresh        = 0.1;         
@@ -41,4 +41,14 @@ if strcmp(tem(end-2:end), '_rl')
 else
     roiName = tem; 
 end
-title(roiName,'FontSize', 24)
+
+
+%% title
+% stimtype
+rmPath = viewGet(VOLUME{end}, 'rmfile');
+[~,rmName,~] = fileparts(rmPath);
+stimName = ff_stringRemove(rmName, 'retModel-');
+
+% title
+titleName = {roiName, stimName};
+title(titleName,'FontSize', 20)

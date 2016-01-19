@@ -7,13 +7,13 @@ bookKeeping;
 
 list_rois = {
     'lh_PPA_Place_rl'
-    'rh_PPA_Place_rl'
+    ''
     };
 
-% subjects to consider
+% subjects to include
 % some rois like V1 have partial voluming and their segmentation needs to
 % be fixed. so if need be, specify only a subset of the subjects. 
-list_subInds = [1:4 6:13];
+list_subInds = [1:4];
 
 % Checkers, Words, FalseFont -- choose from these options
 list_rms  = {

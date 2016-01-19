@@ -8,24 +8,28 @@ dtsToCreate = {
     'FaceSmall';        % 2
     'WordLarge';        % 3
     'WordSmall';        % 4
+    'Checkers';         % 5
     };
 
 % The datatype the scan belongs to. For example, a 1 means that the first
 % scan is in the first dataTYPE specified in dtsToCreate
 dtAssignments = [
-    0;
-    0;
+    5;
+    5;
     1;
+    2;
+    3;
     4;
-    2;
+    0;
+    5;
+    4;
     3;
-    2;
     1;
-    3;
+    2;
     ];
 
 % make the new tseries from the most processed time series
-dtToAverage = 'MotionComp'; % 'MotionComp_RefScan1';
+dtToAverage = 'MotionComp_RefScan1'; % 'MotionComp_RefScan1';
 
 %% 
 

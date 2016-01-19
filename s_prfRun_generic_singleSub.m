@@ -13,7 +13,9 @@ dirVista        = pwd;
 
 % dataTYPE name. Can run for mutiple datatypes 
 list_rmName = {
-    'Words'
+    'Checkers';
+    'Words';
+    'FalseFont';
     }; 
 
 % roi name. assumes in shared directory
@@ -21,13 +23,13 @@ list_rmName = {
 % assign this to be a string in a cell otherwise {'LV1_rl'}
 % Note: if we want to specify multiple rois, change the naming
 % convention. See outFileName
-roiName = {'lh_VWFA_rl'};
+roiName = {''};
 
 % prf model. Specify in a cell. Options: 
 % {'one oval gaussian' | 'onegaussian'}
 % Note: if we want to specify multiple models, change the naming
 % convention. See outFileName
-prfModel = {'onegaussian'}; 
+prfModel = {'css'}; 
 
 % search type. 
 % 1 = grid search only ("coarse"),
@@ -37,12 +39,12 @@ wSearch = 3;
 
 % scan number with checkers and knk
 % for clip frame info
-p.scanNum_Knk                  = 2;
+p.scanNum_Knk                  = 4;
 p.scanNum_Checkers             = 1; 
 
 % name of params file
 p.paramsFile_Knk            = 'Stimuli/params_knkfull_multibar_blank.mat';  % Words and FalseFont
-p.paramsFile_Checkers       = 'Stimuli/checkers1.mat';         % Checkers
+p.paramsFile_Checkers       = 'Stimuli/params_checkers.mat';         % Checkers
 
 % image file
 p.imFile_Knk                = 'Stimuli/images_knk_fliplr.mat';  % Words and FalseFont
@@ -104,7 +106,7 @@ for ii = 1:length(list_rmName)
     dataNum = viewGet(vw, 'curdt'); 
     
     % some variables depend on whether checkers or knk was run  
-    if strcmp(rmName, 'Checkers')
+    if length(rmName) > 7 || strcmp(rmName(1:8), 'Checkers')
         params.paramsFile       = p.paramsFile_Checkers; 
         params.imFile           = p.imFile_Checkers; 
         p.scanNum               = p.scanNum_Checkers; 
@@ -147,22 +149,7 @@ for ii = 1:length(list_rmName)
     
     %% Put the rm params into the view structure
     
-    % vw = rmLoadParameters(vw);  
-    % the function rmLoadParameters used to call both rmDefineParameters
-    % and rmMakeStimulus. If we do it here so that we can give it arguments
-    % outside of the default (eg previously, sigma major and minor would be 
-    % identical despite having prfModel = {'one oval gaussian'} when
-    % specifying it as an argument in vw = rmMain(vw, ...)
-    
-    % scan/stim and analysis parameters
-    % params = rmDefineParameters(vw, varargin)
-    params = rmDefineParameters(vw, 'model', prfModel, 'matFileName', outFileName);
-
-    % make stimulus and add it to the parameters
-    %  params = rmMakeStimulus(params, keepAllPoints)
-    params = rmMakeStimulus(params);
-
-    % store params in view struct
+    vw = rmLoadParameters(vw);  
     vw  = viewSet(vw,'rmParams',params);
     
     % check it 

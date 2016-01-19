@@ -11,32 +11,41 @@ bookKeeping;
 
 %% modify here
 
+% which session list
+list_path = list_sessionRet; 
+
 % subject index, see bookKeeping
-subInd = 13;
+subInd = [12];
 
 % rois to load
 list_rois = {
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
-%     'LhV4_rl'
+%     'left_VWFA_rl'
+%     'right_VWFA_rl';
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+%      'LhV4_rl'
 %     'LV01_rl'
 %     'lh_VWFA_rl'
-    'RV1_rl'
-    'RV2v_rl'
-    'RV3v_rl'
-%     'RhV4_rl'
+%     'RV1_rl'
+%     'RV2v_rl'
+%     'RV3v_rl'
+%      'RhV4_rl'
 %     'RVO1_rl'
 %     'rh_VWFA_rl'
     };
 
 % param map to load WITHOUT the .mat extension
-pMapName = 'WordVAll';
+pMapName = 'FaceVWord_Scrambled'; % 'WordVAll';
+
+% folder relative to dir vista that the param map resides in
+% pMapDir = fullfile('Gray','Original');
+pMapDir = fullfile('Gray','GLMs');
 
 %% do it
 
 % localizer directory
-dirVista = list_sessionPath{subInd};
+dirVista = list_path{subInd};
 
 % anatomy directory
 dirAnatomy = list_anatomy{subInd};
@@ -58,7 +67,7 @@ VOLUME{end} = meshLoad(VOLUME{end},mshName,1);
 
 %% load parameter maps
 VOLUME{end} = viewSet(VOLUME{end},'curscan',1); 
-VOLUME{end} = loadParameterMap(VOLUME{end}, fullfile(pwd,'Gray','Original',[pMapName '.mat']));
+VOLUME{end} = loadParameterMap(VOLUME{end}, fullfile(pwd,pMapDir,[pMapName '.mat']));
 VOLUME{end} = setDisplayMode(VOLUME{end},'map');
 VOLUME{end}.ui.mapMode=setColormap(VOLUME{end}.ui.mapMode, 'hotCmap'); 
 % VOLUME{end} = setClipMode(VOLUME{end}, 'map', [-0.3 0.3]);

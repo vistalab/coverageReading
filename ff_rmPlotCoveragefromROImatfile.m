@@ -1,4 +1,13 @@
 function [RFcov, figHandle, all_models, weight, data] = ff_rmPlotCoveragefromROImatfile(rm,vfc, vw)
+% [RFcov, figHandle, all_models, weight, data] = ff_rmPlotCoveragefromROImatfile(rm,vfc, vw)
+%
+% THIS IS FLIPPED. 
+% also it needs an input of vw which kind of defeats the point
+% use rmPlotCoveragefromROImatfile instead (checked, it's good)!
+% The reason this is not deleted is because there might be other code that
+% calls this and accounts for the flip ...
+% should delete this soon though.
+%
 % rmPlotCoverage - calulate the visual field coverage within an ROI
 % adapted from serge's code.  I have already gotten all the rm model
 % parameters and save them to an roi across subjects.  the idea here is to either load them

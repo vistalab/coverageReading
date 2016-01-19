@@ -8,14 +8,16 @@ bookKeeping;
 %% modify here
 
 % subjects to do this for
-list_subInds = 1:13; 
+list_subInds = 1:19; 
 
 % rois that we want to delete
 list_roiNames = {
-    'lh_ventral_Body'
-    'lh_lateral_Body'
-    'rh_ventral_Body'
-    'rh_lateral_Body'
+%     'lh_VWFA_new_rl'
+%     'rh_VWFA_new_rl'
+%     'lh_mFus_Face_new_rl'
+%     'lh_pFus_Face_new_rl'
+%     'rh_mFus_Face_new_rl'
+%     'rh_pFus_Face_new_rl'
     };
 
 

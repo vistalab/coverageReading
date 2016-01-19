@@ -1,16 +1,20 @@
 %% manipulate rois: e.g., combine them into a new one
-clear all; close all; clc; 
+close all; clear all;  clc; 
 bookKeeping; 
 
 %% modify here
 
+% session list
+list_path = list_sessionRet; 
+
 % subjects to do this for
-list_subInds = [1:4 6:13]; 
+list_subInds = [20:22]; 
 
 roisToCombine = {
-    'rh_ventral_Body'; 
+    'left_VWFA_rl'
+    'right_VWFA_rl';
 }; 
-roiNewName  = 'rh_ventral_Body_rl'; 
+roiNewName  = 'combined_VWFA_rl'; 
 roiNewColor = 'w'; 
 roiAction   = 'Union';  
 
@@ -37,7 +41,7 @@ numRois = length(roisToCombine);
 for ii =  list_subInds
     
     % move to subject directory and open their gray view
-    chdir(list_sessionPath{ii})
+    chdir(list_path{ii})
     vw = initHiddenGray; 
     
     % subject's shared anatomy file
