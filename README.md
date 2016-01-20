@@ -1,4 +1,3 @@
-The README file for the coverageReading repository
 
 ## Namespaces 
 
@@ -60,5 +59,5 @@ The README file for the coverageReading repository
 
 ## Notes
 
-### Organization
+#### Directory organization
 
