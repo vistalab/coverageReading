@@ -48,7 +48,7 @@ roiA = VOLUME{end}.ROIs(end).name;
 roiB={VOLUME{end}.ROIs(1:end-1).name}; 
 
 % make the roi 
-VOLUME{end} = ROIanotb(VOLUME{end}, roiA, roiB, newroi.name, newroi.color); 
+VOLUME{end} = ff_ROIanotb(VOLUME{end}, roiA, roiB, newroi.name, newroi.color); 
 
 
 %% save roi in local directory

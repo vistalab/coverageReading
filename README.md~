@@ -22,11 +22,9 @@ The README file for the coverageReading repository
 
 **ff**          - Functions
 
-**gui**         - Open a mrVista gui and load things (pmap, ret model) for a given subject
+**gui**         - Open a mrVista gui and load things (pmap, ret model)
 
-**mshimg**      - Related to the visualization of a mesh
-
-**parfiles**    - Parfiles (parameter files for for GLM) related code
+**parfiles**    - Parfiles related code
 
 **pmap**        - Parameter map related code
 
@@ -34,16 +32,9 @@ The README file for the coverageReading repository
 
 **roi**         - Manipulate (e.g. combine, rename) a mrVista roi mat file
 
-**rm**          - Ret model related code
-
-**rmroi**       - See below for what an rmroi is. Code related to this.
-
-**s**           - Stands for scripts. We like to save these into the subject's directory. 
-                Includes things like the script used to prf models, info we want to keep around
-
 **summary**     - Generate figures for exploratory purposes. Similar to _figScript_ but not as intense
 
-**tSeries**     - tSeries related code.
+
 
 ## Directories
 
@@ -58,7 +49,5 @@ The README file for the coverageReading repository
 **tutorials**
 
 
-## Notes
 
-### Organization
 
