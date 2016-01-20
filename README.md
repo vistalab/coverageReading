@@ -1,7 +1,20 @@
+## Directories
+
+**figures**         - code that generates figures, including figures for papers, posters, presentations
+
+**functions**       - functions
+
+**organization**    - code related to subject organization, naming conventions
+
+**tractography**    - tractography. just getting started with this
+
+**tutorials**       - tutorials for preprocessing, processing pipeline
+
+
 
 ## Namespaces 
 
-**check**       - Checks for the existence of 
+**check**       - Checks for the existence certan types of data (ret models, rois) across subjects
 
 **coverage**    - Plots things related to the visual field coverage
 
@@ -44,20 +57,11 @@
 
 **tSeries**     - tSeries related code.
 
-## Directories
-
-**figures**
-
-**functions**
-
-**organization**
-
-**tractography**
-
-**tutorials**
 
 
 ## Notes
 
 #### Directory organization
+
+#### About bookKeeping
 
