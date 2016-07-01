@@ -40,10 +40,8 @@ pathData_nii = fullfile(dirDiffusion, dataFile);
 % where we want the .mif file of the data to be saved
 pathData_mif = fullfile(dirDiffusion, 'data.mif'); 
 
-% output file name .tck file and .pdb file
-connectomeName = ['Connectome_' num2str(numFibers) '_curvature' ff_dec2str(curvature)];
-output_tck = fullfile(dirDiffusion, [connectomeName '.tck']);
-output_pdb = fullfile(dirDiffusion,[connectomeName '.pdb']);
+% output file name (.tck file)
+outputName = ['Connectome_' num2str(numFibers) '_curvature' ff_dec2str(curvature) '.tck']
 
 %% convert from nifti files to .mif files 
 % convert the segmentation if it does not exist!
@@ -61,7 +59,7 @@ end
 chdir(dirDiffusion)
 
 % the command string
-commandString = ['!streamtrack SD_PROB data.mif ' output_tck ' -seed t1_class.mif -mask t1_class.mif -curvature 1 -num ' num2str(numFibers)]; 
+commandString = ['!streamtrack SD_PROB data.mif ' outputName ' -seed t1_class.mif -mask t1_class.mif -curvature 1 -num ' num2str(numFibers)]; 
 
 % run in terminal
 eval(commandString);
@@ -69,6 +67,5 @@ eval(commandString);
 
 %% convert to pdb
 
- mrtrix_tck2pdb(output_tck, output_pdb)
 
 

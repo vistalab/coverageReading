@@ -26,11 +26,10 @@ edit hcp_ribbon2classFile
 edit hcp_dtiInit
 
 %% Generate a comprehensive connectome using mrTrix
-% lmax = 10. 500,000 fibers
-% this is stored in mrtrix_fascicles in the subject's DTI anatomy
-% Find the pdb file here. mrtrix gives it a name like: 
-% dti_aligned_trilin_csd_lmax10_dti_aligned_trilin_brainmask_dti_aligned_trilin_wm_prob-curv1-cutoff0.1-500000.pdb
+% Generates something named Connectome_500000_curvature1.pdb into the
+% subject's diffusion directory
 
+edit hcp_mrtrix; 
 
 
 %% Define V1, V2, V3 -- Use Benson's code

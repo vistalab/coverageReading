@@ -68,3 +68,12 @@ pathDicom = '/sni-storage/wandell/data/reading_prf/ab/tiledLoc_sizeRet/dicoms/in
 INFO = dicominfo(pathDicom);
 IMG = dicomread(pathDicom);
 imagesc(IMG)
+
+%% A good subject. Dicom header -- functional ret
+% Sub20 
+
+pathDicom = '/sni-storage/wandell/data/reading_prf/ab/tiledLoc_sizeRet/dicoms/retKnk/MR.1.2.840.113619.2.353.4120.7575399.14382.1448472683.124.dcm'
+INFO = dicominfo(pathDicom);
+IMG = dicomread(pathDicom);
+imagesc(IMG)
+
