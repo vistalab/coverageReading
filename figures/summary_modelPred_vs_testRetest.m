@@ -11,7 +11,7 @@ list_path = list_sessionRet;
 % {'/sni-storage/wandell/data/reading_prf/rosemary/20141213_1020'};
 
 % subjects
-list_subInds = [1:11, 13:19];
+list_subInds = [1:20];
 
 % roi names
 % things to consider - make a separate plot for each roi?
@@ -20,17 +20,11 @@ list_roiNames = {
     };
 
 % RETMODEL dt and rm names
-dtName = 'Words_Half1'; 
-rmName = 'retModel-Words_Half1-css.mat'; 
+dtName = 'Words1'; 
+rmName = 'retModel-Words1-css.mat'; 
 
 % INDPENDENT DATA. dt name
-dtNameInd = 'Words_Half2'; 
-
-% save directory
-saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/modelReliability';
-dirDropbox = '/home/rkimle/Dropbox/TRANSFERIMAGES/';
-saveDropbox = true; 
-
+dtNameInd = 'Words2'; 
 
 %% define things and intialize things
 % number of rois
@@ -100,7 +94,10 @@ for jj = 1:numRois
             for vv = 1:numVoxels
 
                 % GET THE PREDICTED TIME SERIES
-                [prediction, ~, ~, varexp, ~] = rmPlotGUI_makePrediction(M, [], vv); varexp
+                [prediction, ~, ~, varexp, ~] = rmPlotGUI_makePrediction(M, [], vv); 
+                
+                voxelCoord = M.coords(vv);
+                varexp;
                 
                 % GET THE TIME SERIES THAT THE MODEL WAS FIT TO (D1)
                 actual = ROItseries{1}(:,vv); 
@@ -116,6 +113,9 @@ for jj = 1:numRois
                 
                 % RMSE = RMSE_m / RMSE_d
                 rmse = rmse_m / rmse_d; 
+                
+                % RMSE_PREDICTION: M AND D1
+                rmse_p = ff_rmse(prediction, actual);
                 
                 % store it
                 RMSE_withinSub(vv) = rmse; 
@@ -150,6 +150,7 @@ axisFontSize = 12;
 figure;
 
 [nb, xb] = hist(RMSE_acrossSubs, numBins); 
+dataMedian = median(RMSE_acrossSubs);
 bh = bar(xb, nb); 
 xlabel('R_rmse')
 ylabel('Voxel Count')
@@ -162,8 +163,9 @@ set(lineh, 'LineWidth', lineLineWidth)
 set(lineh, 'Color', lineLineColor)
 set(lineh, 'LineStyle', '--')
 
-% add a red line at 1/sqrt(2)
-lineh_red = plot([1/sqrt(2) 1/sqrt(2)], [0  max(get(gca, 'YLim'))])
+% add a red line at data median
+% lineh_red = plot([1/sqrt(2) 1/sqrt(2)], [0  max(get(gca, 'YLim'))])
+lineh_red = plot([dataMedian dataMedian], [0  max(get(gca, 'YLim'))])
 set(lineh_red, 'LineWidth', lineLineWidth)
 set(lineh_red, 'Color', 'r')
 % set(lineh, 'LineStyle', '--')
@@ -180,75 +182,13 @@ tem = ff_stringRemove(rmName, ['-' roiName]);
 tem = ff_stringRemove(tem, '.mat');
 descript = ff_stringRemove(tem, 'retModel-');
 
-titleName = ['Group RMSE. ' roiNameDescript '. Model: ' descript '. IndependentData: ' dtNameInd]; 
+titleName = {['Group RMSE. ' roiNameDescript ], ...
+    ['. Model: ' descript '. IndependentData: ' dtNameInd], ...
+    [mfilename]
+    }; 
 title(titleName, 'FontWeight', 'Bold')
 
 %% save
-savePath = fullfile(saveDir, titleName);
-saveas(gcf, [savePath '.png'], 'png')
-saveas(gcf, [savePath '.fig'], 'fig')
-if saveDropbox
-    savePathDropbox = fullfile(dirDropbox, titleName); 
-    saveas(gcf, [savePathDropbox '.png'], 'png')
-    saveas(gcf, [savePathDropbox '.fig'], 'fig')
-end
 
-%% tseries plot -----------------------------------------------------------
-% 
-% % color of the independent data
-% % [.8 .4 .1] % orangish
-% % [.3 .6 .8] % bluish
-% % [.5 .3 .6] % purplish
-% colorD1 = [.8 .4 .1];
-% colorD2 = [.3 .6 .8]; 
-% 
-% % Model and D2 Independent -----------------------------------------------
-% figure;  close all; 
-% hold on
-% plot(prediction, '--k', 'LineWidth', 2)
-% plot(independent, 'Color', colorD2, 'LineWidth', 2)
-% 
-% grid on
-% legend({'Prediction', 'Run2'})
-% 
-% % axes. Put x axis in units of seconds as opposed to time frames
-% xtick = get(gca, 'xtick'); 
-% xtickNew = xtick*2; 
-% xtickNewChar = num2str(xtickNew')
-% set(gca, 'xTickLabel', get(gca, 'xTick')*2)
-% 
-% % labels
-% xlabel('Time (sec)')
-% ylabel('BOLD % Change')
-% 
-% % title and save
-% titleName = ['Model and D2 (Indpendent)' '. VarExp: ' num2str(varexp)]; 
-% title(titleName, 'FontWeight', 'Bold')
-% saveas(gcf, fullfile(dirDropbox, [titleName '.png']), 'png')
-% saveas(gcf, fullfile(dirDropbox, [titleName '.fig']), 'fig')
-% 
-% % D1 and D2 -------------------------------------------------------------
-% figure;  
-% hold on
-% plot(actual, 'Color', colorD1, 'Linewidth', 2)
-% plot(independent, 'Color', colorD2, 'LineWidth', 2)
-% grid on
-% 
-% legend({'Run1', 'Run2'})
-% 
-% % axes. Put x axis in units of seconds as opposed to time frames
-% xtick = get(gca, 'xtick'); 
-% xtickNew = xtick*2; 
-% xtickNewChar = num2str(xtickNew')
-% set(gca, 'xTickLabel', get(gca, 'xTick')*2)
-% 
-% % axes
-% xlabel('Time (sec)')
-% ylabel('BOLD % Change')
-% 
-% % title and save
-% titleName = ['D1 and D2' '. VarExp: ' num2str(varexp)]; 
-% title(titleName, 'FontWeight', 'Bold')
-% saveas(gcf, fullfile(dirDropbox, [titleName '.png']), 'png')
-% saveas(gcf, fullfile(dirDropbox, [titleName '.fig']),
-% 'fig')bcdeghiklmoprvd]
+ff_dropboxSave; 
+

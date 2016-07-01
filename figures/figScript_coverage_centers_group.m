@@ -8,16 +8,27 @@ bookKeeping;
 
 %% modify here
 
+% transparent? much much longer 
+% with matlab2015, able to use scatter function
+transparent = true; 
+
+% alpha value -- transparency
+alphaValue = 0.5; 
+
 % subjects to include
-list_subInds = [1:15 17:21];
+list_subInds = 1:20 %[1:20];
 
 % session list
 list_path = list_sessionRet; 
 
 % rois plotted individually or all on one plot
 % if true, can specify many rois
-% if false, specify the rois we want on a single coverag eplot
-roisIndividual = false; 
+% if false, specify the rois we want on a single coverage plot.
+% list_colors will then correspond to rois
+roisIndividual = true; 
+
+% if true, colors will correspond to ROI
+colorIndividual = true;
 
 % rois to do this for
 list_rois = {
@@ -34,16 +45,16 @@ list_rois = {
 
 % modify this if ~roiIndividual
 list_colors = {
-    % [1 1 1]
-    [.2 1 0] % green - right visual hemisphere
-    [0 .2 1] % blue - left visual hemisphere
+    [1 1 1]
+%     [.2 1 0] % green - right visual hemisphere
+%     [0 .2 1] % blue - left visual hemisphere
     };
 % modify this if roiIndividual
 dotColor = [1 1 1];
 
 % ret model dt and name
-dtName = 'Words';
-rmName = 'retModel-Words-css.mat'; 
+dtName = 'Checkers';
+rmName = 'retModel-Checkers-css.mat'; 
 
 % threshold and other visualization parameters
 vfc.prf_size        = true; 
@@ -65,13 +76,12 @@ vfc.threshByCoh     = false;
 vfc.addCenters      = true;                 
 vfc.verbose         = prefsVerboseCheck;
 vfc.dualVEthresh    = 0;
-vfc.backgroundColor = [.9 .9 .9];   % color
+vfc.backgroundColor = [.1 .1 .1];   % color
 vfc.fillColor       = [1 0 0];   % yet to figure out what this does
 vfc.color           = [0 1 0];   % yet to figure out what this does
+vfc.tickLabel       = false; 
 
-% transparent? much much longer 
-% with matlab2015, able to use scatter function
-transparent = false; 
+
 
 % save
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/centers';
@@ -105,8 +115,6 @@ for jj = 1:length(list_rois)
     else
         dotColor = list_colors{jj};
     end
-    
-    % dot color if 
 
     % loop over subjects
     for ii = 1:numSubs
@@ -118,6 +126,10 @@ for jj = 1:length(list_rois)
         dirAnatomy = list_anatomy{subInd};
         chdir(dirVista);
         vw = initHiddenGray; 
+        
+        if colorIndividual
+            dotColor = list_colorsPerSub(subInd,:);
+        end
 
         % load the roi
         roiPath = fullfile(dirAnatomy, 'ROIs', [roiName '.mat']);
@@ -136,14 +148,14 @@ for jj = 1:length(list_rois)
             rmroi.subInitials = subInitials; 
 
             % threshold
-            rmroithresh = ff_thresholdRMData(rmroi, h);
+            rmroithresh = ff_thresholdRMData(rmroi, vfc);
 
             % plot the centers if passes threshold
             if ~isempty(rmroithresh)
                 
                 if transparent
                     % semi-transparent centers
-                    ff_scatter_patches(rmroithresh.x0, rmroithresh.y0, 4, dotColor, 'FaceAlpha', 0.2, 'EdgeColor', 'none');
+                    ff_scatter_patches(rmroithresh.x0, rmroithresh.y0, 3, dotColor, 'FaceAlpha', alphaValue, 'EdgeColor', 'none');
                 else
                     plot(rmroithresh.x0, rmroithresh.y0, '.','Color', dotColor, 'MarkerSize', 8)
                 end

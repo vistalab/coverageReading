@@ -1,21 +1,22 @@
-function RF_mean = ff_rmPlotCoverageGroup(M, vfc)
+function RF_mean = ff_rmPlotCoverageGroup(M, vfc, varargin)
 %% function to plot the group average visual field coverage
 % RF_mean = ff_rmPlotCoverageGroup(M, vfc)
+% RF_mean = ff_rmPlotCoverageGroup(M, vfc, 'flip', false)
 % INPUTS
-% M:    M should be a 1xnumSubs cell where M{ii} is the rm struct for a
+% M:    M should be a cell vector of length numSubs  where M{ii} is the rm struct for a
         % particular roi for the iith subject
 % vfc   visual field coverage information thresholds. TODO: provide more detail here. 
 %
 % OUTPUTS
 % RF_mean
-%
+
 % NOTE: there are 2 places where we do y flipping: lines 35 andn 57
 
 % RL 03/15
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % number of subjects to average over
-numSubs     = size(M,2); 
+numSubs     = length(M); 
 numToAvg    = numSubs; 
 
 % % store each subject's rf (prior to averaging)
@@ -33,15 +34,23 @@ counter = 0;
 centersx0 = []; 
 centersy0 = []; 
 
+%% input parser -- flipping
+par = inputParser; 
+addOptional(par, 'flip', true); 
+parse(par, varargin{:});
+flip = par.Results.flip; 
+
 %% get the rf information for each subject
 for ii = 1:numSubs
    if ~isempty(M{ii}) 
         [rf, figHandle, all_models, weight, data]  = rmPlotCoveragefromROImatfile(M{ii}, vfc);
         
         % y flippage!
-        rf = flipud(rf);
-        if ~isempty(data)
-            data.suby0 = -data.suby0;
+        if flip
+            rf = flipud(rf);
+            if ~isempty(data)
+                data.suby0 = -data.suby0;
+            end
         end
         
         % check that rf isn't all nans. (this happens when we don't have a ret model or roi defined?)
@@ -50,8 +59,7 @@ for ii = 1:numSubs
         % also check that there voxels pass the threshold!!! (otherwise the coverage will be all 0s)
         % if no voxels pass threshold, <data> from rmPlotCoveragefromROImatfile is empty
         noVoxelsPassThreshold = isempty(data);
-        
-        
+                
         if ~coverageHasNans && ~noVoxelsPassThreshold  
             counter = counter + 1;
             
@@ -93,6 +101,14 @@ if ~isempty(RF)
     % add polar grid on top
     p.ringTicks = (1:3)/3*vfc.fieldRange;
     p.color = 'w';
+    
+    % tick labels
+    if ~isfield(vfc, 'tickLabel')
+        p.tickLabel = true; 
+    else
+        p.tickLabel = vfc.tickLabel;
+    end
+    
     polarPlot([], p);
 
     title(['Group Average.'], 'FontSize', 14);
@@ -107,15 +123,26 @@ if ~isempty(RF)
     colormap(vfc.cmap);
     caxis([0 1]);
 
-
-
-
-
     %% add the centers if requested
     if vfc.addCenters
         plot(centersx0, centersy0,'.','Color',[.5 .5 .5], 'MarkerSize', 4);
     end
  
+    %% group summary contour 
+    if vfc.contourPlot
+
+        % get the x and y points of the specified contour level
+        [~, contourCoordsX, contourCoordsY] = ...
+        ff_contourMatrix_makeFromMatrix(RF_mean,vfc,vfc.contourLevel);
+
+        % transform so that we can plot it on the polar plot
+        contourX = contourCoordsX/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange; 
+        contourY = contourCoordsY/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange;
+        
+        plot(contourX, contourY, '--', 'Color', vfc.contourColor, 'MarkerSize', 2, 'LineWidth',2);
+        
+    end
+    
 end
 
 end

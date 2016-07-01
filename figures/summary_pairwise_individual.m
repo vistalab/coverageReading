@@ -9,10 +9,11 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % list subject index
-list_subInds = [1:4 6:19];
+list_subInds = [1:11 13:17];
+list_subIndsDescript = '[1:11 13:17]';
 
 % whether looking at a subject by subject basis
-subIndividually = true; 
+subIndividually = false; 
 
 % list rois
 list_roiNames = {
@@ -35,35 +36,48 @@ list_rmNames = {
 
 % ret model comments
 list_rmDescripts = {
-    'Words. Linear'
-    'Words. CSS'
+    'Words linear '
+    'Words css'
     };
 
 % values to threshold the RM struct by
-h.cothresh = 0;
-h.eccthresh = [0 15];
-h.sigmathresh = [0 30];
-h.minvoxelcount = 0;
+%   vfc.cothresh
+%   vfc.eccthresh
+%   vfc.sigthresh
+vfc.cothresh = 0; 
+vfc.eccthresh = [0 15];
+vfc.sigthresh = [0 30];
 
+
+% colors
+list_colors = list_colorsPerSub;
 
 % field to plot. Ex:  
 % variance explained (co), eccentricity (ecc), effective size (sigma)
 % 'numvoxels' for number of voxels in roi
 % fieldToPlotDescript is for axis labels and plot titles
 list_fieldNames  = {
-    'sigma1'
-    'ecc'
+%     'sigma1'
+%     'ecc'
     'co'
+    'exponent'
     }; 
 
 list_fieldDescripts = {
-    'prf Size'
-    'eccentricity'
+%     'sigma major'
+%     'eccentricity'
     'varExp'
+    'exponent'
     }; 
 
 % save directory
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/rmComparison';
+
+% which plots do we want? lots we can make ...
+plot_individualPlotsForIndividuals = 0 ;
+plot_fixedEffects = 1; 
+plot_subjectMedian = true; 
+
 
 %% end modification section
 
@@ -76,107 +90,144 @@ numRois = length(list_roiNames);
 % number of fields
 numFields = length(list_fieldNames);
 
-% initialize data struct
-D = cell(numSubs, numRois, 2); 
-
 % rm descriptions
 rm1Descript = list_rmDescripts{1}; 
 rm2Descript = list_rmDescripts{2}; 
 
-% loop over subjects
-for ii = 1:numSubs
-    
-    subInd = list_subInds(ii); 
-    dirVista = list_path{subInd}; 
-    dirAnatomy = list_anatomy{subInd};
-    chdir(dirVista); 
-    vw = initHiddenGray; 
-    
-    % loop over the 2 rm models
-    for kk = 1:2
-        
-        % dt and rm name and path
-        dtName = list_dtNames{kk};
-        rmName = list_rmNames{kk};
-        rmPath = fullfile(dirVista, 'Gray', dtName, rmName);
-        
-        % load rm 
-        vw = rmSelect(vw, 1, rmPath);
-        vw = rmLoadDefault(vw);
-        
-        % loop over the rois
-        for jj = 1:numRois
-            
-            % roi name and path
-            roiName = list_roiNames{jj};
-            roiPath = fullfile(dirAnatomy, 'ROIs', roiName);
-            
-            % load roi
-            [vw, roiExists] = loadROI(vw, roiPath, [], [], 1, 0);
-            
-            if roiExists 
-                rmroi = rmGetParamsFromROI(vw);
-                D{ii,jj,kk} = rmroi; 
-            end
-            
-        end
-        
-    end
+% initialize medians
+subjectMedians = zeros(numSubs, numRois, 2, numFields);
 
+%% get the cell of rms so that we can threshold
+rmroiCell = ff_rmroiCell(list_subInds, list_roiNames, list_dtNames, list_rmNames);
+
+%% Threshold and get identical voxels for each subject
+% In comparing ret models, the collection of voxels may not be the same
+% because of the thresholding. In this cell we redefine the rmroi
+rmroiCellSameVox = cell(size(rmroiCell));
+
+for jj = 1:numRois
+    for ii = 1:numSubs        
+        % get identical voxels for each subject's roi over all ret models
+        D = rmroiCell(ii,jj,:);
+        rmroiCellSameVox(ii,jj,:) = ff_rmroiGetSameVoxels(D, vfc);        
+    end
 end
 
+%% plot the fixed effects -- combine all voxels over subjects
 
-%% plotting
-
-for ii = list_subInds
-    % subjec initials
-    subInitials = list_sub{ii}; 
+for jj = 1:numRois
     
-    for jj = 1:numRois
-        % roiName
-        roiName = list_roiNames{jj};
-        if strcmp(roiName(end-2:end), '_rl')
-            roiNameDescript = roiName(1:end-3); 
-        else
-            roiNameDescript = roiName; 
-        end
+    roiName = list_roiNames{jj};
+
+    for ff=1:numFields
+
+        % field name
+        fieldName = list_fieldNames{ff};
+        fieldNameDescript = list_fieldDescripts{ff}; 
+        figure; 
+        titleName = [ff_stringRemove(roiName, '_rl') '. ' fieldName];
+        title(titleName, 'FontWeight', 'Bold')
+        hold on; 
         
-        % rmRois for different ret models
-        rmroi1 = D{ii,jj,1}; 
-        rmroi2 = D{ii,jj,2};
-        
-        
-        for ff = 1:numFields
-            % field name
-            fieldName = list_fieldNames{ff};
-            fieldNameDescript = list_fieldDescripts{ff}; 
-            
+        BarData1 = [];
+        BarData2 = [];
+
+        for ii = 1:numSubs
+
+            subInd = list_subInds(ii);
+            subjectColor = list_colors(subInd,:);
+
+            % rmRois for different ret models
+            rmroi1 = rmroiCellSameVox{ii,jj,1}; 
+            rmroi2 = rmroiCellSameVox{ii,jj,2};
+
             % get the data
             x1 = eval(['rmroi1.' fieldName]);
             x2 = eval(['rmroi2.' fieldName]);
             
-            % go! plot
-            figure; 
-            plot(x1, x2, '.k'); 
-            grid on; 
-            identityLine
+            % store the medians for the fixed effects plot
+            subjectMedians(ii,jj,1,ff) = median(x1);
+            subjectMedians(ii,jj,2,ff) = median(x2);
+
+            % concatenate
+            BarData1 = [BarData1, x1];
+            BarData2 = [BarData2, x2];
+
+            % individual dots
+            plot(x1, x2, '.', 'Color',subjectColor); 
+            hold on; 
+
+        end % end loop over subjects
+
+        % plot the medians on top so that they are clearly visible
+        % Have to loop over subjects because of colors
+        for ii = 1:numSubs
+            subInd = list_subInds(ii);
+            subjectColor = list_colors(subInd,:);
+            medx = subjectMedians(ii,jj,1,ff);
+            medy = subjectMedians(ii,jj,2,ff);
+            plot(medx, medy, 'o', ...
+                'MarkerEdgeColor', 'k', ...
+                'MarkerFaceColor', subjectColor, ...
+                'MarkerSize',10, ...
+                'LineWidth', 3.5); 
             
-            % title 
-            titleName = ['RetModel Pairwise Comparison. ' fieldNameDescript '. ' roiNameDescript '. ' subInitials]; 
-            title(titleName, 'FontWeight', 'Bold')
-            
-            % axes. rm1 on x. rm2 on y. 
-            xlabel(rm1Descript)
-            ylabel(rm2Descript)
-            
-            % save
-            savePath = fullfile(saveDir, titleName);
-            saveas(gcf, [savePath '.png'], 'png'); 
-            saveas(gcf, [savePath '.fig'], 'fig'); 
-            
-        end
+        end % loop over subjects
         
-    end
-    
-end
+        %% plot properties -- scatter plot with all subjects
+        grid on; 
+        xlabel(rm1Descript, 'FontWeight', 'Bold')
+        ylabel(rm2Descript, 'FontWeight', 'Bold')
+        
+        % save
+        grid on; 
+        ff_identityLine(gca, [.5 .5 .5]);
+        ff_dropboxSave; 
+        
+        %% bar plot -- need to functionalize
+        rm1 = list_rmDescripts{1};
+        rm2 = list_rmDescripts{2};
+        differenceDescript = [rm2 ' minus ' rm1];
+
+        figure; 
+        numBins = 10; 
+        Bar = BarData2 - BarData1;
+
+        [N,X] = hist(Bar,numBins);
+        Nnorm = N./sum(N);
+        bar(X,Nnorm,  'facecolor', [.5 .5 .5], 'linewidth',2)
+
+        % statistic -- mean or median
+        stat = median(Bar);
+
+        % labels
+        xlabel(['pRF ' fieldName '. ' differenceDescript])
+        ylabel('Count. Normalized')
+
+        % title
+        titleName = {
+            ['pRF Distribution Normalized. ' fieldNameDescript]
+            [ff_stringRemove(roiName, '_rl') '. ' differenceDescript]
+            ['n = ' num2str(numSubs)]
+            };
+        title(titleName, 'fontWeight', 'Bold')
+
+        % plot properties
+        grid on;
+
+        % draw a red line at data median or mean
+        line([stat stat], get(gca, 'YLim'), 'Color', [.9 .2 .4], 'LineWidth',3)
+
+        % save
+        ff_dropboxSave;
+
+    end % loop over fields
+
+end % loop over rois
+
+%% print out and save subject legend
+ff_legendSubject(list_subInds)
+title(['Legend: ' list_subIndsDescript])
+ff_dropboxSave
+
 

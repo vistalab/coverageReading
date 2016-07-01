@@ -5,18 +5,23 @@
 close all; 
 figure;
 
-% horizontal or vertical colorbar
-% colorbar('eastoutside') % -- vertical
-colorbar('southoutside') % -- horizontal
+% save name
+saveName = 'AutumnHorizontalColorbar';
 
+% horizontal or vertical colorbar
+ c = colorbar('eastoutside'); % -- vertical
+% c = colorbar('southoutside') % -- horizontal
 
 % colormap
-% colormap('hot')
-newcolormap = gray(); 
-set(gcf, 'colormap', newcolormap)
+colormap('autumn') % hot % autumn
+% newcolormap = gray(21); 
+% set(gcf, 'colormap', newcolormap)
 
 % limits of colorbar
-caxis([0 1])
+caxis([3 5.5])
+
+% labels of the colorbar -- left right top bottom?
+set(c, 'YAxisLocation', 'right');
 
 % font size
 set(gca, 'fontSize', 16)
@@ -24,8 +29,6 @@ set(gca, 'fontSize', 16)
 % where to save
 saveDir = '/home/rkimle/Dropbox/TRANSFERIMAGES/';
 
-% save name
-saveName = 'GrayColorbar0to1';
 
 %% save!
 

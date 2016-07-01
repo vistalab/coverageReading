@@ -11,22 +11,29 @@ bookKeeping
 list_path = list_sessionRet; 
 
 % subject list
-list_subInds = 1:11; 
+list_subInds = 1:20; 
 
 % name of the original datatype we want copied
 % can be a list
 list_dtOriginal = {
-    'False1'
-    'False2'
+    'WordLarge'
     };
 
 % name that we want to rename the datatype to be
 % can also be a list
 list_dtRename = {
-    'FalseFont1'
-    'FalseFont2'
+    'Words'
     };
 
+
+% INPLANE OR GRAY?
+% previously we've been doing it in the gray, and saving ourselves the step
+% of xforming it into gray.
+% For completeness sake, create the inplane data type (which means we have
+% to xform those that have not been xformed. 
+% Anyway we have the option here
+% OPTIONS: 'gray'| 'inplane'
+xformType = 'inplane';
 
 %% end modification section
 

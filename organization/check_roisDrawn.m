@@ -4,6 +4,7 @@
 bookKeeping; 
 clc;
 
+
 %% modify here
 
 % roi name
@@ -11,7 +12,9 @@ clc;
 % lh_FFA_fullField_rl
 % lh_VWFA_fullField_WordVFaceScrambled_rl
 % lh_VWFA_fullField_WordVScrambled_rl
-roiName = 'right_pFusFace_rl';
+% lh_ventral_rl
+% lh_iOGFace_rl
+roiName = 'rh_iOGFace_rl';
 
 
 %% end modification section

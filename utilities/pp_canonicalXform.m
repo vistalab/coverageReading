@@ -9,20 +9,28 @@
 
 % directory with the mrVista session. Usually this script is saved right in
 % that directory. 
-dirVista  = pwd;
+dirVista  = '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc/';
 
 % nifti files we want to xform
 listToXform = {
-    fullfile(dirVista, '4_1_T1w_Whole_brain_1mm', '10928_4_1.nii.gz')
-    fullfile(dirVista, '5_1_T1w_Whole_brain_1mm', '10928_5_1.nii.gz')
+%     fullfile(dirVista, 'Localizer_English/func.nii.gz')
+%     fullfile(dirVista, 'Localizer_Hebrew/func.nii.gz')
+%     fullfile(dirVista, 'Ret_Checkers1/func.nii.gz')
+%     fullfile(dirVista, 'Ret_Checkers2/func.nii.gz')
+%     fullfile(dirVista, 'Ret_English1/func.nii.gz')
+%     fullfile(dirVista, 'Ret_English2/func.nii.gz')
+%     fullfile(dirVista, 'Ret_Hebrew1/func.nii.gz')
+%     fullfile(dirVista, 'Ret_Hebrew2/func.nii.gz')
+    fullfile(dirVista, 'T1Fl2d_tra/inplane.nii.gz')
     };
-% listToXform = {fullfile(dirVista, '4_1_T1_high_res_inplane_Ret_knk','9727_4_1.nii.gz')};
 
 % name of the new functional, with ext
 % newName = 'func_xform.nii.gz'; 
-newName = 'anatomy_xform.nii.gz'; 
+newName = 'inplane_xform.nii.gz'; 
 
 %% 
+
+chdir(dirVista);
 
 for ii = 1:length(listToXform)
     

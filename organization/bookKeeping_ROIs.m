@@ -3,6 +3,8 @@
 % lh, rh, ch
 % left, right, combined
 
+%% INPLANE ROIs
+% inplane rois are saved locally, in the list_sessionPath directory
 
 %% Word Areas =============================================================
 
@@ -36,6 +38,11 @@ left_VWFA_rl;           % lh_VWFA_rl, or lh_VWFA_fullField_rl
 lh_VWFA_tal1_rl;        % [-42,-57,-6]      Cohen 2000
 lh_VWFA_tal2_rl;        % [-42,-57,-15]     Cohen 2002
 
+% MNI -- a repeat perhaps but better naming
+'VWFA_mni_-42_-57_-6'; % wait need to check that this is MNI ...
+'VWFA_mni_-45_-57_-12'; % Vogel 2012
+
+
 
 %% Face Areas ============================================================
 
@@ -68,6 +75,31 @@ left_FFAFace_rl           	% left, right, combined
 
 % standard localizer
 lh_PPA_Place_rl             % lh, rh, ch
+
+
+
+%% Other ROIS
+% medial boundary: medial of collateral
+% lateral boundary: lateral edge of inferior temporal sulcus
+% anterior boundary: 
+% posterior boundary: all the way
+lh_ventral_all;
+
+% same as lh_ventral_all but anterior of anterior edge of the ptCS
+% and posterior of the anterior edge of the mid fusiform sulcus
+% idea is that this roi is close to the vwfa but still sees a lot of the
+% visual field
+lh_ventral_2_rl;
+
+% an updated version of lh_ventral_2_rl
+% the idea is that if we trim enough of the collateral, we won't be getting
+% the peripheral bits of coverage
+% medial boundary: lateral edge of collateral (i.e. not including collateral)
+% lateral boundary: medial edge of inferior temporal sulcus (i.e. NOTd including ITS)
+% anterior boundary: where parietal sulcus hits collateral sulcus
+% posterior boundary: posterior transverse collateral sulcus
+lh_ventral_3_rl;
+
 
 %% Old naming scheme
 %  old naming schemes ====================================================

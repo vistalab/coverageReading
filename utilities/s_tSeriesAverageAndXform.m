@@ -1,31 +1,26 @@
 %% script that will create a new dataTYPES that is the average of existing scans
+clear all; close all; clc; 
 
-%% modify here
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot01/Analyze_pseudoInplane';
 
 % the names of the dataTYPES we want to create
 dtsToCreate = {
-    'FaceLarge';        % 1
-    'FaceSmall';        % 2
-    'WordLarge';        % 3
-    'WordSmall';        % 4
-    'Checkers';         % 5
+    'Checkers';        % 1
+    'Words_English';   % 2
+    'Words_Hebrew';    % 3
     };
 
 % The datatype the scan belongs to. For example, a 1 means that the first
 % scan is in the first dataTYPE specified in dtsToCreate
 dtAssignments = [
-    5;
-    5;
-    1;
-    2;
-    3;
-    4;
     0;
-    5;
-    4;
-    3;
+    0;
+    1;
     1;
     2;
+    2;
+    3;
+    3;
     ];
 
 % make the new tseries from the most processed time series

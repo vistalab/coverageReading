@@ -37,9 +37,7 @@ inc = linspace(-vfc.fieldRange,vfc.fieldRange, vfc.nSamples);
 imagesc(inc,inc',contourAvgInvert);
 
 % add polar grid on top
-p.ringTicks = (1:3)/3*vfc.fieldRange;
-p.color = 'w';
-polarPlot([], p);
+ff_polarPlot(vfc);
 
 %% colormap
 colorbar;

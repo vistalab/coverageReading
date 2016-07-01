@@ -9,7 +9,7 @@ bookKeeping;
 %% modify here
 
 % subject number (see bookKeeping) that we want to xform
-subNums = 12; 
+subNums = 1; 
 
 % directory with vista session
 list_dirVista = list_sessionPath; 

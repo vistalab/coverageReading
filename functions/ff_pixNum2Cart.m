@@ -1,5 +1,6 @@
 function [visAngX, visAngY] = ff_pixNum2Cart(pixNum, vfc)
 % [pixLocX, pixLocY] = ff_pixNum2Cart(pixNum, vfc.nSamples);
+% See ff_cart2pixNum for the opposite
 
 % The plotted visual field coverage is an image that is nSamples x nSamples
 % We pick a number between 1:(nSamples^2), corresponding to a location in the

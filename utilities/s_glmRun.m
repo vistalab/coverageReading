@@ -1,4 +1,6 @@
-%% t_glmRun
+%% s_glmRun
+%
+% THIS IS NOT THE MOST UPDATED VERSION
 %
 % Illustrates how to run a GLM on a functional data set.
 % Tested 01/04/2011 - MATLAB r2008a, Fedora 12, Current Repos

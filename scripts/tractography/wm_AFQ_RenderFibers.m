@@ -7,7 +7,7 @@ bookKeeping;
 %% modify here
 
 % index of subject we're interested in. see bookKeeping
-list_subInds = [4 6];
+list_subInds = [4];
 
 % name of the fiber group we're interested in WITHOUT the extension
 fgName = 'L_Arcuate_Posterior';

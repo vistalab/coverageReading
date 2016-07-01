@@ -10,7 +10,7 @@ bookKeeping;
 list_subInds = [2:4 6:13];
 
 % name of the roi
-roiName = 'lh_VWFA_rl';
+roiName = 'left_VWFA_rl';
 
 % want some ret model information -- dt and model name
 dtName = 'Words';

@@ -1,4 +1,4 @@
-c%% Analysis workflow
+ec%% Analysis workflow
 % addpath(genpath('/biac4/wandell/data/reading_prf/coverageReading'))
 % {dirAnat} - absolute path for anatomy 
 % {dirVista} - absolute path with mrSESSION
@@ -69,7 +69,11 @@ s_buildMeshes;
 % Want to run the GLM on the most pre-processed time series 
 % This should be MotionComp_RefScan1
 % (Make sure we have this dataType)
-s_glmRun; 
+
+% edit the parfiles for tiled localizer
+parfiles_edit_noColor; % (mrVista will assign default colors)
+
+s_glmRun; % NEED TO FINISH THIS SCRIPT
 
 %% Run the pRF
 % Assign param and image files before running retinotopy:
@@ -119,7 +123,8 @@ rm_combineFile;
 % Xforms the parameters maps from the localizer session to the retinotopy (main) session
 pmap_fromRM;
 pmap_fromPMaps;
-pmap_fromGLM;
+pmap_fromGLM; % small field localizer
+pmap_fromGLMTiled; % tiled large field localizer
 
 pmap_xformAcrossSession.m
 
@@ -201,7 +206,6 @@ if ~dirThreshExists
     chdir(saveDir)
     mkdir(dirThresh)
 end
-
 
 savePath = fullfile(saveDir, dirThresh, titleName);
 saveas(gcf, [savePath '.png'],'png')

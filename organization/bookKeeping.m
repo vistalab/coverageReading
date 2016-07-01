@@ -19,13 +19,46 @@ list_sub = {
     'mw'        % 13
     'gt'        % 14
     'ws'        % 15
-    'bw'        % 16
-    'ol'        % 17
-    'tl'        % 18
-    'mv'        % 19
-    'vm'        % 20
-    'ab'        % 21
+    'ol'        % 16
+    'tl'        % 17
+    'mv'        % 18
+    'vm'        % 19
+    'ab'        % 20
+    'bw'        % 21
     'dys_ab'    % 22 
+    'heb_ag'    % 23
+    'heb_aa'    % 24
+    'heb_ls'    % 25
+    'heb_toba'  % 26
+    };
+
+list_names = {  
+    'Jesse Gomez'        % 1
+    'Aaron Dames'        % 2
+    'Cat Camacho'        % 3
+    'Joe Wexler'         % 4
+    'Rose Schneider'     % 5
+    'Sarah Gleberman'    % 6
+    'Tyler Hughes'       % 7
+    'Priyanka Vij'       % 8
+    'Stefanie Lim'       % 9
+    'Janet Veil'         % 10
+    'Destiny Lopez'      % 11 
+    'Anna Khazenzon'     % 12
+    'Michael Waskom'     % 13
+    'Gerald Tiu'         % 14
+    'Wendy Sato'         % 15
+    'Oliver Leung'       % 16
+    'Trisha Lian'        % 17
+    'Michael Vitelli'    % 18
+    'Vanessa Martinez'   % 19
+    'Annette Bugno'      % 20
+    'Brian Wandell'      % 21
+    'Andy Brainard'      % 22   Dyslexic
+    'Amit Goodman'       % 23   Hebrew
+    'Avital Ayzenshtat'  % 24   Hebrew
+    'Linoi Shambiro'     % 25   Hebrew
+    'To Ba'              % 26   Hebrew
     };
 
 % directory with ret. Checkers. Words
@@ -42,16 +75,20 @@ list_sessionRet = {
     '/sni-storage/wandell/data/reading_prf/jv/20150509_ret';        % jv
     '/sni-storage/wandell/data/reading_prf/dl/20150519_ret';        % dl
     '/sni-storage/wandell/data/reading_prf/ak/20150106_1802';       % ak
-    '/sni-storage/wandell/data/reading_prf/mw/tiledLoc_sizeRet';     % mw
-    '/sni-storage/wandell/data/reading_prf/gt/tiledLoc_sizeRet';     % gt
-    '/sni-storage/wandell/data/reading_prf/ws/tiledLoc_sizeRet';     % ws
-    '/sni-storage/wandell/data/reading_prf/bw/tiledLoc_sizeRet';     % bw
-    '/sni-storage/wandell/data/reading_prf/ol/tiledLoc_sizeRet';     % ol
-    '/sni-storage/wandell/data/reading_prf/tl/Localizer_sizeRet';    % tl
+    '/sni-storage/wandell/data/reading_prf/mw/tiledLoc_sizeRet';    % mw
+    '/sni-storage/wandell/data/reading_prf/gt/tiledLoc_sizeRet';    % gt
+    '/sni-storage/wandell/data/reading_prf/ws/tiledLoc_sizeRet';    % ws
+    '/sni-storage/wandell/data/reading_prf/ol/tiledLoc_sizeRet';    % ol
+    '/sni-storage/wandell/data/reading_prf/tl/Localizer_sizeRet';   % tl
     '/sni-storage/wandell/data/reading_prf/mv/tiledLoc_sizeRet';    % mv
     '/sni-storage/wandell/data/reading_prf/vm/tiledLoc_sizeRet';    % vm
     '/sni-storage/wandell/data/reading_prf/ab/tiledLoc_sizeRet';    % ab
+    '/sni-storage/wandell/data/reading_prf/bw/tiledLoc_sizeRet';    % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/20150430_ret';    % dys_ab
+    '/sni-storage/wandell/data/reading_prf/heb_pilot01/Analyze_pseudoInplane';    % heb_ag
+    '/sni-storage/wandell/data/reading_prf/heb_pilot02/RetAndLoc';  % heb_aa
+    '/sni-storage/wandell/data/reading_prf/heb_pilot03/RetAndLoc';  % heb_ls
+    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc_noXform';  % 
     };
 
 % directory with checkers, words, falsefont retinotopy
@@ -72,16 +109,20 @@ list_sessionPath = {
     'do not have'                                                   % mw
     'do not have'                                                   % gt 
     'do not have'                                                   % ws
-    'do not have'                                                   % bw
     'do not have'                                                   % ol
     'do not have'                                                   % tl
     'do not have'                                                   % mv
     'do not have'                                                   % vm
     'do not have'                                                   % ab
+    'do not have'                                                   % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/20150430_ret';    % dys_ab
+    'do not have'                                                   % heb_ag
+    'do not have'                                                   % heb_aa
+    'do not have'                                                   % heb_ls
+    'do not have'                                                   % heb_toba
 };
 
-% directory with the localizer mrSESSION
+% directory with the smallFOV localizer mrSESSION
 list_sessionLocPath = {
     % '/sni-storage/kalanit/biac2/kgs/projects/Longitudinal/FMRI/Localizer/data/RL22_05312014'; % rk    
     '/sni-storage/kalanit/biac2/kgs/projects/Longitudinal/FMRI/Localizer/data/JG24_01062014';   % jg
@@ -99,13 +140,17 @@ list_sessionLocPath = {
     'do not have';                                                                              % mw
     'do not have';                                                                              % gt
     'do not have';                                                                              % ws
-    'do not have';                                                                              % bw
     'do not have';                                                                              % ol
     'do not have';                                                                              % tl
     'do not have';                                                                              % mv
     'do not have';                                                                              % vm
     'do not have';                                                                              % ab
+    'do not have';                                                                              % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/20150430_loc';                                % dys_ab
+    'do not have'                                                                               % heb_ag
+    'do not have'                                                                               % heb_aa
+    'do not have'                                                                               % heb_ls
+    'do not have'                                                                               % heb_toba
     }; 
 
 
@@ -126,13 +171,17 @@ list_sessionDtiQmri = {
     '/sni-storage/wandell/data/reading_prf/mw/dti_qmri';                % mw
     '/sni-storage/wandell/data/reading_prf/gt/dti_qmri';                % gt
     '/sni-storage/wandell/data/reading_prf/ws/dti_qmri';                % ws
-    'to be collected';                                                  % bw
     '/sni-storage/wandell/data/reading_prf/ol/dti_qmri';                % ol
     '/sni-storage/wandell/data/reading_prf/tl/dti_qmri';                % tl
     '/sni-storage/wandell/data/reading_prf/mv/dti_qmri';                % mv
     'to be collected';                                                  % vm
     'to be collected';                                                  % ab
+    'to be collected';                                                  % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/20150503_dti_qmri';   % dys_ab
+    'to be collected';                                                  % heb_ag
+    'to be collected';                                                  % heb_aa
+    'to be collected';                                                  % heb_ls
+    'to be collected';                                                  % heb_toba
     };
 
 % anatomy directory. With mrVista, this information is in vANATOMYPATH, but
@@ -154,13 +203,17 @@ list_anatomy = {
     '/biac4/wandell/data/anatomy/waskom';       % mw
     '/biac4/wandell/data/anatomy/tiu';          % gt
     '/biac4/wandell/data/anatomy/wsato';        % ws 
-    '/biac4/wandell/data/anatomy/wandell';      % bw
     '/biac4/wandell/data/anatomy/leung';        % ol
     '/biac4/wandell/data/anatomy/lian';         % tl
     '/biac4/wandell/data/anatomy/vitelli';      % mv
     '/biac4/wandell/data/anatomy/martinez';     % vm
     '/biac4/wandell/data/anatomy/bugno';        % ab
+    '/biac4/wandell/data/anatomy/wandell';      % bw
     '/biac4/wandell/data/anatomy/brainard';     % dys_ab
+    '/biac4/wandell/data/anatomy/goodman';      % heb_ag
+    '/biac4/wandell/data/anatomy/Ayzenshtat';   % heb_aa
+    '/biac4/wandell/data/anatomy/Shambiro';     % heb_ls
+    '/biac4/wandell/data/anatomy/Toba';         % heb_toba
     };
 
 
@@ -181,13 +234,17 @@ list_sessionSizeRet = {
     '/sni-storage/wandell/data/reading_prf/mw/tiledLoc_sizeRet';     % mw
     '/sni-storage/wandell/data/reading_prf/gt/tiledLoc_sizeRet';     % gt
     '/sni-storage/wandell/data/reading_prf/ws/tiledLoc_sizeRet';     % ws
-    '/sni-storage/wandell/data/reading_prf/bw/tiledLoc_sizeRet';     % bw
     '/sni-storage/wandell/data/reading_prf/ol/tiledLoc_sizeRet';     % ol
     '/sni-storage/wandell/data/reading_prf/tl/Localizer_sizeRet';    % tl
     '/sni-storage/wandell/data/reading_prf/mv/tiledLoc_sizeRet';     % mv
     '/sni-storage/wandell/data/reading_prf/vm/tiledLoc_sizeRet';     % vm
     '/sni-storage/wandell/data/reading_prf/ab/tiledLoc_sizeRet';     % ab
+    '/sni-storage/wandell/data/reading_prf/bw/tiledLoc_sizeRet';     % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/tiledLoc_sizeRet'; % dys_ab
+    'do not have';                                                   % heb_ag
+    'do not have';                                                   % heb_aa
+    'do not have';                                                   % heb_ls
+    'do not have';                                                   % heb_toba
     };
 
 
@@ -209,13 +266,17 @@ list_sessionTiledLoc = {
     '/sni-storage/wandell/data/reading_prf/mw/Localizer_16Channel';             % mw
     '/sni-storage/wandell/data/reading_prf/gt/Localizer_16Channel';             % gt
     '/sni-storage/wandell/data/reading_prf/ws/tiledLoc_sizeRet';                % ws
-    '/sni-storage/wandell/data/reading_prf/bw/tiledLoc_sizeRet';                % bw
     '/sni-storage/wandell/data/reading_prf/ol/tiledLoc_sizeRet';                % ol
     '/sni-storage/wandell/data/reading_prf/tl/Localizer_sizeRet';               % tl
     '/sni-storage/wandell/data/reading_prf/mv/tiledLoc_sizeRet';                % mv
     '/sni-storage/wandell/data/reading_prf/vm/tiledLoc_sizeRet';                % vm
     '/sni-storage/wandell/data/reading_prf/ab/tiledLoc_sizeRet';                % ab
+    '/sni-storage/wandell/data/reading_prf/bw/tiledLoc_sizeRet';                % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/tiledLoc_sizeRet';            % dys_ab
+    '/sni-storage/wandell/data/reading_prf/heb_pilot01/Analyze_pseudoInplane';  % heb_ag
+    '/sni-storage/wandell/data/reading_prf/heb_pilot02/RetAndLoc';              % heb_aa
+    '/sni-storage/wandell/data/reading_prf/heb_pilot03/RetAndLoc';              % heb_ls
+    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc_noXform';              % heb_toba
     };
 
 
@@ -237,13 +298,17 @@ list_fsDir = {
     'to be collected';                                              % mw
     '/sni-storage/wandell/data/reading_prf/anatomy/gtiu';           % gt
     '/sni-storage/wandell/data/reading_prf/anatomy/wsato';          % ws
-    '/sni-storage/wandell/data/reading_prf/anatomy/wandell';        % bw
     '/sni-storage/wandell/data/reading_prf/anatomy/leung';          % ol
     '/sni-storage/wandell/data/reading_prf/anatomy/lian';           % tl
     '/sni-storage/wandell/data/reading_prf/anatomy/vitelli';        % mv
     '/sni-storage/wandell/data/reading_prf/anatomy/martinez';       % vm
     '/sni-storage/wandell/data/reading_prf/anatomy/bugno';          % ab
+    '/sni-storage/wandell/data/reading_prf/anatomy/wandell';        % bw
     '/sni-storage/wandell/data/reading_prf/anatomy/brainard';       % dys_ab
+    '/sni-storage/wandell/data/reading_prf/anatomy/goodman';        % heb_ag
+    '/sni-storage/wandell/data/reading_prf/anatomy/Ayzenshtat';     % heb_aa
+    '/sni-storage/wandell/data/reading_prf/anatomy/Shambiro';       % heb_ls
+    '/sni-storage/wandell/data/reading_prf/anatomy/Toba';           % heb_toba
     };
 
 
@@ -267,13 +332,17 @@ list_scanNum_Knk = [
     0;      % mw
     0;      % gt
     0;      % ws
-    0;      % bw
     0;      % ol
     0;      % tl
     0;      % mv
     0;      % vm
     0;      % ab
+    0;      % bw
     2;      % dys_ab
+    6;      % heb_ag
+    6;      % heb_aa
+    6;      % heb_ls
+    6;      % heb_toba
     ];
 
 % a scan number in vista where the Checkers scan was run (204 sec)
@@ -294,13 +363,17 @@ list_scanNum_Checkers = [
     0;      % mw
     0;      % gt
     0;      % ws
-    0;      % bw
     0;      % ol
     0;      % tl
     0;      % mv
     0;      % vm
     0;      % ab
+    0;      % bw
     1;      % dys_ab
+    4;      % heb_ag
+    4;      % heb_aa
+    4;      % heb_ls
+    4;      % heb_toba
     ];
 
 
@@ -322,13 +395,17 @@ list_scanNum_Knk_sessionRet = [
     2;      % mw
     3;      % gt
     3;      % ws
-    1;      % bw
     3;      % ol
     1;      % tl
     3;      % mv
     3;      % vm
     3;      % ab
+    1;      % bw
     3;      % dys_ab
+    6;      % heb_ag
+    6;      % heb_aa
+    6;      % heb_ls
+    6;      % heb_toba
     ]; 
 
 % a scan number in vista where the checkers scan was run (204 sec). 
@@ -349,13 +426,17 @@ list_scanNum_Checkers_sessionRet = [
     1;      % mw
     1;      % gt
     1;      % ws
-    0;      % bw
     1;      % ol
     0;      % tl
     1;      % mv
     1;      % vm
     1;      % ab
+    0;      % bw
     1;      % dys_ab
+    4;      % heb_ag
+    4;      % heb_aa
+    4;      % heb_ls
+    4;      % heb_toba
     ]; 
 
 %% colors
@@ -437,9 +518,6 @@ list_colors = {
 % retModel-Words-run1: word stimulus, run 1, whole brain
 % retModel-Words-run1-lh_VWFA_rl:  word stimulus, run 1, roi
 
-
-
-
 %% dti bookkeeping
 % name of the folder
 % DTI_2mm_96dir_2x_b2000_run1
@@ -448,7 +526,16 @@ list_colors = {
 % -- dti.bval
 
 %% subject indices
-% [1,2,4,7,13,14,17,19]; % males -- all
-% [3,5,6,8,9,10,11,15,18]; % females -- all
-% [13,14,17,19]; % males -- tiled
-% [15,18]; % females -- tiled
+
+
+%% colors
+load('list_colorsPerSub')
+
+
+
+%% new vfc options
+vfc.ellipsePlot     = false; 
+vfc.ellipseLevel    = 0.9;
+vfc.contourPlot     = true; 
+vfc.contourLevel    = 0.9; 
+vfc.contourColor    = [.5 .5 .5];

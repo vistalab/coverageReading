@@ -11,15 +11,15 @@ bookKeeping;
 %% modify here
 
 % subjects and session
-list_subInds = 1:22; 
+list_subInds = 1:20%16:22
 list_path = list_sessionRet; 
 
 % roi
-roiName = 'LV1_rl';
+roiName = 'left_VWFA_rl';
 
 % saving purposes, should be informative
 % can also be empty
-titleDescript = 'Words'; 
+titleDescript = 'Words. Same voxels'; 
 
 list_dtNames = {
 %     'Checkers'
@@ -54,16 +54,9 @@ list_forLegend = {
 legendDescript = list_forLegend;  % list_rmNames
 
 list_colors = {
-    [0.3922    0.3922    0.5020]  % purple
-    [1.0000    0.5647    0.3922]  % orange
-    [0    0.6353    0.3255]       % teal
-%     [1 0 0]; 
-%     [.3 1 .3]
-%     [.3 .3 1]
-%     [1 .2 .2];
-%     [.2 1 .2];
-%     [.2 .2 1];
-%     [.9 .9 .1];
+    [ 0.4745    0.3412    0.6235] % purple
+    [1.0000    0.5373         0] % orange
+    [0.1333    0.6314    0.7294] % teal
     };
 
 contourLevel = 0.9; 
@@ -76,7 +69,7 @@ vfc.newfig          = true;
 vfc.nboot           = 50;                        
 vfc.normalizeRange  = true;              
 vfc.smoothSigma     = true;                
-vfc.cothresh        = 0.1;         
+vfc.cothresh        = 0.2;         
 vfc.eccthresh       = [0 15]; 
 vfc.nSamples        = 128;            
 vfc.meanThresh      = 0;
@@ -85,24 +78,24 @@ vfc.weightBeta      = 0;
 vfc.cmap            = 'hot';						
 vfc.clipn           = 'fixed';                    
 vfc.threshByCoh     = false;                
-vfc.addCenters      = true;                 
+vfc.addCenters      = false;                 
 vfc.verbose         = prefsVerboseCheck;
 vfc.dualVEthresh    = 0;
 vfc.backgroundColor = [.95 .95 .95];
 vfc.color           = [1 0 0]; % yet to figure out what this does
 vfc.fillColor       = [0 1 0]; % yet to figure out what this does 
+vfc.tickLabel       = false; 
 
 % save
 saveDropbox = true; 
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/contours/CI';
 
 
-%% end modification section
-
+%% compute basic things
 % number of ret models
 numDts = length(list_dtNames); 
 
-% loop over subjects
+%% loop over subjects
 for ii = list_subInds
     
     % dirVista
@@ -121,6 +114,10 @@ for ii = list_subInds
     bgcolor = vfc.backgroundColor(1); 
     ContourMatrix3D = bgcolor*ones(vfc.nSamples, vfc.nSamples, 3); 
     
+    % initialize for each subject
+    rmroiCell = cell(1, numDts);% initialize
+    contourCoords = cell(2,numDts);
+    
     for kk = 1:numDts
         
         dtName = list_dtNames{kk};
@@ -136,30 +133,62 @@ for ii = list_subInds
             rmroi = rmGetParamsFromROI(vw); 
             rmroi.sub = subInitials; 
             
-            % get the contour matrix
-            % this is a 2d matrix: 
-            % a 128x128 logical with true at the contour
-            contourMatrixLogical = ff_contourMatrix_make(rmroi, vfc, contourLevel); 
-            
-            % store the contour matrix with colr
-            contourColor = list_colors{kk};
-            
-            % loop over channels
-            % note that a single pixel will only have one color
-            for cc = 1:3
-                channelColor = contourColor(cc); 
-                temChannel = ContourMatrix3D(:,:,cc); 
-                temChannel(contourMatrixLogical) = channelColor;
-                ContourMatrix3D(:,:,cc) = temChannel; 
-            end % loop over contours
-   
-        end % if both rm and roi exists
-        
-    end % loop over ret models (stim types)
+            % store the list of all rmrois so we can find the intersection
+            % of all of them
+            rmroiCell{kk} = rmroi; 
+        end
+    end
     
-    %% plot the 3d coverage plot!
+    % Cell where each element has an rmroi. 
+    % All elements of this outputted cell are of the same voxels
+    rmroiCellSameVox = ff_rmroiGetSameVoxels(rmroiCell, vfc);
+    for kk = 1:numDts
+        rmroiSame = rmroiCellSameVox{kk};
+        
+        RFcov = rmPlotCoveragefromROImatfile(rmroiSame, vfc);
+
+        % get the x and y points of the specified contour level
+        [contourMatrix, contourCoordsX, contourCoordsY] = ...
+            ff_contourMatrix_makeFromMatrix(RFcov,vfc,vfc.ellipseLevel);
+
+        % transform so that we can plot it on the polar plot
+        contourX = contourCoordsX/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange; 
+        contourY = contourCoordsY/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange;
+
+        % store
+        contourCoords{1,kk} = contourX; 
+        contourCoords{2,kk} = contourY; 
+    end 
+    
+    %% plot! TODO: make into function
     close all; 
-    ff_polarPlotFrom3DMatrix(ContourMatrix3D, vfc); 
+    
+    % add polar grid on top
+    p.ringTicks = (1:3)/3*vfc.fieldRange;
+    p.color = 'w';
+    p.backgroundColor = vfc.backgroundColor;
+    p.tickLabel = vfc.tickLabel; 
+    polarPlot([], p);
+    hold on; 
+    
+    
+    % add pRF centers if requested
+    if vfc.addCenters,
+        inds = data.subEcc < vfc.fieldRange;
+        plot(data.subx0(inds), data.suby0(inds), '.', ...
+            'Color', [.5 .5 .5], 'MarkerSize', 4);
+    end
+    
+    % loop through contours
+    for kk = 1:numDts
+        
+        contourColor = list_colors{kk};
+        x = contourCoords{1,kk};
+        y = contourCoords{2,kk};
+        
+        plot(x,y,'-', 'Color',contourColor, 'LineWidth',2)
+        
+    end
     
     
     %% plot properties
@@ -175,7 +204,7 @@ for ii = list_subInds
     % title
     roiNameDescript = ff_stringRemove(roiName, '_rl'); 
     titleName = {
-        ['Contour Coverage.' roiNameDescript '. ' subInitials '.' titleDescript];
+        ['Contour Coverage within individual.' roiNameDescript '. ' subInitials '.' titleDescript];
         ['ContourLevel: ' num2str(contourLevel)];
         mfilename;
         };

@@ -8,7 +8,7 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % subjects to do this for
-list_subInds = [20:22]; 
+list_subInds = 1:20; 
 
 roisToCombine = {
     'left_VWFA_rl'

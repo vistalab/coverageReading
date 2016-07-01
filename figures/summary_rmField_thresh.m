@@ -10,7 +10,7 @@ list_path = list_sessionRet;
 
 % subjects to analyze (indices defined in bookKeeping.m)
 % sometimes we only want to do a subset of the subjects, or only look at 1
-list_subInds = [1:4 6:19]; 
+list_subInds = 1%[1:4 6:19]; 
 
 % give another description to put in the title and to save, otherwise plots
 % may be overwritten

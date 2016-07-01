@@ -5,7 +5,7 @@ clear all; close all; clc;
 bookKeeping;
 
 % subjects we want to do this for, see bookKeeping
-list_subInds = [17 14 4 1 21 11];
+list_subInds = 1; 
 
 % the list
 theList = list_sessionRet; % list_sessionPath
@@ -41,7 +41,7 @@ list_rmNames = {
 
 vfc.prf_size        = true; 
 vfc.fieldRange      = 15;
-vfc.method          = 'max';         
+vfc.method          = 'density';         
 vfc.newfig          = true;                      
 vfc.nboot           = 50;                          
 vfc.normalizeRange  = true;              

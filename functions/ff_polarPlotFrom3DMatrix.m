@@ -1,5 +1,6 @@
-function ff_polarPlotFrom3DMatrix(rfcov, vfc)
-% ff_polarPlotFrom3DMatrix(rfcov, vfc)
+function ff_polarPlotFrom3DMatrix(rfcov, vfc, varargin)
+% ff_polarPlotFrom3DMatrix(rfcov, vfc, varargin)
+% ff_polarPlotFrom3DMatrix(rfcov, vfc, 'rmroi', rmroi, 'data', data)
 % When we just have a matrix, lots of little steps to make a presentable
 % coverage map (axis and black circle and grid lines etc). 
 % This function tries to take care of that. 
@@ -15,6 +16,15 @@ function ff_polarPlotFrom3DMatrix(rfcov, vfc)
 
 figure; hold on; 
 
+%% optional input parameter: rmroi struct
+pa = inputParser; 
+pa.addOptional('rmroi', []);
+pa.addOptional('data',[]);
+pa.parse(varargin{:});
+rmroi = pa.Results.rmroi;
+if iscell(rmroi), rmroi = {1}; end; 
+
+%%
 % specify for the polar angle plot
 inc = linspace(-vfc.fieldRange,vfc.fieldRange, vfc.nSamples);
 

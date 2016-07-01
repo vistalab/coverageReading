@@ -11,14 +11,19 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % subjects to do this for, see bookKeeping
-list_subInds = [1:15, 17:21];
-% [1:15, 17:21] % everyone except bw, rl, mb
-
+list_subInds = [2:5 7:8 10:11]% 
 
 % rois we want to look at
 list_roiNames = {
-    'LV2v_rl'
-    'left_VWFA_rl'
+%     'combined_VWFA_rl'
+%     'right_VWFA_rl'
+%     'ch_PPA_Place_rl'
+%     'rh_PPA_Place_rl'
+%     'lh_ventral_3_rl'
+    'lh_pFusFace_rl'
+    'lh_mFusFace_rl'
+    'rh_pFusFace_rl'
+    'rh_mFusFace_rl'
     };
 
 % data types we want to look at
@@ -28,7 +33,7 @@ list_dtNames = {
 %     'WordSmall'
 %     'FaceSmall'
 %     'FaceLarge'
-%     'Checkers'
+    'Checkers'
     };
 
 % names of the rm in each dt
@@ -38,29 +43,13 @@ list_rmNames = {
 %     'retModel-WordSmall-css.mat';
 %     'retModel-FaceSmall-css.mat';
 %     'retModel-FaceLarge-css.mat';
-%     'retModel-Checkers-css.mat'
+    'retModel-Checkers-css.mat'
     };
 
 % visual field plotting thresholds
-vfc.prf_size        = true; 
-vfc.fieldRange      = 15;
-vfc.method          = 'max';         
-vfc.newfig          = true;                      
-vfc.nboot           = 50;                          
-vfc.normalizeRange  = true;              
-vfc.smoothSigma     = true;                
-vfc.cothresh        = 0.2;         
-vfc.eccthresh       = [0 15]; 
-vfc.nSamples        = 128;            
-vfc.meanThresh      = 0;
-vfc.weight          = 'varexp';  
-vfc.weightBeta      = 0;
-vfc.cmap            = 'hot';						
-vfc.clipn           = 'fixed';                    
-vfc.threshByCoh     = false;                
-vfc.addCenters      = false;                 
-vfc.verbose         = prefsVerboseCheck;
-vfc.dualVEthresh    = 0;
+vfc = ff_vfcDefault; 
+vfc.contourPlot = true;  
+vfc.cothresh = 0.05; 
 
 % save
 % saveDir = '/biac4/wandell/data/reading_prf/forAnalysis/images/working/';
@@ -150,7 +139,7 @@ for jj = 1:numRois
         saveas(gcf, fullfile(saveDir, [titleName{1} '.png']), 'png');
         saveas(gcf, fullfile(saveDir, [titleName{1} '.fig']), 'fig');
         if saveDropbox
-            save_figureToDropbox
+            ff_dropboxSave;
         end
         
     end

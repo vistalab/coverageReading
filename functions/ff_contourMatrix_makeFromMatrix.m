@@ -1,6 +1,6 @@
-function contourMatrix = ff_contourMatrix_makeFromMatrix(matrix,vfc,contourLevel)
+function [contourMatrix, contourCoordsX, contourCoordsY] = ff_contourMatrix_makeFromMatrix(matrix,vfc,contourLevel)
 %% returns the logical contour matrix 
-% contourMatrix = ff_contourMatrix_makeFromMatrix(matrix,vfc, contourLevel) 
+% [contourMatrix, contourCoordsX, contourCoordsY] = ff_contourMatrix_makeFromMatrix(matrix,vfc,contourLevel)
 
 % Pick a threshold after which contour point will be discontinuous
 threshDist = 25; 
@@ -39,6 +39,14 @@ for bb = 1:length(tema)
     end            
 end
 
+if ~isempty(contourCoords)
+    contourCoordsX = contourCoords(1,:);
+    contourCoordsY = contourCoords(2,:);
+else 
+    contourCoordsX = [];
+    contourCoordsY = []; 
+end
+
 
 %% make an image matrix that is 0 everywhere except for this at this
 % contour 
@@ -46,6 +54,10 @@ contourMatrix = zeros(vfc.nSamples, vfc.nSamples);
 for cc = 1:length(contourCoords)
     xpos = round(contourCoords(2,cc)); 
     ypos = round(contourCoords(1,cc)); 
+    
+    if xpos == 0, xpos = 1; end
+    if ypos == 0; ypos = 1; end
+
     contourMatrix(xpos, ypos) = 1; 
 end
 contourMatrix = logical(contourMatrix); 

@@ -1,0 +1,33 @@
+%% Data from Israel in a different setup. Take notes here. 
+% Subject is heb_pilot01
+
+%% resolution of the functionals
+
+%% Inplane and T1 -- things in the Analyze/T1 folder
+% resolution of functional data 
+
+% 20160421_203233s008a1001.nii -- 
+% INPLANE
+% very cropped. makes for distortion
+% size(nii.data) =  320   320    48 
+% nii.pixdim = [.75 .75 3]
+
+
+% 20160421_203233t1fl2dsags005a1001 --------------------------------------
+% probably identical to the one above? (inplane)
+
+% 20160421_203233trat1mprages009a1001.nii -------------------------------
+% original T1
+
+% o20160421_203233trat1mprages009a1001.nii ----------------------------
+% T1 after reorienting
+
+% co20160421_203233trat1mprages009a1001.nii ----------------------------
+% T1 after cropping (and after reorienting)
+
+%% compress into 4D nifti
+% 'fourD.nii' is the same file as 'func.nii'
+'func.nii'
+
+%% canonical xform
+'func_xform.nii'

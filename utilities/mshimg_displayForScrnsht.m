@@ -13,7 +13,9 @@ bookKeeping;
 list_dirVista = list_sessionRet; 
 
 % subjects we want to get mesh screenshots for. based on list_dirVista
-subsToSee = [14:16, 18:19]; %1:length(list_dirVista); 
+subsToSee = 12%[13:20]; %1:length(list_dirVista); 
+list_sub{subsToSee}
+% [1:15 17:21]
 
 % which hemisphere do we want to see? left or right
 input.hemisphere = {'left'};
@@ -24,7 +26,7 @@ input.hemisphere = {'left'};
 % 'autumnCmap' or 'hotCmap':  category selectivity
 % 'jetCmap': prf amp map
 % 'hsvTbCmap': ecc map
-input.cmap = 'hsvTbCmap'; 
+input.cmap = 'hotCmap'; 
 
 % scan number. 
 input.scan_num = 1;  
@@ -32,22 +34,23 @@ input.scan_num = 1;
 % name of roi
 % if we don't want an roi, write the empty string
 % will assume that roi is in shared directory
-input.roiname = 'LV1_rl'; %'rh_WordVAll_rl.mat'; 
+input.roiname = 'left_VWFA_rl-mask'; %'rh_WordVAll_rl.mat'; 
 
 % roi color
-input.roicolor = 'k'; 
+input.roicolor = 'b'; 
 
 % type of map we want to load.
 % 'parameter' for parameter map
 % 'prf' for retinotopy model
-input.mapType = 'prf'; % 'parameter'
+input.mapType = 'parameter'; % 'parameter' 'prf'
 
 % pick the views
 % input.angles = {'lateral_lh' 'medial_lh' 'ventral_lh'};
-input.angles = {'medial_lh'};
+input.angles = {'ventral_lh'}; % do only a single angle for now
 
 % directory where we want to save
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/paramMaps';
+saveDropbox = false; 
 
 % extension we want to save as
 extSave = 'png'; 
@@ -55,7 +58,9 @@ extSave = 'png';
 %% modify here: things to define if loading a simple parameter map
 % name of parameter map
 % 'varExp_CheckersMinusWords.mat'; 
-input.map = 'WordVFace_Scrambled.mat'; 
+% 'WordVFace_Scrambled'
+% 'WordVAll.mat'
+input.map = 'WordVAll.mat';%'WordVFace_Scrambled.mat'; 
 
 % threshold of the parameter map values: [mapWinMin, mapWinMax], % respectively. 
 % only show values greater than mapWinMin AND less than mapWinMax
@@ -170,6 +175,12 @@ for ii = subsToSee
     
     %% save the image
     
+    % title name for saving
+    subInitials = list_sub{ii};
+    roiName = ff_stringRemove(input.roiname, '_rl'); 
+    theAngle = input.angles{1}; 
+    titleName = ['Mesh. ' theAngle '. ' roiName '. ' subInitials];
+    
     % create the directory if it does not exist
     if ~exist(fullfile(saveDir, mName),'dir')
         mkdir(saveDir, mName)
@@ -177,6 +188,7 @@ for ii = subsToSee
     
     % save
     saveas(gcf, savePath, extSave)
+    if saveDropbox, ff_dropboxSave('title', titleName); end; 
     
     close all; 
 end

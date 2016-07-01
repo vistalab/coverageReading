@@ -1,9 +1,5 @@
 %% plot contours on an individual level basis
 % we will get a CI if we do it for mutliple ret models --
-% ASSUMES that the dtname ends in _Remove_Sweep{x}
-% Ex: dtName = 'Words' --> 'Words_Remove_Sweep{x}'
-% TYPICAL NAMING CONVENTION??
-% retModel-{dtName}-{roiName}
 
 % this will give us a confidence interval
 % Have the graph be "graded" in shades -- the part where every contour
@@ -16,7 +12,7 @@ bookKeeping;
 %% modify here
 
 % the group we want to sample over, as indicated by bookKeeping
-list_subInds = [1:11 13];
+list_subInds = [1:20];
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
 list_path = list_sessionRet; % list_sessionPath; % list_sessionSizeRet;
@@ -32,45 +28,30 @@ list_roiNames = {
 % datatype names
 % ff_stringRemoveSweeps('Words_Remove_Sweep', 8,[])
 list_dtNames = {
-    'Checkers'
-    'Checkers1and2'
-    'Checkers2and3'
+%     'Checkers'
+%     'Checkers1and2'
+%     'Checkers2and3'
+    'Words1'
+    'Words2'
     };
 
 % rm names
 % ff_stringRemoveSweeps('retModel-Words_Remove_Sweep', 8, '-css.mat');
 list_rmNames = {
-    'retModel-Checkers-css.mat'
-    'retModel-Checkers1and2-css-left_VWFA_rl.mat'
-    'retModel-Checkers2and3-css-left_VWFA_rl.mat'
+%     'retModel-Checkers-css.mat'
+%     'retModel-Checkers1and2-css-left_VWFA_rl.mat'
+%     'retModel-Checkers2and3-css-left_VWFA_rl.mat'
+    'retModel-Words1-css.mat'
+    'retModel-Words2-css.mat'
     };
 
 % contour level
 list_contourLevels = [
-    .9
+    .5
     ];
 
 % vfc threshold
-vfc.prf_size        = true; 
-vfc.fieldRange      = 15;
-vfc.method          = 'max';         
-vfc.newfig          = true;                      
-vfc.nboot           = 50;                          
-vfc.normalizeRange  = true;              
-vfc.smoothSigma     = true;                
-vfc.cothresh        = 0.2;         
-vfc.eccthresh       = [0 15]; 
-vfc.nSamples        = 128;            
-vfc.meanThresh      = 0;
-vfc.weight          = 'varexp';  
-vfc.weightBeta      = 0;
-vfc.cmap            = 'hot';						
-vfc.clipn           = 'fixed';                    
-vfc.threshByCoh     = false;                
-vfc.addCenters      = true;                 
-vfc.verbose         = prefsVerboseCheck;
-vfc.dualVEthresh    = 0;
-
+vfc = ff_vfcDefault; 
 % save 
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/contours/CI';
 saveDropbox = true; 
@@ -223,13 +204,7 @@ for ii = 1:numSubs
             title(titleName)
 
             %% save
-            saveas(gcf, fullfile(saveDir, [titleName '.png']), 'png')
-            saveas(gcf, fullfile(saveDir, [titleName '.fig']), 'fig')
-            if saveDropbox
-                dropboxDir = '/home/rkimle/Dropbox/TRANSFERIMAGES/';
-                saveas(gcf, fullfile(dropboxDir, [titleName '.png']), 'png')
-                saveas(gcf, fullfile(dropboxDir, [titleName '.fig']), 'fig')
-            end
+            ff_dropboxSave; 
         end
    
     end

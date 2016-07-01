@@ -1,0 +1,10 @@
+%% subject indices for rois that have been drawn
+
+lh_pFusFace_rl      [1:9 11 15] 
+lh_mFusFace_rl      [1:11 14 15]
+
+lh_pFusFace_rl      [2:12]
+lh_mFusFace_rl      [1:12]
+
+
+intsection: [2:11]

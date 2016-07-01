@@ -40,8 +40,8 @@ list_rois = {
 % variance explained (co), eccentricity (ecc), effective size (sigma)
 % 'numvoxels' for number of voxels in roi
 % fieldToPlotDescript is for axis labels and plot titles
-fieldToPlot         = 'ecc'; 
-fieldToPlotDescript = 'ecc'; 
+fieldToPlot         = 'co'; 
+fieldToPlotDescript = 'Variance Explained'; 
 
 % if we want to threshold the values
 % if we don't want to threshold, comment these lines out
@@ -50,11 +50,11 @@ fieldToPlotDescript = 'ecc';
 
 % subjects to analyze (indices defined in bookKeeping.m)
 % sometimes we only want to do a subset of the subjects, or only look at 1
-subsToAnalyze = [1:11]; %1:length(list_sub); 
+subsToAnalyze = 1%[1:20]; %1:length(list_sub); 
 
 % list of stim types to look at
 list_rmNames = {
-%     'Checkers'; 
+    'Checkers'; 
     'Words'; 
 %     'FalseFont'; 
 }; 

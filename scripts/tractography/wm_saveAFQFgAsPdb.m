@@ -19,7 +19,7 @@ bookKeeping;
 %% modify here
 
 % subjects we want to do this for
-list_subInds = [9];
+list_subInds = 4;
 
 
 %% end modification section

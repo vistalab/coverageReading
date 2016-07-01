@@ -16,7 +16,7 @@ bookKeeping;
 %% modify here
 
 % subjects we want to do this for. see bookKeeping
-list_subInds = 12%[1:4 6:13];
+list_subInds = 8%[1:4 6:13];
 
 % condition names of the kidLoc:
 % add 1 to what is in the par file (eg Fixation is condition 0 in the parfile)

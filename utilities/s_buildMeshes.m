@@ -4,7 +4,7 @@ bookKeeping;
 
 %% make any modifications here
 % subject number we want to make mesh for, as indicated by bookKeeping
-subInd = 12;
+subInd = 26;
 
 % session path
 list_path = list_sessionRet; 

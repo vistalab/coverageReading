@@ -4,10 +4,10 @@
 
 
 %% modify
-newroi.color    = 'b';
-newroi.name     = 'LV1_example'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 
+newroi.color    = 'w';
+newroi.name     = 'LV1_foveal'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 
 newroi.comment  = '';
-restrictToFunc  = 0;  % 0 for visual field maps, 1 for categories
+restrictToFunc  = 1;  % 0 for visual field maps, 1 for categories
 saveWhere       = 0; % 1 = local, 0 = shared
 % 'lh_VWFA_rl'          : on the inferior temporal sulcus (iTS), posterior of
 %       the mid-fusiform suclus. also sometimes on posterior fusiform

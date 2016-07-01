@@ -1,4 +1,4 @@
-function ellipse_t = ff_fit_ellipse( x,y,axis_handle )
+function ellipse_t = ff_fit_ellipse( x,y,axis_handle, varargin)
 %
 % Copyright (c) 2003, Ohad Gal
 % All rights reserved.
@@ -158,7 +158,12 @@ function ellipse_t = ff_fit_ellipse( x,y,axis_handle )
 %   Orientation = phi
 %
 %
+%% TODO: input parser
 
+ellipseColor = [0 0 1];
+
+
+%%
 % initialize
 orientation_tolerance = 1e-3;
 
@@ -286,8 +291,11 @@ if (nargin>2) & ~isempty( axis_handle ) & (test>0)
     % draw
     hold_state = get( axis_handle,'NextPlot' );
     set( axis_handle,'NextPlot','add' );
-    plot( new_ver_line(1,:),new_ver_line(2,:),'r' );
-    plot( new_horz_line(1,:),new_horz_line(2,:),'r' );
-    plot( rotated_ellipse(1,:),rotated_ellipse(2,:),'r' );
+    % plot( new_ver_line(1,:),new_ver_line(2,:), ...
+    % ellipseColor);
+    % plot( new_horz_line(1,:),new_horz_line(2,:), ...
+    % ellipseColor);
+    plot( rotated_ellipse(1,:),rotated_ellipse(2,:), ...
+        'Color',ellipseColor, 'LineWidth',2);
     set( axis_handle,'NextPlot',hold_state );
 end

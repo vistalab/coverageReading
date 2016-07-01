@@ -7,7 +7,7 @@ clc;
 list_path = list_sessionRet; 
 
 % dt names to check
-dtName = 'FaceSmall';
+dtName = 'Words_restingState';
 
 
 %% end modification section

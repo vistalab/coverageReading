@@ -13,7 +13,7 @@ bookKeeping;
 %% modify here
 
 % subject number to xform -- position in bookKeeping
-list_subInds = [12]; 
+list_subInds = [8]; 
 
 %% end modification section
 
@@ -32,10 +32,10 @@ nameParamMaps   = {
     'WordVNumber.mat'; 
     'NumberVAll.mat'; 
     'PlaceVAll.mat';
-%     'Residual Variance.mat'; 
-%     'Proportion Variance Explained.mat';  
-%     'BodyVAll.mat'
-%     'BodyLimbVAll.mat'
+    'Residual Variance.mat'; 
+    'Proportion Variance Explained.mat';  
+    'BodyVAll.mat'
+    'BodyLimbVAll.mat'
     }; 
 
 srcScan = 1; 

@@ -9,9 +9,9 @@ bookKeeping;
 
 % names of the roi
 list_rois = {
-    'rh_pFus_Face_rl';
-    'lh_pFus_Face_rl';
-    'lh_mFus_Face_rl';
+%     'rh_pFus_Face_rl';
+%     'lh_pFus_Face_rl';
+%     'lh_mFus_Face_rl';
 %     'LV1_rl'
 %     'LV2v_rl'
 %     'LV3v_rl'
@@ -21,6 +21,7 @@ list_rois = {
 %     'ch_VWFA_rl'
 %     'rh_pFus_Face_rl'
 %     'ch_PPA_Place_rl'
+    'left_VWFA_rl'
     }; 
 
 % field to plot. Ex:  
@@ -34,26 +35,26 @@ getRidOfLastBin     = true;
 
 % subjects to analyze (indices defined in bookKeeping.m)
 % sometimes we only want to do a subset of the subjects, or only look at 1
-list_subInds =  [1:4 6:12];
+list_subInds =  1% [1:4 6:12];
 
 
 % list of data types to look at. Does this for every ROI
 list_dtNames = {
-    'Checkers';
+%     'Checkers';
     'Words'; 
-    'FalseFont'; 
+%     'FalseFont'; 
 }; 
 
 % names of the ret model in the corresponding dt
 list_rmNames = {
-    'retModel-Checkers.mat'
+%     'retModel-Checkers.mat'
     'retModel-Words.mat'
-    'retModel-FalseFont.mat'
+%     'retModel-FalseFont.mat'
     };
 
 % which rms are we comparing? 
 % we could be describing stim types
-rmCompareDescript = 'Checkers Word FalseFont Comparison';
+rmCompareDescript = 'Words ';
 
 % colors corresponding to stim types
 list_colors = {
@@ -64,10 +65,7 @@ list_colors = {
     };
 
 % values to threshold the RM struct by
-h.threshco = 0.1;
-h.threshecc = [0 15];
-h.threshsigma = [0 30];
-h.minvoxelcount = 0;
+vfc = ff_vfcDefault; 
 
 % save
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/histograms/';
@@ -144,7 +142,7 @@ for jj = 1:numRois
                 rmroi = rmGetParamsFromROI(vw);
 
                 % get the thresholded rmroi struct
-                rmroi_thresh = ff_thresholdRMData(rmroi,h);
+                rmroi_thresh = ff_thresholdRMData(rmroi,vfc);
 
                 if ~isempty(rmroi)
                     g =  eval(['rmroi.' fieldToPlot]); 

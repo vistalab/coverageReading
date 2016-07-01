@@ -10,7 +10,7 @@ bookKeeping;
 %% modify  --------------------------------------------------------------------------
 
 % subjects we want to do this for
-list_subInds = [21]; 
+list_subInds = [14:20]; 
 
 % session list. see bookKeeping
 list_path = list_sessionRet; 
@@ -23,16 +23,13 @@ list_numKnk = list_scanNum_Knk_sessionRet;
 
 % dataTYPE name. Can run for mutiple datatypes 
 list_rmName = {
-    'Checkers1and2'
+    'Words_scale1mu0sig1'
     }; 
 
 % roi name. assumes in shared directory
 % if we want to run on the whole brain, assign this the empty string ''
 % assign this to be a string in a cell otherwise {'LV1_rl'}
-% list_rois = {
-%     'ch_VWFA_rl'
-%     };
-list_rois = ''; 
+list_rois = {'left_VWFA_rl'}; 
 
 % prf model. Specify in a cell. Options: 
 % {'one oval gaussian' | 'onegaussian' | 'css'}

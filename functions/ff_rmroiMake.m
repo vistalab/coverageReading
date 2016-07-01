@@ -1,8 +1,8 @@
 function rmroi = ff_rmroiMake(roiName, list_subInds, dtName, rmName)
 %% function that will make the rmroi struct for a given list of subjects
 % rmroi = ff_rmroiMake(roiName, list_subInds, dtName, rmName)
-% This function comes in handy when we don't want to commit to a certain rm
-% model, roi defintion, subject list, etc.
+% use ff_rmroiCell instead. more updated.
+% this should be deleted ...
 
 
 %% define and initialize some things

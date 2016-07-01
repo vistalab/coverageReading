@@ -1,11 +1,23 @@
-function ff_dropboxSave()
+function ff_dropboxSave(varargin)
 
-%% grabs the current figure and its title and saves it to dropbox
+%% Grabs the current figure and saves it to dropbox
+% If there are no inputs, grabs the figure title and uses this as the
+% filename
+% Otherwise: ff_dropboxSave('title', 'theTitleNameThatYouWant')
+
+%% If no inputs, grabs the current figure title and saves it to dropbox
 % filename is title name
 % saves both the .png and .fig file
 
 dropboxDir = '/home/rkimle/Dropbox/TRANSFERIMAGES/';
-titleName = get(get(gca, 'title'), 'String'); 
+
+%% input parser
+p = inputParser; 
+addOptional(p, 'title', get(get(gca, 'title'), 'String')); 
+parse(p, varargin{:});
+titleName = p.Results.title; 
+
+%%
 
 if iscell(titleName)
     titleName = ff_cellstring2string(titleName); 

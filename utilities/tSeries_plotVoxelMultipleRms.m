@@ -13,13 +13,13 @@ bookKeeping;
 subInd = 1; 
 
 % session list as a string
-listName =  'list_sessionPath';
+list_path =  list_sessionRet;
 
 % coords of the voxel we want. a 3 x 1  vector!!!!!!!!
 % we can find these coordinates from the rmPlotGUI
 % alternatively, if we specify an ROI, it will do this for every voxel in
 % the roi
-points = 'lh_VWFA_rl';
+points = [ 126   164    53]';
 
 % time series of voxels individually (1) or of the mean tseries of the roi (0)?
 individualVoxel = 1; 
@@ -28,21 +28,31 @@ individualVoxel = 1;
 list_stimTypes = {
     'Words'
 %    'Checkers'
-    'FalseFont'
+%     'FalseFont'
 %    'WordAverage';
 %    'WordSmall';
 %     'WordLarge';
 %      'FaceSmall';
 %     'FaceLarge';
+    'Words_scale1mu0sig1p5'
     };
 
 
 % colors corresponding to stim types
 list_colors = {
-    [.9 .1 .6];
-%    [.8  .3 .3];
-%     [.2 .8 .7];
-     [.4 .9 .3];
+     [0.5294    0.0471    0.6510]   % purple
+     [ 0    0.0667    1.0000]       % blue
+%     [.9 .1 .6];
+% %    [.8  .3 .3];
+% %     [.2 .8 .7];
+%      [.4 .9 .3];
+    };
+
+% '-' solid line, default
+% ':' dotted line
+% ''
+list_markers = {
+    ''
     };
 
 % save directory
@@ -54,12 +64,9 @@ saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/tSeri
 % number of stim types
 numStims = length(list_stimTypes);
 
-% session list
-theList = eval(listName); 
-
 %% the view
 % subject's vista dir. go there. initalize the vew
-dirVista = theList{subInd}; 
+dirVista = list_path{subInd}; 
 chdir(dirVista); 
 vw = initHiddenGray; 
 
@@ -149,6 +156,7 @@ for vv = 1:numVoxels
         % plotMeanTSeries will return <data> which has 2 fields
         % frameNumbers: [96x1 double]
         % tSeries: [96x1 single]    
+        figure; 
         data = plotMeanTSeries(vw);
 
         % store the data so we can plot it later
@@ -166,6 +174,15 @@ for vv = 1:numVoxels
 end
 
 %% do the plotting -----------------------------------------------------
+
+list_markers = {
+    '-'
+    '--'
+    };
+list_lineWidths = [
+    2.5;
+    1.5;
+    ];
 
 for vv = 1:numVoxels
     close all; figure; 
@@ -186,11 +203,14 @@ for vv = 1:numVoxels
     
     for kk = 1:numStims
 
-        % color corresponding to stim type
+        % color and marker corresponding to stim type
         stimColor = list_colors{kk}; 
+        markerType = list_markers{kk};
+        lineWidth = list_lineWidths(kk);
 
-        plot(TS{kk,1}, TS{kk,2}, 'Color', stimColor, ...
-            'LineWidth', 2);
+        plot(TS{kk,1}, TS{kk,2}, markerType, ...
+            'Color', stimColor, ...
+            'LineWidth', lineWidth);
         hold on
 
     end
@@ -205,10 +225,12 @@ for vv = 1:numVoxels
 
     % save
     subInitials = list_sub{subInd};
-    titleName = [subInitials '. tseries from ' voxCoordsString];
+    titleName = {
+        [subInitials '. tseries from ' voxCoordsString]
+        [mfilename]
+        };
     title(titleName, 'FontWeight', 'Bold')
-    saveas(gcf, fullfile(saveDir, [titleName '.png']), 'png')
-    saveas(gcf, fullfile(saveDir, [titleName '.fig']), 'fig')
+    ff_dropboxSave;
     
 end
 

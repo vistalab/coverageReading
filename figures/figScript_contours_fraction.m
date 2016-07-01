@@ -15,16 +15,21 @@ bookKeeping;
 %% modify here
 
 % the group we want to sample over, as indicated by bookKeeping
-list_subInds = [1:15, 17:21];
-% [1:15, 17:21] % everyone except bw, rl, mb
+list_subInds = [1:2, 4:11, 13:17]
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
 list_path = list_sessionRet; 
 
 % the roi we're interested in
-% 'lh_ventralSurface_rl' 'lh_VWFA_wordVfacescrambled_rl' 'lh_VWFA_fullField_rl' 'left_VWFA_rl'
+% 'lh_ventralSurface_rl' 'lh_VWFA_wordVfacescrambled_rl'
+% 'lh_VWFA_fullField_rl' 'left_VWFA_rl' 'VWFA_mni_-45_-57_-12'
 list_roiNames = {
-    'left_VWFA_rl'
+    'lh_ventral_rl'
+%     'right_VWFA_rl'
+%     'right_VWFA_rl'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
     };
 
 % stimulus description, plotting purposes
@@ -32,11 +37,13 @@ list_roiNames = {
 list_stimDescript = {
 %     'WordLarge. css'
 %     'WordSmall. css'
+    'Checkers. css'
     'Words. css'
-%     'Checkers. css'
 %     'FaceLarge. css'
 %     'FaceSmall. css'
 %     'FalseFont. css'
+%     'Words_scale1mu0sig1. css'
+%     'Words_scale1mu0sig1p5. css'
     };
 
 % datatype names
@@ -45,28 +52,34 @@ list_stimDescript = {
 list_dtNames = {
 %     'WordLarge'
 %     'WordSmall'
+    'Checkers'
     'Words'
-%     'Checkers'
 %     'FaceLarge'
 %     'FaceSmall'
 %     'FalseFont'
+%     'Words_scale1mu0sig1'
+%     'Words_scale1mu0sig1p5'
     };
 
 % rm names
 list_rmNames = {
 %     'retModel-WordLarge-css.mat'
 %     'retModel-WordSmall-css.mat'
+    'retModel-Checkers-css.mat'
     'retModel-Words-css.mat'
-%     'retModel-Checkers-css.mat'
 %     'retModel-FaceLarge-css.mat'
 %     'retModel-FaceSmall-css.mat'
 %     'retModel-FalseFont-css.mat'
+%     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'
+%     'retModel-Words_scale1mu0sig1p5-css-left_VWFA_rl.mat'
     };
 
 % contour level
 list_contourLevels = [
-    .5
+    0.5
+    0.9
     ];
+
 
 % vfc threshold
 vfc.prf_size        = true; 
@@ -82,13 +95,21 @@ vfc.nSamples        = 128;
 vfc.meanThresh      = 0;
 vfc.weight          = 'varexp';  
 vfc.weightBeta      = true;
-vfc.cmap            = 'hot';						
+vfc.cmap            = 'jet';						
 vfc.clipn           = 'fixed';                    
-vfc.threshByCoh     = false;                
+vfc.threshByCoh     = true;                
 vfc.addCenters      = true;                 
 vfc.verbose         = prefsVerboseCheck;
 vfc.dualVEthresh    = 0;
-
+vfc.backgroundColor = [.9 .9 .9]; 
+vfc.ellipsePlot     = false; 
+vfc.ellipseLevel    = 0.9;
+vfc.ellipseColor    = [1 0 0];
+vfc.contourPlot     = false; 
+vfc.contourLevel    = 0.9; 
+vfc.contourColor    = [0 0 0];
+vfc.tickLabel       = false; 
+ 
 % save 
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/contours/CI';
 

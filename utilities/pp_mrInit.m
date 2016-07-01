@@ -12,36 +12,45 @@ params = mrInitDefaultParams;
 %% modify here
 
 % specify session path. usually this script is saved right there 
-dirVista = pwd; 
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot02/RetAndLoc'; 
 
 % specify inplane
-path_inplane = fullfile(dirVista,'5_1_24mm_Inplane_MUX','inplane_xform.nii.gz'); 
+path_inplane = fullfile(dirVista,'T1','inplane_pseudo.nii.gz'); 
 
 % specify 3DAnatomy file
-% will look in /biac4/wandell/data/anatomy/{lastName}/t1.nii.gz;
-lastName = 'khazenzon'; 
+path_anatomy = '/biac4/wandell/data/anatomy/Ayzenshtat/t1.nii.gz'; 
 
 % specify the functional files
 path_functionals = {
-    fullfile(dirVista, '7_1_BOLD_mux3_24mm_1sec', 'func_xform.nii.gz')
-    fullfile(dirVista, '8_1_BOLD_mux3_24mm_1sec', 'func_xform.nii.gz')
-    fullfile(dirVista, '9_1_BOLD_mux3_24mm_1sec', 'func_xform.nii.gz')
+    fullfile(dirVista, 'Localizer_English', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Localizer_Hebrew', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Ret_Checkers1', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Ret_Checkers2', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Ret_English1', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Ret_English2', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Ret_Hebrew1', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Ret_Hebrew2', 'func_xform.nii.gz');
     }; 
 
 % session code
-params.sessionCode  = 'ak_loc'; 
+params.sessionCode  = 'heb_pilot02_aa'; 
 
 % subject name
-params.subject      = 'ak';
+params.subject      = 'aa';
 
 % description
-params.description  = 'ak_loc'; 
+params.description  = 'hebrew, english, checker ret, large fov localizer'; 
 
 % note for each of the functional scans
 params.annotations  = {
-    'loc_run1';
-    'loc_run2';
-    'loc_run3';
+    'Localizer_English'
+    'Localizer_Hebrew'
+    'Ret_Checkers1'
+    'Ret_Checkers2'
+    'Ret_English1'
+    'Ret_English2'
+    'Ret_Hebrew1'
+    'Ret_Hebrew2'
     }; 
 
 % specify frames to keep. nScans x 2 matrix describing which frames to keep from 
@@ -52,10 +61,16 @@ params.annotations  = {
 %
 % localizer: clip 6 seconds, TR of 2. so clip 3 frames
 % retinotopy: clip 12 seconds, TR of 2. so clip 6 frames
+% TILED localizer automatically clips 3 frames. so just clip 3 and keep 144 frames
 params.keepFrames = [
-    [3, -1];
-    [3, -1];
-    [3, -1];
+    [3, 144];
+    [3, 144];
+    [3, 144];
+    [3, 144];
+    [3, 144];
+    [3, 144];
+    [3, 144];
+    [3, 144];
     ];
 
 % specify parfiles (for localizer) {1 x nScans}
@@ -67,9 +82,6 @@ params.keepFrames = [
 %     };
 
 %%  no need to modify below here 
-
-% t1 path
-path_anatomy = fullfile('/biac4/wandell/data/anatomy/', lastName, 't1.nii.gz'); 
 
 % check that all specified files exist
 check_exist(dirVista);

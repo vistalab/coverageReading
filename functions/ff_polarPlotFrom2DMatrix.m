@@ -21,7 +21,7 @@ inc = linspace(-vfc.fieldRange,vfc.fieldRange, vfc.nSamples);
 c = makecircle(vfc.nSamples);  
 
 % overlap the black circle thing with each channel
-% (Because note that rfcov is 3D)
+% (Because note that rfcov might be 3D)
 rfcov_black = rfcov .*c; 
 
 % overlap the contour with the prob map
@@ -32,6 +32,14 @@ imagesc(inc, inc', rfcov_black);
 % add polar grid on top
 p.ringTicks = (1:3)/3*vfc.fieldRange;
 p.color = 'w';
+
+if isfield(vfc, 'tickLabel')
+    p.tickLabel = vfc.tickLabel;
+end
+
 polarPlot([], p);
+
+% colormap
+colormap(vfc.cmap)
 
 end

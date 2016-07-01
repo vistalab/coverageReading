@@ -6,34 +6,35 @@ bookKeeping;
 %% modify here
 
 % looking at an individual subject. Bookkeeping index number
-list_subsToPlot = 1;  
+list_subsToPlot = 10;  
 
-% name of rm model
-list_rmNames = {
-    'Words';
-    'Words-DOG';
-    }; 
-
-% name of the datatype that the ret model is in
+% dt and rm names
 list_dtNames = {
-    'Words';
-    'Words';
+%     'Checkers'
+    'Words_scale1mu0sig1'
+    'Words_scale1mu0sig0p5'
+    'Words_scale0p5mu0sig0'
+    };
+list_rmNames = {
+    'retModel-Checkers-css.mat'
+%     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'
+%     'retModel-Words_scale1mu0sig0p5-css-left_VWFA_rl.mat'
+%     'retModel-Words_scale0p5mu0sig0-css-left_VWFA_rl.mat'
     };
 
 % name of the roi
 list_roiNames = {
-     'LV1_rl' %lh_WordsExceedsCheckers_rl
+     'left_VWFA_rl' 
     }; 
 
 % save directory
-saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/forPresentations';
+saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/coverages/max';
 
 % tSeries plotting. 
 % 0 = average over the entire roi
-% 1 = for the voxel in the roi with the highest variance explained. 
-% Number greater than 0 or 1. Plot the series of that roi indice number <-
-% ^ have to finish coding this option actually
-plotTSeriesOpt = 0; 
+% -1 = for the voxel in the roi with the highest variance explained. 
+% Number greater than 0 Plot the series of that roi indice number 
+plotTSeriesOpt = 80949; 
 
 %% defining things
 
@@ -50,18 +51,18 @@ numRms = length(list_rmNames);
 % stimulus type
 maxVE = zeros(numRms, numSubs, numRois); 
 
-%% plot the time series and coverage plots
+%% plot the time series and coverage plots -------------------------------
 
 for ii = 1:numSubs
     
     % subject info
     subInd = list_subsToPlot(ii); 
-    subid = list_sub{subInd};
+    subInitials = list_sub{subInd};
     
     % subject vista dir - change path and intialize view
     vistaDir = list_sessionPath{subInd};
     chdir(vistaDir);
-    mrVista 3;
+    vw = initHiddenGray; 
     
     % shared anatomy directory
     d = fileparts(vANATOMYPATH);
@@ -75,12 +76,12 @@ for ii = 1:numSubs
         rmName = list_rmNames{kk};
            
         % set the datatype
-        VOLUME{end} = viewSet(VOLUME{end}, 'curdt', dtName);
+        vw = viewSet(vw, 'curdt', dtName);
 
         % load the rm model
-        rmPath = fullfile(vistaDir, 'Gray', dtName, ['retModel-' rmName '.mat']); 
-        VOLUME{end} = rmSelect(VOLUME{end},1,rmPath); 
-        VOLUME{end} = rmLoadDefault(VOLUME{end});
+        rmPath = fullfile(vistaDir, 'Gray', dtName, rmName); 
+        vw = rmSelect(vw,1,rmPath); 
+        vw = rmLoadDefault(vw);
 
         for jj = 1:length(list_roiNames)
 
@@ -88,17 +89,18 @@ for ii = 1:numSubs
             roiName = list_roiNames{jj}; 
             roiPath = fullfile(dirRoi, roiName); 
 
-            % [VOLUME{end}, ok] = loadROI(VOLUME{end}, filename, [select], [color], [absPathFlag], [local=1])
-            VOLUME{end} = loadROI(VOLUME{end},roiPath, [],[],1,0); 
+            % [vw, ok] = loadROI(vw, filename, [select], [color], [absPathFlag], [local=1])
+            vw = loadROI(vw,roiPath, [],[],1,0); 
 
             % number of frames
-            numFrames = viewGet(VOLUME{end}, 'numFrames'); 
+            numFrames = viewGet(vw, 'numFrames'); 
             
             % get the ROI coords
-            roiCoords = viewGet(VOLUME{end}, 'roi coords'); 
+            roiCoords = viewGet(vw, 'roi coords'); 
 
             % get the ROI indices
-            roiIndices = viewGet(VOLUME{end}, 'roi inds'); 
+            roiIndices = viewGet(vw, 'roi inds');
+            roiIndices
             
             % number of voxels in this roi
             roiNumVox = length(roiIndices);
@@ -109,20 +111,20 @@ for ii = 1:numSubs
             end
 
             % time series from the roi
-            % [roitSeries, subCoords] = getTseriesOneROI(VOLUME{end},ROIcoords,scanNum, getRawTseriesFlag(=0 default), removeRedundantFlag(=1 default) )
-            tSeries_Roi = getTseriesOneROI(VOLUME{end}, roiCoords); 
+            % [roitSeries, subCoords] = getTseriesOneROI(vw,ROIcoords,scanNum, getRawTseriesFlag(=0 default), removeRedundantFlag(=1 default) )
+            tSeries_Roi = getTseriesOneROI(vw, roiCoords); 
             
-            % get the rmFit prediction for entire brain
-            % M = rmPlotGUI(VOLUME{end}, [roi=selected ROI], [allTimePoints=1(yes)], [preserveCoords=0]);
-            M = rmPlotGUI(VOLUME{end}, [],[],1); 
+            % get the rmFit prediction for the roi
+            % M = rmPlotGUI(vw, [roi=selected ROI], [allTimePoints=1(yes)], [preserveCoords=0]);
+            M = rmPlotGUI(vw, [],[],1); 
 
             % find the voxel number corresponding to highest variance explained
             varExp_allVox   = rmGet(M.model{1}, 'varExp'); 
             varExp_roi      = varExp_allVox(roiIndices);
-            [Y,I]           = max(varExp_roi);
-            varExp          = varExp_roi(I); 
 
             % get the actual time series of the voxel with highest var exp
+            [Y,I]           = max(varExp_roi);
+            varExp          = varExp_roi(I); 
             ts_vox          = tSeries_Roi{1}(:,I);
             brainInd        = roiIndices(I); 
             
@@ -147,20 +149,26 @@ for ii = 1:numSubs
             %% plotting ----------------------------------------------------------
             %% plot the coverage map
             coverage_plot; 
-            titleName = [roiName '. ' rmName '. ' subid];
+            
+            % title
+            roiNameDescript = ff_stringRemove(roiName, '_rl');
+            tem = ff_stringRemove(rmName, '_rl');
+            rmNameDescript = ff_stringRemove(tem, roiNameDescript);
+            titleName = ['Coverage. ' roiNameDescript '. ' rmNameDescript '. ' subInitials];
             title(titleName, 'FontWeight', 'Bold', 'FontSize', 16)
             % save the coverage map
-            saveas(gcf, fullfile(saveDir, [titleName '_coverage.png']), 'png')
-            saveas(gcf, fullfile(saveDir, [titleName '_coverage.fig']), 'fig')
+            saveas(gcf, fullfile(saveDir, [titleName '.png']), 'png')
+            saveas(gcf, fullfile(saveDir, [titleName '.fig']), 'fig')
+            ff_dropboxSave; 
 
             %% plotting time series
             figure()
             hold on
             if plotTSeriesOpt == -1 % plot the tseries of the voxel with highest variance explained
-   
+                
                 plot(ts_vox,'k--','LineWidth',1.5)
                 plot(ts_vox_predict,'b','LineWidth',1.5)
-                titleName = {[roiName '. ' rmName '. ' subid], 'Voxel tSeries, Predicted and Actual' ['varExp of best voxel: ' num2str(varExp)]};
+                titleName = {[roiNameDescript '. ' rmNameDescript '. ' subInitials], 'Voxel tSeries, Predicted and Actual' ['varExp of best voxel: ' num2str(varExp)]};
                 title(titleName, 'FontWeight', 'Bold', 'FontSize', 14)
                 xlabel('Time (s)')
                 ylabel('BOLD signal change (%)')
@@ -170,10 +178,10 @@ for ii = 1:numSubs
                 grid on
                 
             elseif plotTSeriesOpt == 0 % plot the averaged tseries of the roi
-                
+                                
                 plot(ts_roi,'k--','LineWidth',1.5)
                 plot(ts_roi_predict,'b','LineWidth',1.5)
-                titleName = {[roiName '. ' rmName '. ' subid], 'Averaged tSeries, Predicted and Actual' , ['varExp of best voxel: ' num2str(varExp)]};
+                titleName = {[roiNameDescript '. ' rmNameDescript '. ' subInitials], 'Averaged tSeries, Predicted and Actual' , ['varExp of best voxel: ' num2str(varExp)]};
                 title(titleName, 'FontWeight', 'Bold', 'FontSize', 14)
                 xlabel('Time (s)')
                 ylabel('BOLD signal change (%)')
@@ -184,12 +192,41 @@ for ii = 1:numSubs
                 
             elseif plotTSeriesOpt > 0 % plot the tseries of a specific voxel
                 
+                % CHANGE THIS HERE
+                brainInd = 80949;
                 
+                % finds the voxel indice so that we can grab things like
+                % variance explained
+                voxInd = find(roiIndices == brainInd);
+                              
+                % get the actual time series of the voxel with highest var exp
+                ts_vox = tSeries_Roi{1}(:,voxInd);
+
+                % get the predicted time series of the voxel with highest var exp
+                % [prediction, RFs, rfParams, varexp, blanks] = rmPlotGUI_makePrediction(M, coords, voxel)
+                ts_vox_predict  = rmPlotGUI_makePrediction(M, [], voxInd);
                 
+                varExp = varExp_roi(voxInd);
+                
+                % % ------------- 
+                plot(ts_vox,'k--','LineWidth',1.5)
+                plot(ts_vox_predict,'b','LineWidth',1.5)
+                titleName = {[roiNameDescript '. ' rmNameDescript '. ' subInitials], 'Voxel tSeries, Predicted and Actual', ['varExp of voxel ' num2str(brainInd) ': ' num2str(varExp)]};
+                title(titleName, 'FontWeight', 'Bold', 'FontSize', 14)
+                xlabel('Time (s)')
+                ylabel('BOLD signal change (%)')
+                set(gca, 'YLim', [-3 3])
+                legend('Voxel tSeries','Predicted TimeSeries')
+                hold off
+                grid on
+
+                
+               
             end
             % save time series
             saveas(gcf, fullfile(saveDir, [titleName{1} '_ts.png']), 'png')
             saveas(gcf, fullfile(saveDir, [titleName{1} '_ts.fig']), 'fig')
+            ff_dropboxSave; 
 
             %% store the information
             % maxVE = zeros(numRms, numSubs, numRois); 
