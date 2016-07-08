@@ -7,17 +7,17 @@ bookKeeping;
 %% modify here
 
 % subjects to do this for, see bookKeeping
-list_subInds = [1];
+list_subInds = 7;
 
 % original roi name
 % rh_mFusFace_rl
 list_roiOriginal = {
-    'left_VWFA_rl'
+    'right_VWFA_rl'
     };
   
 % new roi name
 list_roiNew = {
-    'left_VWFA_rl-mask'
+    'rVOTRC'
     };
 
 % delete the original? IMPORTANT CHECK THIS

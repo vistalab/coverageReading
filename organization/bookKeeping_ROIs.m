@@ -107,3 +107,11 @@ lh_ventral_3_rl;
 % 'lh_VWFA1_WordsNumbers_rl'
 % 'lh_OWFA_WordsNumbers_rl'
 % 'lh_vwfa_WordsNumbers_rl'
+
+
+%% Nathan's naming scheme
+% LhV4_rl --> lV4_all_nw
+
+%% FOV paper
+% lVOTRC
+% rVOTRC

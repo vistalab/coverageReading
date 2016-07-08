@@ -9,17 +9,17 @@ bookKeeping
 
 %%
 
-for ii = 3%1:20
+for ii = 1%1:20
 
 bookKeeping; 
 subInitials = list_sub{ii};
 
 %% modify here
 
-titleDescript = ['Coverage with contours of Run 1 and Run 2. Left VOT_RC.' subInitials];
+titleDescript = ['Coverage with contours of Run 1 and Run 2. Right VOT_RC.' subInitials];
 % THE UNDERLAY -------------
 und_subInds = ii; % if more than one, will be group average
-und_roiName = {'left_VWFA_rl'};
+und_roiName = {'rVOTRC'};
 und_dtName = {'Words'};
 und_rmName = {'retModel-Words-css.mat'};
 und_vfc = ff_vfcDefault; 
@@ -37,8 +37,8 @@ con_subInds = {
     [ii];
     };
 con_roiNames = {
-    {'left_VWFA_rl'}
-    {'left_VWFA_rl'}
+    {'rVOTRC'}
+    {'rVOTRC'}
     };
 con_dtNames = {
     {'Words1'}

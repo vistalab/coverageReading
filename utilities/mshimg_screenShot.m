@@ -9,21 +9,25 @@ bookKeeping;
 
 %% modify here
 
-saveName = 'param map: word contrast. roi: left_VWFA_rl'
+% for screenshots, close mesh and view afterwards
+% for roi drawing purposes, do not close
+keepMeshOpen = true; 
 
-list_subInds = 13:20
+% dropbox save name
+saveName = 'VOTRC definition'
+
+list_subInds = 1% 1:20
 list_path = list_sessionTiledLoc;  % list_sessionTiledLoc % list_sessionRet
 
 % 'ventral_lh'
-meshView = 'ventral_lh';
+meshView = 'ventral_rh';
 
 % 'lh_inflated400_smooth1.mat'
-meshName = 'lh_inflated400_smooth1.mat';
+meshName = 'rh_inflated400_smooth1.mat';
 
 % rois to load. specify empty string if we don't want rois
 list_roiNames = {
-    'lh_ventral_3_rl';
-    'left_VWFA_rl'
+    'rV4_all_nw'
     };
 
 % correspond to rois
@@ -38,7 +42,7 @@ roiDrawMethod = 'perimeter';
 
 % parameter maps. specify empty string if we don't want pmap
 pmapName = 'WordVFace_Scrambled.mat'; % 'WordVFace_Scrambled.mat'; % 'WordVAll.mat'
-pmapDt = 'GLMs'; % 'GLMs'
+pmapDt = 'GLMs'; % 'GLMs' % Original
 
 % show these values of the pmap on the mesh
 % [mapWinMin, mapWinMax] % respectively. 
@@ -135,7 +139,6 @@ for ii = list_subInds
     msh = vw.mesh{end};
     theSetting = ff_meshSettingNumber(msh, meshView); 
     
-    
     % screenshot and save!
     titleName = [saveName '. ' subInitials];
     img = meshMultiAngle(msh, theSetting, [], 'cbarFlag', 1, 'titleText', titleName);
@@ -144,6 +147,8 @@ for ii = list_subInds
     
     % -------------------------------------
     % delete the mesh once we are finished
-    vw = meshDelete(vw, inf);
+    if ~keepMeshOpen
+        vw = meshDelete(vw, inf);
+    end
          
 end

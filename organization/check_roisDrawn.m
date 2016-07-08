@@ -14,7 +14,10 @@ clc;
 % lh_VWFA_fullField_WordVScrambled_rl
 % lh_ventral_rl
 % lh_iOGFace_rl
-roiName = 'rh_iOGFace_rl';
+% rV4_all_nw
+% LhV4_rl
+% lVOTRC
+roiName = 'rV4_all_nw';
 
 
 %% end modification section

@@ -11,13 +11,13 @@ bookKeeping;
 %% modify here
 
 % subject indices, see bookKeeping
-list_subInds = [2];
+list_subInds = [18];
 
 % Tracking mode: {'prob' | 'stream'} for probabilistic or deterministic tracking. 
 p.mode = 'prob';
 
 % Number of fibers to generate
-p.nSeeds = 100000; 
+p.nSeeds = 500000; 
 
 
 %% end modification section

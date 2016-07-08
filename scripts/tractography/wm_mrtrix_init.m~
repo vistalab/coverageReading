@@ -21,7 +21,7 @@ for ii = list_subInds
     dirDiffusion = list_sessionDtiQmri{ii};
     
     %% dt6   - string, full-path to an mrInit-generated dt6 file. 
-    dt6 = fullfile(dirDiffusion, 'dti96trilin_run1_res2', 'dt6.mat');
+    dt6 = fullfile(dirDiffusion, 'dti96trilin', 'dt6.mat');
     
     %% lmax  - The maximal harmonic order to fit in the spherical deconvolution (d
     %    model. Must be an even integer. This input determines the
@@ -58,7 +58,7 @@ for ii = list_subInds
     %
     % dirAnatomy = list_anatomy{ii};
     
-    load(dt6);
+    load(dt6)
     wmMaskFile = files.wmMask; % fullfile(dirAnatomy, 't1_class.nii.gz');
     
     %% run mrtrix init!

@@ -4,8 +4,15 @@
 
 
 %% modify
+
+% which view variable
+% 1: vw
+% 2: theView
+% 3: hG
+wView = 1;
+
 newroi.color    = 'w';
-newroi.name     = 'LV1_foveal'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 
+newroi.name     = 'rVOTRC'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 
 newroi.comment  = '';
 restrictToFunc  = 1;  % 0 for visual field maps, 1 for categories
 saveWhere       = 0; % 1 = local, 0 = shared
@@ -22,42 +29,52 @@ saveWhere       = 0; % 1 = local, 0 = shared
 % 'lh_FacesVentral_rl'  : everything on the ventral surface
 
 %% no need to modify
-% assuming that mrVista and a mesh is loaded, there should exist a 
-% variable called VOLUME. check this, and abort if not found.
-if ~exist('VOLUME', 'var'); error('Must have VOLUME variable defined!'); end
+% view with a loaded mesh
+% 1: vw
+% 2: VOLUME{end}
+% 3: hG
+switch  wView
+    case 1
+       theView = vw;  
+    case 2
+       theView = VOLUME{end}; 
+    case 3
+       theView = hG; 
+end
 
 
 % get the roi from the mesh
 % vw = meshROI2Volume(vw, [mapMethod=3]), where method 3 means grow from 
 % layer 1 to get an roi that spans all layers  
-VOLUME{end} = meshROI2Volume(VOLUME{end}, 3); 
+theView = meshROI2Volume(theView, 3); 
 
 % whether or not to restrict roi to functional acitivity
 if restrictToFunc
-    VOLUME{end} = restrictROIfromMenu(VOLUME{end}); 
+    theView = restrictROIfromMenu(theView); 
 end
 
 % grab selected roi
-roi = viewGet(VOLUME{end}, 'curRoi'); 
+
+roi = viewGet(theView, 'curRoi'); 
 
 %% perform ROI a not b
 % roi is last one you picked
-roiA = VOLUME{end}.ROIs(end).name;
+roiA = theView.ROIs(end).name;
 
 % all other rois you don't want
-roiB={VOLUME{end}.ROIs(1:end-1).name}; 
+roiB={theView.ROIs(1:end-1).name}; 
 
 % make the roi 
-VOLUME{end} = ff_ROIanotb(VOLUME{end}, roiA, roiB, newroi.name, newroi.color); 
+theView = ff_ROIanotb(theView, roiA, roiB, newroi.name, newroi.color); 
 
 
 %% save roi in local directory
-saveROI(VOLUME{1}, 'selected', 0)
+saveROI(theView, 'selected', 0)
 
 % refresh screen
-VOLUME{end} = refreshScreen(VOLUME{end}); 
+theView = refreshScreen(theView); 
 % refresh mesh
-VOLUME{end} = meshColorOverlay(VOLUME{end}); 
+theView = meshColorOverlay(theView); 
 
 
 % %% plot the coverage

@@ -13,7 +13,7 @@ bookKeeping;
 titleDescript = 'Coverage with half-max.';
 
 % subjects
-list_subInds = 4;
+list_subInds = 19;
 
 % session
 list_path = list_sessionRet; 
@@ -27,9 +27,10 @@ list_roiNames = {
 %     'right_VWFA_rl'
 %     'lh_VWFA_rl'
 %     'lh_VWFA_fullField_rl'
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+    'lVOTRC'
     };
 
 % dt and rm names

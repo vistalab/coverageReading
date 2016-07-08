@@ -1,7 +1,12 @@
 %% Workflow. 
 % Evaluating the strength of the evidence for a tract between LGN and V2, V3
 %
-% ASSUMES DATA IS HERE: '/sni-storage/wandell/data/LGN_V123/{subID}'
+% ASSUMES SUBJECT DATA IS HERE: '/sni-storage/wandell/data/LGN_V123/{subID}'
+% 
+% dirDiffusion. Diffusion data, relative to subject data is: /T1w/Diffusion 
+% Whole brain connectome is stored in Diffusion directory (though this might be changed)
+% dirDiffusion/fiberGroups: Other fiber groups are stored in Diffusion
+%   opticChiasm
 
 %% Shared anatomy directory
 % - Create it: /biac4/wandell/data/anatomy/HCP_{ID}
@@ -26,14 +31,17 @@ edit hcp_ribbon2classFile
 edit hcp_dtiInit
 
 %% Generate a comprehensive connectome using mrTrix
-% Generates something named Connectome_500000_curvature1.pdb into the
+% Generates something named Connectome_500000_curvature1_prob.pdb into the
 % subject's diffusion directory
-
 edit hcp_mrtrix; 
 
 
-%% Define V1, V2, V3 -- Use Benson's code
+%% Generate an optimized connectome using Brain-Life
+edit hcp_life; 
 
+
+%% Define V1, V2, V3 -- Use Benson's code
+% there is a docker (?)
 
 
 
@@ -43,7 +51,6 @@ edit hcp_mrtrix;
 % =========================================================================
 
 % Save V2 and V3 as pdb files
-
 
 % Find LGN.
 % Is this automatically defined when running freesurfer?

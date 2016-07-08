@@ -9,11 +9,14 @@ bookKeeping;
 %%  modify here: make the struct to pass into hG_load
 % TODO: change the variable <input> into something else, because this is already a matlab function
 
+% keep mesh open to play around
+keepMeshOpen = true; 
+
 % path and directory with the mrSESSION
 list_dirVista = list_sessionRet; 
 
 % subjects we want to get mesh screenshots for. based on list_dirVista
-subsToSee = 12%[13:20]; %1:length(list_dirVista); 
+subsToSee = 2%[13:20]; %1:length(list_dirVista); 
 list_sub{subsToSee}
 % [1:15 17:21]
 
@@ -26,7 +29,7 @@ input.hemisphere = {'left'};
 % 'autumnCmap' or 'hotCmap':  category selectivity
 % 'jetCmap': prf amp map
 % 'hsvTbCmap': ecc map
-input.cmap = 'hotCmap'; 
+input.cmap = 'autumnCmap'; 
 
 % scan number. 
 input.scan_num = 1;  
@@ -34,7 +37,7 @@ input.scan_num = 1;
 % name of roi
 % if we don't want an roi, write the empty string
 % will assume that roi is in shared directory
-input.roiname = 'left_VWFA_rl-mask'; %'rh_WordVAll_rl.mat'; 
+input.roiname = 'lV4_all_nw'; %'rh_WordVAll_rl.mat'; 
 
 % roi color
 input.roicolor = 'b'; 
@@ -112,7 +115,7 @@ for ii = subsToSee
         
     % change to mrVista directory
     chdir(input.dirVista);
-    vw = initHiddenGray;
+    vw = initHiddenGray; 
     
     % shared anatomy directory
     d = fileparts(vANATOMYPATH);
@@ -163,7 +166,9 @@ for ii = subsToSee
     end
     
     % close all meshes
-    hG = meshDelete(hG, inf); 
+    if ~keepMeshOpen
+        hG = meshDelete(hG, inf); 
+    end
 
     %% then organize into a figure
     dimAngles   = size(input.angles); 
@@ -190,7 +195,10 @@ for ii = subsToSee
     saveas(gcf, savePath, extSave)
     if saveDropbox, ff_dropboxSave('title', titleName); end; 
     
-    close all; 
+    if ~keepMeshOpen
+        close all; 
+    end
+    
 end
 
 
