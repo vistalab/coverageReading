@@ -5,7 +5,7 @@ bookKeeping;
 
 %% the subject we want to work with. 
 % index as ordered in bookKeeping
-subInd = 4;
+subInd = 18;
 
 % directory of subject's dti session. go here
 dirDiffusion = list_sessionDtiQmri{subInd};

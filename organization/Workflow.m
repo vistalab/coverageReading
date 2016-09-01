@@ -1,4 +1,4 @@
-ec%% Analysis workflow
+%% Analysis workflow
 % addpath(genpath('/biac4/wandell/data/reading_prf/coverageReading'))
 % {dirAnat} - absolute path for anatomy 
 % {dirVista} - absolute path with mrSESSION
@@ -98,6 +98,13 @@ s_pRFRun_Dumoulin_individualRuns;   % cross-validation;
 
 
 %% rename the prf model fits appropriately
+
+edit rm_rename; 
+
+% testRetest ret models should be xformed and saved in the main session ret
+% under the appropriate stim type: e.g.
+% Gray/Words/retModel-Words-css-testRetest.mat
+
 
 %% Alternative pRF models
 % {dirVista}/Gray/Original/retModel-Combined.mat

@@ -9,9 +9,8 @@ clear all; close all; clc;
 bookKeeping; 
 
 %% modify here
-% subjects we want to do this for, see bookKeeping
-%  2     3     4     5     6     7     8     9    
-list_subInds = [10    13    14    15    16    17    18    22];
+% subjects we want to do this for, see bookKeeping    
+list_subInds = [2     3     4     5     6     7     8     9   10    13    14    15    16    17    18    22];
 
 %% end modification section
 
@@ -25,7 +24,7 @@ for ii = 1:length(list_subInds)
     dirAnatomy = list_anatomy{subInd};
     
     % diffusion directory
-    dirDiffusion = list_sessionDtiQmri{subInd};
+    dirDiffusion = list_sessionDiffusionRun1{subInd};
     
     % dt6 path
     dt6Path = fullfile(dirDiffusion, 'dti96trilin_run1_res2', 'dt6.mat');
@@ -35,8 +34,8 @@ for ii = 1:length(list_subInds)
     
     % directory to save the ROIs
     dirSaveRois = fullfile(dirAnatomy, 'ROIsMrDiffusion');
-    if ~exist(dirSaveRois,'dir')
-        mkdir(dirSaveRois)
+    if ~exist(dirSaveRois, 'dir')
+        mkdir(dirSaveRois);
     end
     
     %% list of mrVista roi (full paths) that we want to xform

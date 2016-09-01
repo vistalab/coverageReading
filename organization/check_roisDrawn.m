@@ -4,21 +4,18 @@
 bookKeeping; 
 clc;
 
-
 %% modify here
 
-% roi name
-% left_mFusFace_rl
-% lh_FFA_fullField_rl
-% lh_VWFA_fullField_WordVFaceScrambled_rl
-% lh_VWFA_fullField_WordVScrambled_rl
-% lh_ventral_rl
-% lh_iOGFace_rl
-% rV4_all_nw
-% LhV4_rl
-% lVOTRC
-roiName = 'rV4_all_nw';
+% roi name WITH EXTENSION
+% if .mat extension, will look under the sharedAnatomy/ROIs/
+% if .nii.gz extension, will look under sharedAnatomy/ROIsNiftis/
+% roiName = 'rV2v_all_nw.mat';
+% roiName = 'LGN_left.nii.gz';
+roiName = 'RV3d_rl.mat';
 
+% subjects to check for 
+% list_subInds = [ 2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22]; 
+list_subInds = 1:20;
 
 %% end modification section
 
@@ -29,9 +26,8 @@ counter = 0;
 % number of subjects
 numSubs = length(list_sub);
 
-
 % loop over subjects
-for ii = 1:numSubs
+for ii = list_subInds
    
     % subject's anatomy directory
     dirAnatomy = list_anatomy{ii};
@@ -40,7 +36,14 @@ for ii = 1:numSubs
     subInitials = list_sub{ii};
     
     % path of roi
-    pathROI = fullfile(dirAnatomy, 'ROIs', [roiName '.mat']);
+    [~,~,e] = fileparts(roiName); 
+    if strcmp(e, '.mat')
+        pathROI = fullfile(dirAnatomy, 'ROIs', roiName);
+    end
+
+    if strcmp(e, '.gz')
+        pathROI = fullfile(dirAnatomy, 'ROIsNiftis', roiName);
+    end
     
     % check if roi exists
     if ~exist(pathROI, 'file')

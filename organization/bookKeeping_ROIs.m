@@ -6,6 +6,14 @@
 %% INPLANE ROIs
 % inplane rois are saved locally, in the list_sessionPath directory
 
+%% VISUAL FIELD MAPS
+% LV1_rl, RV1_rl, LV2v_rl, RV2v_rl
+% CV1_rl: left and right V1
+
+% LV2_rl, RV2_rl, LV3_rl, RV3_rl: ventral and dorsal V2 (V3) in left (right) hemisphere
+% CV2d_rl, CV2v_rl, CV3d_rl, CV3v_rl: left and right V2d etc
+% CV2_rl, CV3_rl: left and right and ventral and dorsal
+
 %% Word Areas =============================================================
 
 % standard localizer =====================================================
@@ -111,7 +119,36 @@ lh_ventral_3_rl;
 
 %% Nathan's naming scheme
 % LhV4_rl --> lV4_all_nw
+% rV1_all_nw
 
 %% FOV paper
 % lVOTRC
 % rVOTRC
+
+% lVOTRC_fullField
+% lVOTRC_smallField
+
+%% Thresholding by the ret model
+% 'lVOTRC-threshByWordModel'
+% 'lVOTRC-threshByCheckerModel'
+
+% 'lVOTRC-threshByWord1Model' -- created by loading lVOTRC, loading
+% retModel-Words1-css.mat, and defining a new ROI for all voxels that pass
+% the thresholds defined in vfc
+% 'lVOTRC-threshByWord1AndWord2Model' 
+
+%% Nifti ROIs are stored here
+%{sharedAnatomyDir}/ROIsNiftis
+
+%% FIBER GROUPS ----------------------------------------------------------
+% Using the comprehensive connectome : Connectome_500000_curvature1.mat
+% all fiber groups that come within 5mm of these .mat ROIs, using
+% the comprehensive connectome
+% 'LGN_left-LV1' 
+% 'LGN_right-RV1'
+% 'LGN_left-LV2'
+% 'LGN_right-RV2'
+% 'LGN_left-LV3'
+% 'LGN_right-RV3'
+
+

@@ -54,9 +54,6 @@ edit pp_canonicalXform.m;
 % and save t1 to shared directory
 edit pp_acpcAndSave.m
 
-
-
-
 %% canonical xform
 edit pp_canonicalXform.m;
 % Remember to do all the following:
@@ -79,6 +76,9 @@ edit pp_freesurfer
 
 %% initialize
 edit pp_mrInit
+
+%% quality assurance
+% view the mean map on top of the inplane
 
 %% align inplane to anatomical
 edit pp_alignInplaneToAnatomical

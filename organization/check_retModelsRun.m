@@ -6,10 +6,10 @@ bookKeeping; clc;
 %% modify here
 
 % dt name
-dtName = 'Words2';
+dtName = 'Words1';
 
 % rm nameedit 
-rmName = 'retModel-Words2-css.mat'; 
+rmName = 'retModel-Words1-css.mat'; 
 
 % session list to check
 list_path = list_sessionRet; 

@@ -1,62 +1,48 @@
 %% Workflow. 
-% Evaluating the strength of the evidence for a tract between LGN and V2, V3
+% LGN analysis for subjects we already have retinotopy for
 %
-% ASSUMES SUBJECT DATA IS HERE: '/sni-storage/wandell/data/LGN_V123/{subID}'
-% 
-% dirDiffusion. Diffusion data, relative to subject data is: /T1w/Diffusion 
-% Whole brain connectome is stored in Diffusion directory (though this might be changed)
-% dirDiffusion/fiberGroups: Other fiber groups are stored in Diffusion
-%   opticChiasm
+% When we can, we try to save a copy of the analyses script in each
+% subject's directory. For analyses that we run as a loop over subjects, we
+% save in: /sni-storage/wandell/data/reading_prf/coverageReading/scripts/tractography/analyses_multiSubject
 
-%% Shared anatomy directory
-% - Create it: /biac4/wandell/data/anatomy/HCP_{ID}
 
-% - Move the T1 there. The T1w that is measured at the same resolution of the
-% diffusion data is under: T1w/T1w_acpc_dc_restore_1.25.nii.gz 
-edit hcp_sharedAnatomy
+%% rename files
+% _run1 _run2
+% dti (.bvec .bval .nii.gz)
 
-%% Create the class file from the ribbon file
-% HCP data already has freesurfer run on it.
-% Class file is necessary for the Benson code
-% T1w that is sampled at the same resolution as the diffusion: T1w_acpc_dc_restore_1.25.nii.gz
-edit hcp_ribbon2classFile
-
+%% Move a copy of the shared anatomy into dirDiffusion
 
 %% dtiInit
-% Diffusion/ contains
-% bvals
-% bvecs
-% data.nii.gz
-% nodif_brain_mask.nii.gz -- brain mask in diffusion space
-edit hcp_dtiInit
+% to create the dt6
+edit wm_dtiInit
 
-%% Generate a comprehensive connectome using mrTrix
-% Generates something named Connectome_500000_curvature1_prob.pdb into the
-% subject's diffusion directory
-edit hcp_mrtrix; 
+%% Initialize files for running mrtrix tractography
+edit wm_mrtrix_init.m
 
+%% Run mrtrix tractography
+edit wm_mrtrix_track.m
 
 %% Generate an optimized connectome using Brain-Life
-edit hcp_life; 
+edit wm_life_optimizedConnectome.m
 
-
-%% Define V1, V2, V3 -- Use Benson's code
-% there is a docker (?)
-
-
-
+%% Xform the mrVista V1, V2, V3 rois into dti ROIs
+% saves the ROIs into dirDiffusion/ROIs -- using edit wm_xformROIs.m
+% these ROIs are later moved into {sharedAnatomy}/ROIsMrDiffusion
+edit wm_xformROIs.m
+ 
+%% Draw the LGN ROIs\
+% First draw them as mat files in dirDiffusion/ROIS.
+% 5mm sphere roi -- see Evernote for screenshots
+    % in the coronal slice, halfway between we see clear delineation
+    % of red and green
+% 
+% Then save them as niftis with the following naming convention. Keep them here:
+% {sharedAnatomyDirectory}/ROIsNiftis/LGN_left.nii.gz
+edit wm_dtiRoiNiftiFromMat.m
 
 %% Identify all fibers that have one endpoint in LGN and one in V2/3
-% Use Quench -- Type quench into the terminal
-% =========================================================================
-
-% Save V2 and V3 as pdb files
-
-% Find LGN.
-% Is this automatically defined when running freesurfer?
-% Save this as a pdb file as well. 
-
-
-
+% Save fiber groups here: {sharedAnatomy}/ROIsFiberGroups
+% Will include .mat and .pdb files
+edit wm_fibersBetweenRois.m
 
 %% Use LiFE to evaluate the strength of the evidence

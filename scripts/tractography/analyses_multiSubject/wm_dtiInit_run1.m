@@ -6,7 +6,7 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22];
+list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22]    
 
 % runs to do this for
 % if doing it for multiple runs, make sure we know data is not being
@@ -23,7 +23,7 @@ p.dt6BaseName = ['dti96trilin_run' num2str(runNum) '_res2' ];
 % clobber. 
 % 1: files silently overwritten if exist
 % 0: then you'll be asked if you want to recompute the file or use the existing one
-p.clobber = 0;
+p.clobber = 1;
 
 % dwOutMm. resolution of the output in mm. default is [2 2 2]
 
