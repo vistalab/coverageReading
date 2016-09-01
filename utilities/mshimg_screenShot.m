@@ -11,29 +11,29 @@ bookKeeping;
 
 % for screenshots, close mesh and view afterwards
 % for roi drawing purposes, do not close
-keepMeshOpen = true; 
+keepMeshOpen = false; 
 
 % dropbox save name
-saveName = 'VOTRC definition'
+saveName = 'mask region'
 
-list_subInds = 1% 1:20
-list_path = list_sessionTiledLoc;  % list_sessionTiledLoc % list_sessionRet
+list_subInds = 1%1:20
+list_path = list_sessionRet;  % list_sessionTiledLoc % list_sessionRet
 
 % 'ventral_lh'
-meshView = 'ventral_rh';
+meshView = 'ventral_lh';
 
 % 'lh_inflated400_smooth1.mat'
-meshName = 'rh_inflated400_smooth1.mat';
+meshName = 'lh_inflated400_smooth1.mat';
 
 % rois to load. specify empty string if we don't want rois
 list_roiNames = {
-    'rV4_all_nw'
+    'GLM_WordVFace_Scrambled_mask'
     };
 
 % correspond to rois
 list_roiColors = {
-    [0 0 1]
     [0 0 0]
+    [1 1 1]
     };
 
 % 'patches' 'boxes' 'perimeter' 'filled perimeter'
@@ -42,16 +42,16 @@ roiDrawMethod = 'perimeter';
 
 % parameter maps. specify empty string if we don't want pmap
 pmapName = 'WordVFace_Scrambled.mat'; % 'WordVFace_Scrambled.mat'; % 'WordVAll.mat'
-pmapDt = 'GLMs'; % 'GLMs' % Original
+pmapDt = 'Original'; % 'GLMs' % Original
 
 % show these values of the pmap on the mesh
 % [mapWinMin, mapWinMax] % respectively. 
 % only show values greater than mapWinMin AND less than mapWinMax
 % if mapWinMin > mapWinMax, then it will do the OR condition
-pmapWinThresh = [3 10]; 
+pmapWinThresh = []; % [3 10]; 
 
 % clip the colors of the parameter map
-pmapClipmode = [3 10]; % [-0.3 0.3]; % for even bicolor
+pmapClipmode = [3 5]; % [-0.3 0.3]; % for even bicolor
 
 % color cmap corresponding to parameter maps.
 % 'bicolorCmap' 'coolhotGrayCmap'
@@ -61,9 +61,11 @@ pmapClipmode = [3 10]; % [-0.3 0.3]; % for even bicolor
 pmapCmap = 'autumnCmap';
 
 % RET. specify empty strings if we don't want to load
-dtName = '';
-rmName = '';
-rmField = '';
+dtName = ''; %'Words';
+rmName = ''; %'retModel-Words-css.mat';
+rmField = ''; %'co';
+
+coThresh = 0.2; 
 
 %% define things
 numRois = length(list_roiNames);
@@ -114,15 +116,20 @@ for ii = list_subInds
         vw = refreshScreen(vw, 1); 
     end
     
-%     %% retinotopy loading
-%     if ~isempty(dtName)
-%         rmPath = fullfile(dirVista, 'Gray', dtName, rmName);
-%         vw = rmSelect(vw, 1, rmPath);
-%         vw = rmLoadDefault(vw);
-%         
-%         % set the field we want to see
-%         
-%     end
+    %% retinotopy loading
+    if ~isempty(dtName)
+        rmPath = fullfile(dirVista, 'Gray', dtName, rmName);
+        vw = rmSelect(vw, 1, rmPath);
+        vw = rmLoadDefault(vw);
+        
+        % set the field we want to see
+        % FOR NOW ASSUME WE WANT THE CO (VAREXP)
+                
+        % visualize the varExp map
+        vw = setDisplayMode(vw, 'co');
+        vw = setCothresh(vw, coThresh);
+        
+    end
     
     %% update the mesh
     % recompute vertex. else things might look broken. 

@@ -7,7 +7,7 @@ bookKeeping
 %% modify here
 
 list_subInds = 1:20;
-roiName = {'combined_VWFA_rl'};
+roiName = {'rVOTRC'};
 
 dtName = {'Words'};
 rmName = {'retModel-Words-css.mat'};

@@ -9,14 +9,14 @@ bookKeeping;
 
 % subject indices in the 2 groups. indicate each as a row vector
 list_subInds_all = {
-    [13:19];     % large words
-    [13:19];      % small words
+    [1:20];     % words
+    [1:20];     % checkers
     };
 
 % roi for each population
 list_rois_all = {
-    'combined_VWFA_rl' 
-    'combined_VWFA_rl'
+    'lVOTRC' 
+    'lVOTRC'
     };
 
 % rm field for each population
@@ -27,22 +27,19 @@ list_rmFields_all = {
 
 % dts and rms
 list_dts_all = {
-    'WordLarge'
-    'WordSmall'
+    'Words'
+    'Checkers'
     };
 list_rms_all = {
-    'retModel-WordLarge-css.mat'
-    'retModel-WordSmall-css.mat'
+    'retModel-Words-css.mat'
+    'retModel-Checkers-css.mat'
     };
 
 % how to threshold. assumes same for both
-h.threshco = 0.2;
-h.threshecc = [0 12];
-h.threshsigma = [0 15];
-h.minvoxelcount = 1; 
+vfc = ff_vfcDefault; 
 
 % number of bins. assume same for now
-numBins = 12; 
+numBins = 20; 
 
 % save 
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/summaries';
@@ -86,7 +83,7 @@ for pp = 1:2
             vw = rmLoadDefault(vw); 
             rm = rmGetParamsFromROI(vw); 
             rm.subInitials = subInitials; 
-            rmthresh = ff_thresholdRMData(rm, h);
+            rmthresh = ff_thresholdRMData(rm, vfc);
             
             % get the field we're interested and append
             tem = eval(['rmthresh.' rmField]);
@@ -140,24 +137,5 @@ for pp = 1:2
     
 end
 
-
 %% save
-
-% make thresh directory if it does not exist
-stringThresh = ff_stringDirNameFromThresh(h);
-saveDirThresh = fullfile(saveDir, stringThresh);
-if ~exist(saveDirThresh), mkdir(saveDirThresh), end
-
-% figure title
-roiName1 = ff_stringRemove(list_rois_all{1},'_rl'); 
-roiName2 = ff_stringRemove(list_rois_all{2},'_rl'); 
-titleSave = ['Voxel Distribution. ' rmField '. ' roiName1 ' and ' roiName2];
-
-savePath = fullfile(saveDirThresh, titleSave); 
-saveas(gcf, [savePath '.png'], 'png')
-saveas(gcf, [savePath '.fig'], 'fig')
-
-if saveDropbox
-    save_figureToDropbox;
-end
-
+ff_dropboxSave;

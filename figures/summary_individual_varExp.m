@@ -7,7 +7,13 @@ bookKeeping;
 %% modify here
 
 % plot title
-titleDescript = 'Checkers and and Words and Words_scale1mu0sig1p5';
+titleDescript = 'Checkers and Words and Words1. Thresholded';%'Checkers and and Words and Words_scale1mu0sig1p5';
+
+roiName = 'rVOTRC-threshByWordModel';
+
+% the usual thresholds for making FOVs
+vfc = ff_vfcDefault; 
+vfc.cothresh = 0; % 0 if we are interested in all voxels of an ROI
 
 list_subInds = [1:20]; 
 list_path = list_sessionRet; 
@@ -19,7 +25,7 @@ list_dtNames = {
 list_rmNames = {
     'retModel-Checkers-css.mat'
     'retModel-Words-css.mat'
-    'retModel-Words_scale1mu0sig1p5-css-left_VWFA_rl.mat'
+    'retModel-Words_scale1mu0sig1p5-css-rVOTRC.mat'
     };
 
 list_markerTypes = {
@@ -36,8 +42,6 @@ list_colors = [
      [0.5294    0.0471    0.6510]   % purple
      [ 0    0.0667    1.0000]       % blue
     ];
-
-roiName = 'left_VWFA_rl';
 
 
 %% define stuff
@@ -67,7 +71,10 @@ for ii = 1:numSubs
         vw = rmSelect(vw, 1, rmPath);
         vw = rmLoadDefault(vw);
         
-        rmroi = rmGetParamsFromROI(vw);
+        tem = rmGetParamsFromROI(vw);
+        
+        rmroi = ff_thresholdRMData(tem, vfc); 
+        
         allSub_mu(kk,ii) = mean(rmroi.co)*100;
         allSub_sig(kk,ii) = std(rmroi.co)*100;
         
@@ -106,7 +113,7 @@ set(gca, 'XTickLabel', 1:numSubs)
 l = legend(list_dtNames)
 % set(l, 'northeastoutside')
 
-titleName = {['Mean Variance Explained. left_VWFA. '], ...
+titleName = {['Mean Variance Explained. ' roiName], ...
     [titleDescript], ...
     [mfilename]; 
     };

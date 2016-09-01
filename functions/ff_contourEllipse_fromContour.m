@@ -1,12 +1,11 @@
-function [RFellipseContour, ellipse_t] = ff_contourEllipse_fromContour(RFcovContour, vfc, data)
-%% Fits an ellipse to a given contour level
+function [RFellipseContour, ellipse_t] = ff_contourEllipse_fromContour(RFcovContour, vfc)
+%% Fits an ellipse to the contour depicted in RFcovContour
 % level and returns a logical contour matrix with just this ellipse
+% [RFellipseContour, ellipse_t] = ff_contourEllipse_fromContour(RFcovContour, vfc)
 %
 % INPUTS
-% - RFcovContour
-% - vfc
-% - data (need the X and Y samples)
-% - contourLevel
+% - RFcovContour is a binary matrix. 1s indicate location of the contour
+% - vfc are visual field coverage parameters
 %
 % OUTPUTS
 % - RFEllipseContour: A logical square matrix with 1s at the ellipse and 0s
@@ -47,7 +46,9 @@ ellipseCenterY = ellipse_t.Y0_in;      % Y0 is the center of the x-axis of the n
 % now transform the ellipse back into 128x128 matrix
 % this will plot it as a prf. we want to 
 % RF = rfGaussian2d(X,Y,sigmaMajor,sigmaMinor,theta,x0,y0);
-tem = rfGaussian2d(data.X, data.Y, sigmaMajor, sigmaMinor, theta, ellipseCenterX, ellipseCenterY); 
+x = linspace(-vfc.fieldRange, vfc.fieldRange, vfc.nSamples);
+[X,Y] = meshgrid(x,x); 
+tem = rfGaussian2d(X, Y, sigmaMajor, sigmaMinor, theta, ellipseCenterX, ellipseCenterY); 
 RFellipse = flipud(tem);
 tem = ff_contourMatrix_makeFromMatrix(RFellipse, vfc, 1/sqrt(2)); 
 RFellipseContour = flipud(tem); 

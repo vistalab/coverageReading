@@ -44,7 +44,7 @@ list_rmDescripts = {
 %   vfc.cothresh
 %   vfc.eccthresh
 %   vfc.sigthresh
-vfc.cothresh = 0; 
+vfc.cothresh = 0.2; 
 vfc.eccthresh = [0 15];
 vfc.sigthresh = [0 30];
 

@@ -115,7 +115,7 @@ for ii = 1:numSubs;
                     RFcovContour = ff_contourMatrix_make(rmroi,vfc, contourLevel);
                     
                     % THE ELLIPSE. Various things we can plot with this                
-                    RFEllipseContour = ff_contourEllipse_fromContour(RFcovContour, vfc, data); 
+                    RFEllipseContour = ff_contourEllipse_fromContour(RFcovContour, vfc); 
                     close all; 
                     
                     subEllipseContourMat(:,:,ii) = RFEllipseContour;

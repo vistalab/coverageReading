@@ -9,24 +9,25 @@ bookKeeping
 
 %%
 
-for ii = 1%1:20
+for ii = [3 20]
 
 bookKeeping; 
 subInitials = list_sub{ii};
 
 %% modify here
 
-titleDescript = ['Coverage with contours of Run 1 and Run 2. Right VOT_RC.' subInitials];
+titleDescript = ['Test retest reliability. ' subInitials];
 % THE UNDERLAY -------------
 und_subInds = ii; % if more than one, will be group average
-und_roiName = {'rVOTRC'};
+und_roiName = {'lVOTRC-threshByWordModel'}; % lVOTRC-threshByWordModel
 und_dtName = {'Words'};
 und_rmName = {'retModel-Words-css.mat'};
 und_vfc = ff_vfcDefault; 
 und_vfc.cmap = 'hot';
 und_vfc.addCenters = true; 
-und_vfc.cothresh = 0.2; 
+und_vfc.cothresh = 0; 
 und_vfc.smoothSmigma = 0; 
+und_vfc.tickLabel = false; 
 
 
 % THE CONTOURS ----------------
@@ -37,16 +38,16 @@ con_subInds = {
     [ii];
     };
 con_roiNames = {
-    {'rVOTRC'}
-    {'rVOTRC'}
+    {'lVOTRC-threshByWordModel'}
+    {'lVOTRC-threshByWordModel'}
     };
 con_dtNames = {
-    {'Words1'}
-    {'Words2'}
+    {'Words'}
+    {'Words'}
     };
 con_rmNames = {
-    {'retModel-Words1-css.mat'}
-    {'retModel-Words2-css.mat'}
+    {'retModel-Words-css.mat'}
+    {'retModel-Words-css-testRetest.mat'}
     };
 con_contourLevels = {
     0.5
@@ -61,7 +62,7 @@ con_contourMarkers = {
     '--'
     };
 con_contourMarkerSizes = { % 2 for group average
-    [1] 
+    [1]
     [1]
     };
 con_contourLineWidths = {
@@ -70,14 +71,14 @@ con_contourLineWidths = {
     };
 con_centerMarkers = {
     '.'
-    'o'
+    '.'
     };
 
 % vfc
 vfc = ff_vfcDefault();
 vfc.cmap = 'hot';
 vfc.addCenters = false; 
-vfc.cothresh = 0.2; 
+vfc.cothresh = 0; 
 vfc.smoothSmigma = 0; 
 
 %% do things

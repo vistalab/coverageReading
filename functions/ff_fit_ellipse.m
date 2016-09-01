@@ -160,7 +160,8 @@ function ellipse_t = ff_fit_ellipse( x,y,axis_handle, varargin)
 %
 %% TODO: input parser
 
-ellipseColor = [0 0 1];
+ellipseColor = [0 0 1];; %[.65 .65 .65]; % [0 0 1];
+ellipseLineWidth = 2; %.25; % 2
 
 
 %%
@@ -296,6 +297,6 @@ if (nargin>2) & ~isempty( axis_handle ) & (test>0)
     % plot( new_horz_line(1,:),new_horz_line(2,:), ...
     % ellipseColor);
     plot( rotated_ellipse(1,:),rotated_ellipse(2,:), ...
-        'Color',ellipseColor, 'LineWidth',2);
+        'Color',ellipseColor, 'LineWidth', ellipseLineWidth);
     set( axis_handle,'NextPlot',hold_state );
 end

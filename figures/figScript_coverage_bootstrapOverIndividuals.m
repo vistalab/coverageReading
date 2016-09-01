@@ -12,10 +12,10 @@ alphaValue = 0.5;
 contourLevel = 0.5;
 contourColor = [.5 .5 .5];
 
-list_subInds = [1:20]%1, 13:20]; 
+list_subInds = [1:12]; 
 
 roiName = {
-    'LV1_rl'
+    'rVOTRC'
     };
 
 %  'Words_scale1mu0sig1p5'
@@ -31,7 +31,7 @@ vfc.addCenters = false;
 vfc.contourBootstrap = false; 
 vfc.contourLevel = contourLevel; 
 vfc.nboot = 50;
-vfc.cothresh = 0.4;
+vfc.cothresh = 0.2;
 
 %% define things
 numSubs = length(list_subInds);
@@ -42,7 +42,7 @@ rfcovCell = cell(numSubs,1);
 rmroiCell = ff_rmroiCell(list_subInds, roiName, dtName, rmName);
 
 %% get the rfcov matrix for each subject
-for ii = list_subInds
+for ii = 1:numSubs
     
     subInd = list_subInds(ii);
     rmroi = rmroiCell{ii};

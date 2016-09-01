@@ -1,4 +1,4 @@
-%% plot pRF distributions over many subjects (sizes, centers, varExp)
+orsv%% plot pRF distributions over many subjects (sizes, centers, varExp)
 % but subjects have different roi sizes, so we take numSamples with
 % replacement each subject nboot times
 
