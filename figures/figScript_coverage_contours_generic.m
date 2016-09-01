@@ -9,48 +9,57 @@ bookKeeping;
 
 %% modify here
 
-titleDescript = 'rh_mFusFace_rl. Checkers. n=11. '
+titleDescript = 'VOT and VOTRC comparison with mean pRF value.'
+
+% vfc
+vfc = ff_vfcDefault();
+vfc.cmap = 'jet';
+vfc.addCenters = 0;
+vfc.method = 'sum';
+
 
 % THE UNDERLAY -------------
-und_subInds = [1:11] ; % if more than one, will be group average
-und_roiName = {'rh_mFusFace_rl'};
-und_dtName = {'Checkers'};
-und_rmName = {'retModel-Checkers-css.mat'};
+und_subInds = [1:20] ; % if more than one, will be group average
+und_roiName = {'lh_ventral_3_rl'};
+und_dtName = {'Words'};
+und_rmName = {'retModel-Words-css.mat'};
 
 
 % THE CONTOURS ----------------
 % can have many contours.
 % indicate in cell array.
 con_subInds = {
-    [1:11];
+    [1:20];
+    [1:20];
     };
 con_roiNames = {
-    {'rh_mFusFace_rl'}
+    {'lVOTRC'}
+    {'lh_ventral_3_rl'}
     };
 con_dtNames = {
-    {'Checkers'}
+    {'Words'}
+    {'Words'}
     };
 con_rmNames = {
-    {'retModel-Checkers-css.mat'}
+    {'retModel-Words-css.mat'}
+    {'retModel-Words-css.mat'}
     };
 con_contourLevels = {
+    0.5
     0.5
     };
 con_contourColors = {
     [0 0 0]
+    [0 0 0]
     };
 con_contourMarkers = {
+    '--'
     '--'
     };
 con_contourMarkerSizes = {
     [2]
+    [2]
     };
-
-% vfc
-vfc = ff_vfcDefault();
-vfc.cmap = 'jet';
-vfc.addCenters = 0;
-
 
 %% do things
 

@@ -16,7 +16,7 @@ list_subInds = [1:20];
 % roi names
 % things to consider - make a separate plot for each roi?
 list_roiNames = {
-    'combined_VWFA_rl'
+    'cVOTRC'
     };
 
 % RETMODEL dt and rm names

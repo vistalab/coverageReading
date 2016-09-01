@@ -8,7 +8,7 @@ clear all; close all; clc
 % last name of the subject
 % assumes that is a directory in the shared anatomy directory of this name
 % assumes that we want the freesurfer ouputs to be in a directory of this name 
-lastName = 'Toba'; 
+lastName = 'Maya'; 
 
 
 %% define things and run freesurfer

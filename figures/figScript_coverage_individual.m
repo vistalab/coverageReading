@@ -12,8 +12,15 @@ bookKeeping;
 % title description
 titleDescript = 'Coverage with half-max.';
 
+% vfc threshold
+vfc = ff_vfcDefault; 
+vfc.contourPlot = false; 
+vfc.cmap = 'hot';
+vfc.addCenters = true; 
+vfc.nboot = 50; 
+
 % subjects
-list_subInds = 19;
+list_subInds = 1:20;
 
 % session
 list_path = list_sessionRet; 
@@ -35,7 +42,7 @@ list_roiNames = {
 
 % dt and rm names
 list_dtNames = {
-    'Words'
+    'Checkers'
 %     'Words1'
 %     'Words2'
 %     'Words_scale1mu0sig1'
@@ -44,7 +51,7 @@ list_dtNames = {
 %     'Checkers'
     };
 list_rmNames = {
-    'retModel-Words-css.mat'
+    'retModel-Checkers-css.mat'
 %     'retModel-Words1-css.mat'
 %     'retModel-Words2-css.mat'
 %     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'
@@ -53,15 +60,6 @@ list_rmNames = {
 %     'retModel-Checkers-css.mat'
     };
 
-% colors!
-colorEllipse = [1 0 0];
-colorContour =     [0.3922    0.3922    0.5020];  % purple
-
-% vfc threshold
-vfc = ff_vfcDefault; 
-vfc.contourPlot = true; 
-vfc.cmap = 'hot';
-vfc.addCenters = true; 
 
 %%
 

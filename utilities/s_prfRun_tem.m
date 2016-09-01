@@ -23,13 +23,13 @@ list_numKnk = list_scanNum_Knk_sessionRet;
 
 % dataTYPE name. Can run for mutiple datatypes 
 list_rmName = {
-    'Words_scale1mu0sig3'
+    'Words_scale1mu0sig1p5'
     }; 
 
 % roi name. assumes in shared directory
 % if we want to run on the whole brain, assign this the empty string ''
 % assign this to be a string in a cell otherwise {'LV1_rl'}
-list_rois = {'left_VWFA_rl'}; 
+list_rois = {'rVOTRC'}; 
 
 % prf model. Specify in a cell. Options: 
 % {'one oval gaussian' | 'onegaussian' | 'css'}

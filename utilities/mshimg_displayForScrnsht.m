@@ -37,7 +37,7 @@ input.scan_num = 1;
 % name of roi
 % if we don't want an roi, write the empty string
 % will assume that roi is in shared directory
-input.roiname = 'lV4_all_nw'; %'rh_WordVAll_rl.mat'; 
+input.roiname = 'lVOTRC_mask'; %'rh_WordVAll_rl.mat'; 
 
 % roi color
 input.roicolor = 'b'; 
@@ -45,7 +45,7 @@ input.roicolor = 'b';
 % type of map we want to load.
 % 'parameter' for parameter map
 % 'prf' for retinotopy model
-input.mapType = 'parameter'; % 'parameter' 'prf'
+input.mapType = 'prf'; % 'parameter' 'prf'
 
 % pick the views
 % input.angles = {'lateral_lh' 'medial_lh' 'ventral_lh'};
@@ -88,10 +88,10 @@ rmName = 'retModel-Words-css.mat';
 
 % which prf map we want to see. Options include:
 % 'ph', 'co', 'amp', 'ipsi cov map', 'size to ecc ratio'
-input.whichMap = 'ecc'; 
+input.whichMap = 'co'; 
 
 % the co slider threshold value
-input.threshold = 0.1; 
+input.threshold = 0.2; 
 
 
 %% End modification section ----------------------------------------------

@@ -6,8 +6,8 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = 1:20;
-roiName = 'left_VWFA_rl';
+list_subInds = 1:12;
+roiName = 'lVOTRC_smallField';
 
 % 'lh_inflated400_smooth1.mat'
 meshName = 'lh_inflated400_smooth1.mat';
@@ -48,3 +48,5 @@ for ii = 1:numSubs
     
 end
 
+roiSurfaceArea_subjects
+mean(roiSurfaceArea_subjects)

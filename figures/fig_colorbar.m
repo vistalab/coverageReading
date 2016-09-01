@@ -18,7 +18,7 @@ colormap('autumn') % hot % autumn
 % set(gcf, 'colormap', newcolormap)
 
 % limits of colorbar
-caxis([3 5.5])
+caxis([3 5]) % [0 1]
 
 % labels of the colorbar -- left right top bottom?
 set(c, 'YAxisLocation', 'right');
