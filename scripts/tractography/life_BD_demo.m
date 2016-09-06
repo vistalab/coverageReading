@@ -130,7 +130,6 @@ prob.w      = feGet(fe,'fiber weights');
 
 %% (1.9) Plot a histogram of the fitted fascicle weights. 
 [fh(3), ~] = plotHistWeights(prob);
-clear fe
 
 switch strcat(mycomputer,'_',release)
         case {'GLNXA64_2015a','MACI64_2014b'}

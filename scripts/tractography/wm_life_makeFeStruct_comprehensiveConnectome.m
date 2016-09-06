@@ -1,12 +1,17 @@
-%% run LiFE on data collected at the CNI
-% save a copy of this script in each subject's directory
+%% Generate the LiFE struct for each subject
+% Takes about 8 hours per subject
 clear all; close all; clc; 
 bookKeeping; 
 dbstop if error
 
+% add path for life code and other preparations
+addpath(genpath('/biac4/wandell/data/rkimle/BrainSoftware/life/'))
+s = Settings(); 
+set(s.matlab.desktop.workspace, 'ArraySizeLimitEnabled',false); 
+
 %% modify here
 
-list_subInds = 2; 
+list_subInds = 3 %[2 3 4 5 6  7  8  9 10 13 14 15 16 17 18]; 
 
 % the comprehensive connectome. pdb file
 % relative to dirDiffusion
@@ -84,56 +89,5 @@ for ii = list_subInds
     [~,baseName] = fileparts(connectomeComprehensiveName);
     save([baseName '_LiFEStruct.mat'], 'fe')
     
-    %% (1.3) Extract the RMSE of the model on the fitted data set. 
-    % We now use the LiFE-BD structure and the fit to compute the error in each
-    % white-matter voxel spanned by the tractography model.
-    conCom.tractography = 'Probabilistic. Whole-brain';
-    conCom.rmse   = feGet(fe,'vox rmse');
-    
-    %% (1.4) Extract the RMSE of the model on the second data set. 
-    % Here we show how to compute the cross-valdiated RMSE of the tractography
-    % model in each white-matter voxel. We store this information for later use
-    % and to save computer memory.
-    conCom.rmsexv = feGetRep(fe,'vox rmse');
-
-    %% (1.5) Extract the Rrmse. 
-    % We show how to extract the ratio between the model prediction error
-    % (RMSE) and the test-retest reliability of the data.
-    conCom.rrmse  = feGetRep(fe,'vox rmse ratio');
-
-    %% (1.6) Extract the fitted weights for the fascicles. 
-    % The following line shows how to extract the weight assigned to each
-    % fascicle in the connectome.
-    conCom.w      = feGet(fe,'fiber weights');
-
-    %% (1.7) Plot a histogram of the RMSE. 
-    % We plot the histogram of  RMSE across white-mater voxels.
-    [fh(1), ~, ~] = plotHistRMSE(conCom);
-
-    %% (1.8) Plot a histogram of the RMSE ratio.
-    % As a reminder the Rrmse is the ratio between data test-retest reliability
-    % and model error (the quality of the model fit).
-    [fh(2), ~] = plotHistRrmse(conCom);
-
-    %% (1.9) Plot a histogram of the fitted fascicle weights. 
-    [fh(3), ~] = plotHistWeights(conCom);
-
-    %% Extract the coordinates of the white-matter voxels
-    % We will use this later to compare the two connectomes' model.
-    p.coords = feGet(fe,'roi coords');
-    clear fe
-    
-    %% ---------------------------------------------------------
-    %% (2) Evaluate the Deterministic tensor-based connectome.
-    % We will now analyze the tensor-based Deterministic tractography
-    % connectome.
-    det.tractography = 'Probabilistic. Lesioned';
-    fgFileName    = []; 
-
-    % The final connectome and data astructure will be saved with this name:
-    feFileName    = []; 
-
-
-
     
 end

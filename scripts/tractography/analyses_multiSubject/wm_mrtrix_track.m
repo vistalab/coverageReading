@@ -11,7 +11,7 @@ bookKeeping;
 %% modify here
 
 % subject indices, see bookKeeping
-list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17]; % 18 22
+list_subInds = 2 %[3     4      5     6     7     8     9    10    13    14    15    16    17    18     22];      
 
 % the session
 list_paths = list_sessionDiffusionRun1; 
@@ -68,6 +68,9 @@ for ii = list_subInds
     % save as pdb (quench) and mat file
     fgWrite(fg, fgSaveName, 'mat')
     fgWrite(fg, fgSaveName, 'pdb')
+    
+    % clear space
+    clear fg
     
 end
 

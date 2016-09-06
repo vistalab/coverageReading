@@ -5,12 +5,14 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = 2; 
+list_subInds = 3; % [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22]
+
+list_paths = list_sessionDiffusionRun1; 
 
 % the comprehensive connectome. pdb file
 % relative to dirDiffusion
 connectomeComprehensiveDir = '';
-connectomeComprehensiveName = 'Connectome_500000_curvature1.pdb';
+connectomeComprehensiveName = 'fg_mrtrix_500000.pdb';
 
 % name that we will give to the optimized connectome and data structure
 optimizedName = ['LiFEOptimized_' connectomeComprehensiveName];

@@ -6,8 +6,7 @@ tic
 %% modify here
 
 % subjects to do this for
-list_subInds = [ 3     4     5     6     7     8     9    10    13    14    15    16    17    18    22 ];  % 2    3     4     5     6     7     8     9    10    13    14    15    16    17    18    22 
-
+list_subInds = 2 %[3    4     5     6     7     8     9    10    13    14    15    16    17    18 ]; 
 % list_paths
 list_paths = list_sessionDiffusionRun1;
 
@@ -75,7 +74,7 @@ for ii = list_subInds
     
     %% loop over roi pairs
     for jj = 1:length(list_roi1Names)
-
+        
         % initialize the new fiber group
         % it will have all the same information as the comprehensive fg; the
         % only field that is changed is the fibers and the name
@@ -89,6 +88,8 @@ for ii = list_subInds
         roi1Name = list_roi1Names{jj}; 
         roi2Name = list_roi2Names{jj};
         
+        display(['Starting ' roi1Name ' and ' roi2Name '. '])
+        
         roi1 = load(fullfile(dirAnatomy, 'ROIsMrDiffusion', [roi1Name '.mat'])); 
         roi1Coords = roi1.roi.coords; 
 
@@ -99,7 +100,7 @@ for ii = list_subInds
         numFibers = length(fgComp.fibers);
         for ff = 1:numFibers
             % printing progress
-            if mod(ff,500) == 0
+            if mod(ff,2000) == 0
                 display(['Fiber num: ' num2str(ff)])
             end
 

@@ -66,5 +66,8 @@ for ii = list_subInds
     fgWrite(fg, fgSaveName, 'mat')
     fgWrite(fg, fgSaveName, 'pdb')
     
+    % make space
+    clear fg
+    
 end
 

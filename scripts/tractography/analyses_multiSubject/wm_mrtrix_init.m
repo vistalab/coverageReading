@@ -10,7 +10,7 @@ bookKeeping;
 %% modify here
 
 % subject index, see bookKeeping
-list_subInds = [18    22]; %[2    3     4     5     6     7     8     9    10   13    14    15    16    17];
+list_subInds = [2    3     4     5     6     7     8     9    10   13    14    15    16    17     18    22];
 
 
 %% end modification section
@@ -18,11 +18,7 @@ list_subInds = [18    22]; %[2    3     4     5     6     7     8     9    10   
 for ii = list_subInds
     
     % diffusion directory
-<<<<<<< HEAD
-    dirDiffusion = list_sessionDtiQmri{ii};
-=======
     dirDiffusion = list_sessionDiffusionRun1{ii};
->>>>>>> 62a33f4b2e369332bc1df11efab686ab6e09f815
     chdir(dirDiffusion); 
     
     %% dt6   - string, full-path to an mrInit-generated dt6 file. 
