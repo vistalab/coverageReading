@@ -369,7 +369,7 @@ list_sessionTestRetest = {
     'need';     % ak    
     'need';     % mw
     'need';     % gt    
-    'need';     % ws
+    '/sni-storage/wandell/data/reading_prf/ws/ret_testRetest';     % ws 
     'need';     % ol    
     'need';     % tl
     'need';     % mv    
@@ -564,7 +564,7 @@ list_scanNum_Checkers_sessionTestRetest = [
     0;
     0;
     0;
-    0;
+    1;
     0;
     0;
     0;
@@ -596,7 +596,7 @@ list_scanNum_Knk_sessionTestRetest = [
     0;
     0;
     0;
-    0;
+    3;
     0;
     0;
     0;

@@ -52,8 +52,8 @@ pp_mrInit; % retinotopy
 %% Align Inplane to Anatomical
 % knk alignment code, compatible with mrVista
 % Run this script cell-by-cell, self-explanatory
-s_alignInplaneToAnatomical; % localizer
-s_alignInplaneToAnatomical; % retinotopy
+pp_alignInplaneToAnatomical; % localizer
+pp_alignInplaneToAnatomical; % retinotopy
 
 %% Build the meshes
 % Automatically builds the following left and right meshes and save as the following:
@@ -110,6 +110,9 @@ edit rm_rename;
 % {dirVista}/Gray/Original/retModel-Combined.mat
 % Combine Checkers, Words, FalseFont for map drawing (certain regions have lower signal with Checkers, for example)
 rm_combineFile; 
+
+%% Compute dice coefficient
+edit summary_dice_withinSubjectReliability; 
 
 
 %% make parameter maps from GLM and ret models

@@ -151,4 +151,7 @@ lh_ventral_3_rl;
 % 'LGN_left-LV3'
 % 'LGN_right-RV3'
 
+% The corpus callosum
+% 'Splenium.pdb' % drawn in quench so these will be pdb files
+
 

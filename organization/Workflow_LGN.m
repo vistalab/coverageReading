@@ -45,4 +45,24 @@ edit wm_dtiRoiNiftiFromMat.m
 % Will include .mat and .pdb files
 edit wm_fibersBetweenRois.m
 
-%% Use LiFE to evaluate the strength of the evidence
+%% LiFE Things -----------------------------------------------------------
+
+%% Make the FE struct for the comprehensive connectome and save it
+% % This structure contains the forward model of diffusion based on the
+    % tractography solution (a connectome). It also contains all the information necessary to
+    % compute model accuracry, and perform statistical tests. You can type
+    % help('feBuildModel') in the MatLab prompt for more information.
+%
+% We use the struct to make the optimized connectome, among other things
+%
+% Naming convention: {connectomeName}_LiFEStruct.mat, and stored in the
+% same directory as {connectomeName}. Variable name is called fe
+edit wm_life_makeFeStruct_comprehensiveConnectome;  
+
+%% Make the optimized connectome (using the FE struct that was computed in the previous cell)
+% Naming convention: 
+% LiFEOptimized_{connectomeName}, where connectomeName is the comprehensive
+% connectome
+edit wm_life_optimizedConnectome_fromFeStruct
+
+

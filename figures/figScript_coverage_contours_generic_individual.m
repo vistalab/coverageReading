@@ -9,7 +9,7 @@ bookKeeping
 
 %%
 
-for ii = [3 20]
+for ii = [15]
 
 bookKeeping; 
 subInitials = list_sub{ii};
@@ -19,13 +19,13 @@ subInitials = list_sub{ii};
 titleDescript = ['Test retest reliability. ' subInitials];
 % THE UNDERLAY -------------
 und_subInds = ii; % if more than one, will be group average
-und_roiName = {'lVOTRC-threshByWordModel'}; % lVOTRC-threshByWordModel
+und_roiName = {'lVOTRC'}; % lVOTRC-threshByWordModel
 und_dtName = {'Words'};
 und_rmName = {'retModel-Words-css.mat'};
 und_vfc = ff_vfcDefault; 
 und_vfc.cmap = 'hot';
 und_vfc.addCenters = true; 
-und_vfc.cothresh = 0; 
+und_vfc.cothresh = 0.2; 
 und_vfc.smoothSmigma = 0; 
 und_vfc.tickLabel = false; 
 
@@ -38,8 +38,8 @@ con_subInds = {
     [ii];
     };
 con_roiNames = {
-    {'lVOTRC-threshByWordModel'}
-    {'lVOTRC-threshByWordModel'}
+    {'lVOTRC'}
+    {'lVOTRC'}
     };
 con_dtNames = {
     {'Words'}
@@ -78,7 +78,7 @@ con_centerMarkers = {
 vfc = ff_vfcDefault();
 vfc.cmap = 'hot';
 vfc.addCenters = false; 
-vfc.cothresh = 0; 
+vfc.cothresh = 0.2; 
 vfc.smoothSmigma = 0; 
 
 %% do things
