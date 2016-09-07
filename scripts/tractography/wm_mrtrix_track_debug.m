@@ -19,12 +19,17 @@ p.mode = 'prob';
 % Number of fibers to generate
 p.nSeeds = 500000; 
 
+% the session we want to work in
+list_path = list_sessionDiffusionRun2; 
+
 
 %% end modification section
 for ii = list_subInds
     
+    tic
+    
     % diffusion directory
-    dirDiffusion = list_sessionDtiQmri{ii};
+    dirDiffusion = list_path{ii};
     chdir(dirDiffusion);
     
     %% files
@@ -66,8 +71,7 @@ for ii = list_subInds
     fgWrite(fg, fgSaveName, 'mat')
     fgWrite(fg, fgSaveName, 'pdb')
     
-    % make space
-    clear fg
+    toc
     
 end
 

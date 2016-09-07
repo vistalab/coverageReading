@@ -10,7 +10,7 @@ bookKeeping;
 %% modify here
 
 % subject index, see bookKeeping
-list_subInds = [18];
+list_subInds = [2    3     4     5     6     7     8     9    10   13    14    15    16    17     18    22];
 
 
 %% end modification section
@@ -18,10 +18,11 @@ list_subInds = [18];
 for ii = list_subInds
     
     % diffusion directory
-    dirDiffusion = list_sessionDtiQmri{ii};
+    dirDiffusion = list_sessionDiffusionRun1{ii};
+    chdir(dirDiffusion); 
     
     %% dt6   - string, full-path to an mrInit-generated dt6 file. 
-    dt6 = fullfile(dirDiffusion, 'dti96trilin', 'dt6.mat');
+    dt6 = fullfile(dirDiffusion, 'dti96trilin_run1_res2', 'dt6.mat');
     
     %% lmax  - The maximal harmonic order to fit in the spherical deconvolution (d
     %    model. Must be an even integer. This input determines the
@@ -58,7 +59,7 @@ for ii = list_subInds
     %
     % dirAnatomy = list_anatomy{ii};
     
-    load(dt6)
+    load(dt6);
     wmMaskFile = files.wmMask; % fullfile(dirAnatomy, 't1_class.nii.gz');
     
     %% run mrtrix init!

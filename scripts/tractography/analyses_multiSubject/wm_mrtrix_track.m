@@ -11,7 +11,10 @@ bookKeeping;
 %% modify here
 
 % subject indices, see bookKeeping
-list_subInds = [2];
+list_subInds = 2 %[3     4      5     6     7     8     9    10    13    14    15    16    17    18     22];      
+
+% the session
+list_paths = list_sessionDiffusionRun1; 
 
 % Tracking mode: {'prob' | 'stream'} for probabilistic or deterministic tracking. 
 p.mode = 'prob';
@@ -24,7 +27,7 @@ p.nSeeds = 500000;
 for ii = list_subInds
     
     % diffusion directory
-    dirDiffusion = list_sessionDtiQmri{ii};
+    dirDiffusion = list_paths{ii};
     chdir(dirDiffusion);
     
     %% files
@@ -66,7 +69,7 @@ for ii = list_subInds
     fgWrite(fg, fgSaveName, 'mat')
     fgWrite(fg, fgSaveName, 'pdb')
     
-    % make space
+    % clear space
     clear fg
     
 end

@@ -30,6 +30,7 @@ list_sub = {
     'heb_aa'    % 24
     'heb_ls'    % 25
     'heb_toba'  % 26
+    'heb_maya'  % 27
     };
 
 list_names = {  
@@ -59,6 +60,7 @@ list_names = {
     'Avital Ayzenshtat'  % 24   Hebrew
     'Linoi Shambiro'     % 25   Hebrew
     'To Ba'              % 26   Hebrew
+    'Ma Ya'              % 27   Hebrew
     };
 
 % directory with ret. Checkers. Words
@@ -88,7 +90,8 @@ list_sessionRet = {
     '/sni-storage/wandell/data/reading_prf/heb_pilot01/Analyze_pseudoInplane';    % heb_ag
     '/sni-storage/wandell/data/reading_prf/heb_pilot02/RetAndLoc';  % heb_aa
     '/sni-storage/wandell/data/reading_prf/heb_pilot03/RetAndLoc';  % heb_ls
-    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc_noXform';  % 
+    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc_noXform';  % heb_toba
+    '/sni-storage/wandell/data/reading_prf/heb_pilot05/RetAndLoc';  % heb_maya 
     };
 
 % directory with checkers, words, falsefont retinotopy
@@ -120,6 +123,7 @@ list_sessionPath = {
     'do not have'                                                   % heb_aa
     'do not have'                                                   % heb_ls
     'do not have'                                                   % heb_toba
+    'do not have'                                                   % heb_maya
 };
 
 % directory with the smallFOV localizer mrSESSION
@@ -147,42 +151,108 @@ list_sessionLocPath = {
     'do not have';                                                                              % ab
     'do not have';                                                                              % bw
     '/sni-storage/wandell/data/reading_prf/dys_ab/20150430_loc';                                % dys_ab
-    'do not have'                                                                               % heb_ag
-    'do not have'                                                                               % heb_aa
-    'do not have'                                                                               % heb_ls
-    'do not have'                                                                               % heb_toba
+    'do not have';                                                                               % heb_ag
+    'do not have';                                                                               % heb_aa
+    'do not have';                                                                               % heb_ls
+    'do not have';                                                                               % heb_toba
+    'do not have';                                                                               % heb_maya
     }; 
 
-
-% directory with the dti and qmri session
+% for backwawrds compatibility this list is kept. list_sessionDiffusionRun1
+% and list_sessionDiffusionRun2 are better for code readbility
+% directory with the dti 
 list_sessionDtiQmri = {
     'to be collected';                                                  % jg
-    '/sni-storage/wandell/data/reading_prf/ad/20150717_dti_qmri';       % ad
-    '/sni-storage/wandell/data/reading_prf/cc/20150506_dti_qmri';       % cc
-    '/sni-storage/wandell/data/reading_prf/jw/20150426_dti_qmri';       % jw
-    '/sni-storage/wandell/data/reading_prf/rs/20150510_dti_qmri';       % rs
-    '/sni-storage/wandell/data/reading_prf/sg/20150517_dti_qmri';       % sg
-    '/sni-storage/wandell/data/reading_prf/th/20150514_dti_qmri';       % th
-    '/sni-storage/wandell/data/reading_prf/pv/20150510_dti_qmri';       % pv
-    '/sni-storage/wandell/data/reading_prf/sl/20150509_dti_qmri';       % sl
-    '/sni-storage/wandell/data/reading_prf/jv/20150512_dti_qmri';       % jv
+    '/sni-storage/wandell/data/reading_prf/ad/diffusion';               % ad
+    '/sni-storage/wandell/data/reading_prf/cc/diffusion';               % cc
+    '/sni-storage/wandell/data/reading_prf/jw/diffusion';               % jw
+    '/sni-storage/wandell/data/reading_prf/rs/diffusion';               % rs
+    '/sni-storage/wandell/data/reading_prf/sg/diffusion';               % sg
+    '/sni-storage/wandell/data/reading_prf/th/diffusion';               % th
+    '/sni-storage/wandell/data/reading_prf/pv/diffusion';               % pv
+    '/sni-storage/wandell/data/reading_prf/sl/diffusion';               % sl
+    '/sni-storage/wandell/data/reading_prf/jv/diffusion';               % jv
     'to be collected';                                                  % dl
     'to be collected';                                                  % ak 
-    '/sni-storage/wandell/data/reading_prf/mw/dti_qmri';                % mw
-    '/sni-storage/wandell/data/reading_prf/gt/dti_qmri';                % gt
-    '/sni-storage/wandell/data/reading_prf/ws/dti_qmri';                % ws
-    '/sni-storage/wandell/data/reading_prf/ol/dti_qmri';                % ol
-    '/sni-storage/wandell/data/reading_prf/tl/dti_qmri';                % tl
-    '/sni-storage/wandell/data/reading_prf/mv/dti_qmri';                % mv
+    '/sni-storage/wandell/data/reading_prf/mw/diffusion';               % mw
+    '/sni-storage/wandell/data/reading_prf/gt/diffusion';               % gt
+    '/sni-storage/wandell/data/reading_prf/ws/diffusion';               % ws
+    '/sni-storage/wandell/data/reading_prf/ol/diffusion';               % ol
+    '/sni-storage/wandell/data/reading_prf/tl/diffusion';               % tl
+    '/sni-storage/wandell/data/reading_prf/mv/diffusion';               % mv
     'to be collected';                                                  % vm
     'to be collected';                                                  % ab
     'to be collected';                                                  % bw
-    '/sni-storage/wandell/data/reading_prf/dys_ab/20150503_dti_qmri';   % dys_ab
+    '/sni-storage/wandell/data/reading_prf/dys_ab/diffusion';           % dys_ab
     'to be collected';                                                  % heb_ag
     'to be collected';                                                  % heb_aa
     'to be collected';                                                  % heb_ls
     'to be collected';                                                  % heb_toba
+    'to be collected';                                                  % heb_maya
     };
+
+% directories with RUN 1 of diffusion data 
+list_sessionDiffusionRun1 = {
+    'to be collected';                                                  % jg
+    '/sni-storage/wandell/data/reading_prf/ad/diffusion';               % ad
+    '/sni-storage/wandell/data/reading_prf/cc/diffusion';               % cc
+    '/sni-storage/wandell/data/reading_prf/jw/diffusion';               % jw
+    '/sni-storage/wandell/data/reading_prf/rs/diffusion';               % rs
+    '/sni-storage/wandell/data/reading_prf/sg/diffusion';               % sg
+    '/sni-storage/wandell/data/reading_prf/th/diffusion';               % th
+    '/sni-storage/wandell/data/reading_prf/pv/diffusion';               % pv
+    '/sni-storage/wandell/data/reading_prf/sl/diffusion';               % sl
+    '/sni-storage/wandell/data/reading_prf/jv/diffusion';               % jv
+    'to be collected';                                                  % dl
+    'to be collected';                                                  % ak 
+    '/sni-storage/wandell/data/reading_prf/mw/diffusion';               % mw
+    '/sni-storage/wandell/data/reading_prf/gt/diffusion';               % gt
+    '/sni-storage/wandell/data/reading_prf/ws/diffusion';               % ws
+    '/sni-storage/wandell/data/reading_prf/ol/diffusion';               % ol
+    '/sni-storage/wandell/data/reading_prf/tl/diffusion';               % tl
+    '/sni-storage/wandell/data/reading_prf/mv/diffusion';               % mv
+    'to be collected';                                                  % vm
+    'to be collected';                                                  % ab
+    'to be collected';                                                  % bw
+    '/sni-storage/wandell/data/reading_prf/dys_ab/diffusion';           % dys_ab
+    'to be collected';                                                  % heb_ag
+    'to be collected';                                                  % heb_aa
+    'to be collected';                                                  % heb_ls
+    'to be collected';                                                  % heb_toba
+    'to be collected';                                                  % heb_maya
+    };
+
+% directories with RUN 2 of diffusion data 
+list_sessionDiffusionRun2 = {
+    'to be collected';                                                  % jg
+    '/sni-storage/wandell/data/reading_prf/ad/diffusionRun2';           % ad
+    '/sni-storage/wandell/data/reading_prf/cc/diffusionRun2';           % cc
+    '/sni-storage/wandell/data/reading_prf/jw/diffusionRun2';           % jw
+    '/sni-storage/wandell/data/reading_prf/rs/diffusionRun2';           % rs
+    '/sni-storage/wandell/data/reading_prf/sg/diffusionRun2';           % sg
+    '/sni-storage/wandell/data/reading_prf/th/diffusionRun2';           % th
+    '/sni-storage/wandell/data/reading_prf/pv/diffusionRun2';           % pv
+    '/sni-storage/wandell/data/reading_prf/sl/diffusionRun2';           % sl
+    '/sni-storage/wandell/data/reading_prf/jv/diffusionRun2';           % jv
+    'to be collected';                                                  % dl
+    'to be collected';                                                  % ak 
+    '/sni-storage/wandell/data/reading_prf/mw/diffusionRun2';           % mw
+    '/sni-storage/wandell/data/reading_prf/gt/diffusionRun2';           % gt
+    '/sni-storage/wandell/data/reading_prf/ws/diffusionRun2';           % ws
+    '/sni-storage/wandell/data/reading_prf/ol/diffusionRun2';           % ol
+    '/sni-storage/wandell/data/reading_prf/tl/diffusionRun2';           % tl
+    '/sni-storage/wandell/data/reading_prf/mv/diffusionRun2';           % mv
+    'to be collected';                                                  % vm
+    'to be collected';                                                  % ab
+    'to be collected';                                                  % bw
+    '/sni-storage/wandell/data/reading_prf/dys_ab/diffusionRun2';       % dys_ab
+    'to be collected';                                                  % heb_ag
+    'to be collected';                                                  % heb_aa
+    'to be collected';                                                  % heb_ls
+    'to be collected';                                                  % heb_toba
+    'to be collected';                                                  % heb_maya
+    };
+
 
 % anatomy directory. With mrVista, this information is in vANATOMYPATH, but
 % when intializing for dti data it is easier if this info is just specified
@@ -214,6 +284,7 @@ list_anatomy = {
     '/biac4/wandell/data/anatomy/Ayzenshtat';   % heb_aa
     '/biac4/wandell/data/anatomy/Shambiro';     % heb_ls
     '/biac4/wandell/data/anatomy/Toba';         % heb_toba
+    '/biac4/wandell/data/anatomy/Maya';         % heb_maya
     };
 
 
@@ -245,6 +316,7 @@ list_sessionSizeRet = {
     'do not have';                                                   % heb_aa
     'do not have';                                                   % heb_ls
     'do not have';                                                   % heb_toba
+    'do not have';                                                   % heb_maya
     };
 
 
@@ -276,9 +348,41 @@ list_sessionTiledLoc = {
     '/sni-storage/wandell/data/reading_prf/heb_pilot01/Analyze_pseudoInplane';  % heb_ag
     '/sni-storage/wandell/data/reading_prf/heb_pilot02/RetAndLoc';              % heb_aa
     '/sni-storage/wandell/data/reading_prf/heb_pilot03/RetAndLoc';              % heb_ls
-    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc_noXform';              % heb_toba
+    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc_noXform';      % heb_toba
+    '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc';              % heb_maya
     };
 
+
+% test retest reliability: checkers and words
+list_sessionTestRetest = {
+    'need';     % jg    
+    'need';     % ad
+    '/sni-storage/wandell/data/reading_prf/cc/ret_testRetest';     % cc
+    'need';     % jw    
+    'need';     % rs
+    'need';     % sg    
+    'need';     % th
+    'need';     % pv    
+    'need';     % sl
+    'need';     % jv    
+    'need';     % dl
+    'need';     % ak    
+    'need';     % mw
+    'need';     % gt    
+    'need';     % ws
+    'need';     % ol    
+    'need';     % tl
+    'need';     % mv    
+    'need';     % vm
+    '/sni-storage/wandell/data/reading_prf/ab/ret_testRetest';     % ab    
+    'need';     % bw
+    'need';     % dys_ab    
+    'need';     % heb_ag
+    'need';     % heb_aa     
+    'need';     % heb_ls
+    'need';     % heb_toba    
+    'need';     % heb_maya
+    };
 
 
 % list freesurfer roi directory
@@ -308,7 +412,8 @@ list_fsDir = {
     '/sni-storage/wandell/data/reading_prf/anatomy/goodman';        % heb_ag
     '/sni-storage/wandell/data/reading_prf/anatomy/Ayzenshtat';     % heb_aa
     '/sni-storage/wandell/data/reading_prf/anatomy/Shambiro';       % heb_ls
-    '/sni-storage/wandell/data/reading_prf/anatomy/Toba';           % heb_toba
+    '/sni-storage/wandell/data/reading_prf/anatomy/Toba';           % heb_toba    
+    '/sni-storage/wandell/data/reading_prf/anatomy/Maya';           % heb_maya
     };
 
 
@@ -343,6 +448,7 @@ list_scanNum_Knk = [
     6;      % heb_aa
     6;      % heb_ls
     6;      % heb_toba
+    6;      % heb_maya
     ];
 
 % a scan number in vista where the Checkers scan was run (204 sec)
@@ -374,8 +480,8 @@ list_scanNum_Checkers = [
     4;      % heb_aa
     4;      % heb_ls
     4;      % heb_toba
+    4;      % heb_maya
     ];
-
 
 % a scan number in vista where the Knk scan was run (300 sec). 
 % IMPORTANT: this corresponds to list_sessionRet
@@ -406,6 +512,7 @@ list_scanNum_Knk_sessionRet = [
     6;      % heb_aa
     6;      % heb_ls
     6;      % heb_toba
+    6;      % heb_maya
     ]; 
 
 % a scan number in vista where the checkers scan was run (204 sec). 
@@ -437,7 +544,73 @@ list_scanNum_Checkers_sessionRet = [
     4;      % heb_aa
     4;      % heb_ls
     4;      % heb_toba
+    4;      % heb_maya
     ]; 
+
+% a scan number where the checkers scan was run (300 sec). 
+% IMPORTANT: this corresponds to list_sessionTestRetest
+list_scanNum_Checkers_sessionTestRetest = [
+    0;
+    0;
+    1;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    1;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    ];
+
+% a scan number where the knk scan was run (300 sec). 
+% IMPORTANT: this corresponds to list_sessionTestRetest
+list_scanNum_Knk_sessionTestRetest = [
+    0;
+    0;
+    3;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    3;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    0;
+    ];
+
 
 %% colors
 % colors!

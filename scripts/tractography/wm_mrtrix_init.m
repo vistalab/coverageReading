@@ -10,8 +10,7 @@ bookKeeping;
 %% modify here
 
 % subject index, see bookKeeping
-list_subInds = [18];
-
+list_subInds = [2];
 
 %% end modification section
 
@@ -19,6 +18,7 @@ for ii = list_subInds
     
     % diffusion directory
     dirDiffusion = list_sessionDtiQmri{ii};
+    chdir(dirDiffusion); 
     
     %% dt6   - string, full-path to an mrInit-generated dt6 file. 
     dt6 = fullfile(dirDiffusion, 'dti96trilin_run1_res2', 'dt6.mat');
