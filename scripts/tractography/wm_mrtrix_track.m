@@ -11,20 +11,21 @@ bookKeeping;
 %% modify here
 
 % subject indices, see bookKeeping
-list_subInds = [2];
+list_subInds = [3];
+list_paths = list_sessionDiffusionRun1; 
 
 % Tracking mode: {'prob' | 'stream'} for probabilistic or deterministic tracking. 
 p.mode = 'prob';
 
 % Number of fibers to generate
-p.nSeeds = 500000; 
+p.nSeeds = 1000; 
 
 
 %% end modification section
 for ii = list_subInds
     
     % diffusion directory
-    dirDiffusion = list_sessionDtiQmri{ii};
+    dirDiffusion = list_paths{ii};
     chdir(dirDiffusion);
     
     %% files

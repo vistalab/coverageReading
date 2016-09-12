@@ -1,3 +1,4 @@
+
 %% ROI naming scheme
 % some extra bookKeeping because there are 2 localizers
 % lh, rh, ch
@@ -141,14 +142,26 @@ lh_ventral_3_rl;
 %{sharedAnatomyDir}/ROIsNiftis
 
 %% FIBER GROUPS ----------------------------------------------------------
-% Using the comprehensive connectome : Connectome_500000_curvature1.mat
-% all fiber groups that come within 5mm of these .mat ROIs, using
-% the comprehensive connectome
-% 'LGN_left-LV1' 
-% 'LGN_right-RV1'
-% 'LGN_left-LV2'
-% 'LGN_right-RV2'
-% 'LGN_left-LV3'
-% 'LGN_right-RV3'
+% The Connectome_500000_curvature1 (.mat and .pdb) connectome will
+% be saved in dirAnatomy/ROIsConnectomes as well as in
+% list_sessionDiffusionRun1
+% 
+% All fibers that have at least one endpoint within 2mm of the LGN:
+% fg_mrtrix_500000-LGN_endpoint.pdb
+%
+% fg_mrtrix_500000-LGN_endpoint.pdb: Fibers with one endpoint within 2mm of 
+% LGN and the other endpoint within 2mm of an early visual area
+% LGN-V1.pdb
+% LGN-V2.pdb
+% LGN-V3.pdb
+
+% PATH NEIGHBORHOODS ----------------------------------------------------
+% {tract}_pathNeighborhood: all fibers that intersect the tract plus the
+% tract. E.g.:  'LGN-V1_pathNeighborhood' : all fibers that 
+% 
+% {tract}_pathNeighborhood-PRIME: all fibers that intersect the tract
+% WITHOUT the tract
+
+
 
 

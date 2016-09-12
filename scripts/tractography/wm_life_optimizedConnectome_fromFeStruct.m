@@ -5,14 +5,14 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22];
+list_subInds = 3%[2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22];
 list_paths = list_sessionDiffusionRun1; 
 
 % directory that the feStruct is in, relative to dirDiffusion
 feStructDir = ''; 
 
 % name of the fe struct WITH extension
-feStructName = 'fg_mrtrix_114465_LiFEStruct.mat'; 
+feStructName = 'fg_mrtrix_1000_LiFEStruct.mat'; 
 
 % name that will be given to the optimized connectome
 optimizedConnectomeName = ['LiFEOptimized_' ff_stringRemove(feStructName, '_LiFEStruct.mat')];
