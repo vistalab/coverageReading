@@ -12,12 +12,12 @@ list_subInds = 3;
 list_paths = list_sessionDiffusionRun1; 
 
 % 1st connectome FE STRUCT location, relative to dirDiffusion
-% the 1000 fiber connectome life struct
-feStruct1Loc = 'fg_mrtrix_1000_LiFEStruct.mat';
+% this is the candidate
+feStruct1Loc = 'LiFEStructs/LGN-V1_pathNeighborhood_LiFEStruct.mat';
 
 % 2nd connectome FE STRUCT location, relative to dirDiffusion
-% the connectome optimized from the 1000 fiber one
-feStruct2Loc = 'LiFEOptimized_fg_mrtrix_1000_LiFEStruct.mat';
+% this should be the lesioned one
+feStruct2Loc = 'LiFEStructs/LGN-V1_pathNeighborhood-PRIME_LiFEStruct.mat';
 
 %%
 
@@ -37,24 +37,24 @@ for ii = list_subInds
     clear fe
     
     %% Description for each fe struct
-    conCom.tractography = 'Candidate';
-    conOpt.tractography = 'Optimized'; 
+    conCan.tractography = 'Pathneighborhood';
+    conLes.tractography = 'Lesioned'; 
     
     %% Extract the RMSE model on the fitted data set
-    conCom.rmse = feGet(fe1, 'vox rmse'); 
-    conOpt.rmse = feGet(fe2, 'vox rmse');
+    conCan.rmse = feGet(fe1, 'vox rmse'); 
+    conLes.rmse = feGet(fe2, 'vox rmse');
     
     %% Extract the RMSE model on the repeated data set
-    conCom.rmsexv = feGetRep(fe1, 'vox rmse');
-    conOpt.rmsexv = feGetRep(fe2, 'vox rmse');
+    conCan.rmsexv = feGetRep(fe1, 'vox rmse');
+    conLes.rmsexv = feGetRep(fe2, 'vox rmse');
     
     %% Extract the Relative RMSE
-    conCom.rrmse = feGetRep(fe1, 'vox rmse ratio');
-    conOpt.rrmse = feGetRep(fe2, 'vox rmse ratio');
+    conCan.rrmse = feGetRep(fe1, 'vox rmse ratio');
+    conLes.rrmse = feGetRep(fe2, 'vox rmse ratio');
     
     %% Extract the fitted weights for the fascicles
-    conCom.w = feGet(fe1, 'fiber weights');
-    conOpt.w = feGet(fe2, 'fiber weights');
+    conCan.w = feGet(fe1, 'fiber weights');
+    conLes.w = feGet(fe2, 'fiber weights');
     
     %% Plot histograms of the relative rmse
 %     [fh_com(1), ~, ~] = plotHistRMSE(conCom);
@@ -66,64 +66,42 @@ for ii = list_subInds
 %     list_colorsPerSub
     
     %% Plot histogram of fitted fascicle weights
-    [fh_com(3), ~] = plotHistWeights(conCom);
-    [fh_opt(3), ~] = plotHistWeights(conOpt);
+    [fh_com(3), ~] = plotHistWeights(conCan);
+    [fh_opt(3), ~] = plotHistWeights(conLes);
 
     %% Extract coordinates
-    com.coords = feGet(fe1, 'roi coords'); 
-    opt.coords = feGet(fe2, 'roi coords');
-
-    %% Voxels not in the optimized connectome
-    %     LIA = ismember(A,B) for arrays A and B returns an array of the same
-    %     size as A containing true where the elements of A are in B and false
-    %     otherwise.
-    conCom.indsNotInOpt = ~ismember(com.coords, opt.coords, 'rows'); 
-    rmseNotInOpt = conCom.rmse(conCom.indsNotInOpt);
-    figure; 
-    hist(rmseNotInOpt, 50)
-    ylabel('Number of voxels')
-    xlabel('rmse (raw scanner units)')
-    
-    % plot the median
-    dataMed = median(rmseNotInOpt);
-    hold on
-    plot([dataMed dataMed], get(gca,'ylim'), 'LineWidth', 3)
-    
-    titleName = {'rmse of voxels not in the optimized connectome', ...
-        ['Median: ' num2str(dataMed)]};
-    title(titleName, 'fontweight', 'bold')
-    grid on; 
-    hold off
+    can.coords = feGet(fe1, 'roi coords'); 
+    les.coords = feGet(fe2, 'roi coords');
     
     %% Find common coordinates between two connectomes
     fprintf('Finding common brain coordinates between P and D connectomes...\n')
-    conCom.coordsIdx = ismember(com.coords,opt.coords,'rows');
-    conCom.coords    = com.coords(conCom.coordsIdx,:);
-    conOpt.coordsIdx  = ismember(opt.coords,conCom.coords,'rows');
-    conOpt.coords     = opt.coords(conOpt.coordsIdx,:);
-    conCom.rmse      = conCom.rmse( conCom.coordsIdx);
-    conOpt.rmse       = conOpt.rmse( conOpt.coordsIdx);
+    conCan.coordsIdx = ismember(can.coords,les.coords,'rows');
+    conCan.coords    = can.coords(conCan.coordsIdx,:);
+    conLes.coordsIdx  = ismember(les.coords,conCan.coords,'rows');
+    conLes.coords     = les.coords(conLes.coordsIdx,:);
+    conCan.rmse      = conCan.rmse( conCan.coordsIdx);
+    conLes.rmse       = conLes.rmse( conLes.coordsIdx);
 
     % Make a scatter plot of the RMSE of the two tractography models
-    fh(4) = scatterPlotRMSE(conCom,conOpt);
+    fh(4) = scatterPlotRMSE(conCan,conLes);
     
     
     
     %% (3.3) Compute the strength-of-evidence (S) and the Earth Movers Distance.
     % Compare the RMSE of the two models using the Stregth-of-evidence and the
     % Earth Movers Distance.
-    se = feComputeEvidence(conCom.rmse,conOpt.rmse);
+    se = feComputeEvidence(conCan.rmse,conLes.rmse);
     
     %% (3.4) Strength of evidence in favor of Probabilistic tractography. 
     % Plot the distributions of resampled mean RMSE
     % used to compute the strength of evidence (S).
-    fh(5) = distributionPlotStrengthOfEvidence(se, conCom.tractography, conOpt.tractography);
+    fh(5) = distributionPlotStrengthOfEvidence(se, conCan.tractography, conLes.tractography);
 
     %% (3.5) RMSE distributions for Probabilistic and Deterministic tractography. 
     % Compare the distributions using the Earth Movers Distance.
     % Plot the distributions of RMSE for the two models and report the Earth
     % Movers Distance between the distributions.
-    fh(6) = distributionPlotEarthMoversDistance(se, conCom.tractography, conOpt.tractography);
+    fh(6) = distributionPlotEarthMoversDistance(se, conCan.tractography, conLes.tractography);
 
 end
 

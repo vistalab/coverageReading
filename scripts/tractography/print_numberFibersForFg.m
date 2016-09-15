@@ -5,12 +5,14 @@ bookKeeping;
 
 %% 
 
-list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18];
+% list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18];
+list_subInds = [3     4     6     7     8     9    13    15    17];
 
 % relative to dirAnatomy
 % ROIsConnectomes. ROIsFiberGroups
+% 'LGN-V1' 'LGN-V1_pathNeighborhood'
 fgDir =  'ROIsFiberGroups';
-fgName = 'LGN-V3.pdb';
+fgName = 'LGN-V1.pdb';
 
 %% initialize
 numSubs = length(list_subInds);

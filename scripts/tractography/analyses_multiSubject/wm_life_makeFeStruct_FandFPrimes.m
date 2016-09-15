@@ -11,7 +11,7 @@ set(s.matlab.desktop.workspace, 'ArraySizeLimitEnabled',false);
 
 %% modify here
 
-list_subInds = 3;  
+list_subInds = [3     4     6     7     8     9    13    15    17];  
 
 % the comprehensive connectome. pdb file
 % relative to dirAnatomy
@@ -19,6 +19,10 @@ conDir = 'ROIsConnectomes';
 list_conNames = {
     'LGN-V1_pathNeighborhood.pdb'
     'LGN-V1_pathNeighborhood-PRIME.pdb'
+    'LGN-V2_pathNeighborhood.pdb'
+    'LGN-V2_pathNeighborhood-PRIME.pdb'
+    'LGN-V3_pathNeighborhood.pdb'
+    'LGN-V3_pathNeighborhood-PRIME.pdb'
     };
 
 % where we will save the 
@@ -91,5 +95,4 @@ for ii = list_subInds
         % free space
         clear fe
     end
-    
 end

@@ -12,7 +12,7 @@ clc;
 % roiName = 'rV2v_all_nw.mat';
 % roiName = 'LGN_left.nii.gz';
 % roiName = 'LGN-V3_pathNeighborhood.pdb';
-roiName = 'LGN-V1_pathNeighborhood-PRIME.pdb';
+roiName = 'LGN-V3_pathNeighborhood-PRIME.pdb';
 
 % Different types of roi. Specify which directory to look in, relative to
 % dirAnatomy. Options: ROIs, ROIsConnectomes, ROIsFiberGroups,

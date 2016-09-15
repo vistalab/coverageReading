@@ -1,0 +1,30 @@
+LGN-V1_pathNeighborhood.pdb
+
+
+numFibersSubs = 
+
+    'cc. 3. numFibers: 4119'
+    'jw. 4. numFibers: 20029'
+    'sg. 6. numFibers: 127314'
+    'th. 7. numFibers: 87844'
+    'pv. 8. numFibers: 96572'
+    'sl. 9. numFibers: 97423'
+    'mw. 13. numFibers: 80818'
+    'ws. 15. numFibers: 132626'
+    'tl. 17. numFibers: 118971'
+    
+    
+    LGN-V1.pdb
+
+
+numFibersSubs = 
+
+    'cc. 3. numFibers: 22'
+    'jw. 4. numFibers: 20'
+    'sg. 6. numFibers: 29'
+    'th. 7. numFibers: 19'
+    'pv. 8. numFibers: 29'
+    'sl. 9. numFibers: 11'
+    'mw. 13. numFibers: 33'
+    'ws. 15. numFibers: 32'
+    'tl. 17. numFibers: 31'
