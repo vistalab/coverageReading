@@ -13,21 +13,19 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18];
+list_subInds =  3 %  [3   4    6   7    8    9   13   15   17];
 list_paths = list_sessionDiffusionRun1; 
 
 % the comprehensive connectome that we will restrict
 % location is relative to dirAnatomy
 conComDir = 'ROIsConnectomes';
-conComName = 'fg_mrtrix_500000.pdb';
+conComName = 'EverythingExcept_LGN-V1_51100fibers.pdb';
 
 % the fiber group whose coordinates we will restrict the conCom to
 % location is relative to dirAnatomy
 fgDir = 'ROIsFiberGroups';
 list_fgNames = {
-    'LGN-V1.pdb'
-    'LGN-V2.pdb'
-    'LGN-V3.pdb'
+    'LGN-V1_200Fibers.pdb'
     }; 
 
 % where to save, relative to dirAnatomy

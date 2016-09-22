@@ -5,87 +5,58 @@
 % and not as efficient
 
 close all; clear all; clc; 
-bookKeeping
-
-%%
-
-for ii = [15]
-
 bookKeeping; 
-subInitials = list_sub{ii};
 
 %% modify here
 
-titleDescript = ['Test retest reliability. ' subInitials];
+titleDescript = 'LV2v Coverage Words';
+
+% vfc
+vfc = ff_vfcDefault();
+vfc.cmap = 'jet';
+vfc.addCenters = 0;
+vfc.method = 'max';
+
 % THE UNDERLAY -------------
-und_subInds = ii; % if more than one, will be group average
-und_roiName = {'lVOTRC-threshByWordModel'}; % lVOTRC-threshByWordModel
+und_subInds = [1:20] ; % if more than one, will be group average
+und_roiName = {'RhV4_rl'};
 und_dtName = {'Words'};
 und_rmName = {'retModel-Words-css.mat'};
-und_vfc = ff_vfcDefault; 
-und_vfc.cmap = 'hot';
-und_vfc.addCenters = true; 
-und_vfc.cothresh = 0; 
-und_vfc.smoothSmigma = 0; 
-und_vfc.tickLabel = false; 
 
 
 % THE CONTOURS ----------------
 % can have many contours.
 % indicate in cell array.
 con_subInds = {
-    [ii];
-    [ii];
+    [1:20];
     };
 con_roiNames = {
-    {'lVOTRC-threshByWordModel'}
-    {'lVOTRC-threshByWordModel'}
+    {'RhV4_rl'}
     };
 con_dtNames = {
-    {'Words'}
     {'Words'}
     };
 con_rmNames = {
     {'retModel-Words-css.mat'}
-    {'retModel-Words-css-testRetest.mat'}
     };
 con_contourLevels = {
     0.5
-    0.5
     };
 con_contourColors = {
-    [.15 .15 .15]
-    [.15 .15 .15]
+    [0 0 0]
     };
 con_contourMarkers = {
     '--'
-    '--'
     };
-con_contourMarkerSizes = { % 2 for group average
-    [1]
-    [1]
+con_contourMarkerSizes = {
+    [2]
     };
-con_contourLineWidths = {
-    [1]
-    [1]
-    };
-con_centerMarkers = {
-    '.'
-    '.'
-    };
-
-% vfc
-vfc = ff_vfcDefault();
-vfc.cmap = 'hot';
-vfc.addCenters = false; 
-vfc.cothresh = 0; 
-vfc.smoothSmigma = 0; 
 
 %% do things
 
 %% underlay rmroi -------
 und_rmroiCell  = ff_rmroiCell(und_subInds, und_roiName, und_dtName, und_rmName);
-und_rfcov = ff_rmPlotCoverageGroup(und_rmroiCell, und_vfc, 'flip', false);
+und_rfcov = ff_rmPlotCoverageGroup(und_rmroiCell, vfc, 'flip', false);
 und_h = gcf; 
 
 %% contours on top
@@ -96,8 +67,6 @@ for cc = 1:length(con_rmNames)
     contourColor = con_contourColors{cc};
     contourMarker = con_contourMarkers{cc};
     contourMarkerSize = con_contourMarkerSizes{cc};
-    contourLineWidth = con_contourLineWidths{cc};
-    con_centerMarker = con_centerMarkers{cc};
     
     % rmroiCell
     con_rmroiCell = ff_rmroiCell(con_subInds{cc}, con_roiNames{cc}, con_dtNames{cc}, con_rmNames{cc});
@@ -114,16 +83,7 @@ for cc = 1:length(con_rmNames)
     
     % add to underlay plot
     figure(und_h)
-    plot(contourX,contourY, contourMarker, 'Color',contourColor, ...
-        'MarkerSize',contourMarkerSize, ...
-        'LineWidth', contourLineWidth)
-    
-    if vfc.addCenters
-        hold on; 
-        plot(con_rmroiCell{1}.x0, con_rmroiCell{1}.y0, con_centerMarker)
-        
-    end
-
+    plot(contourX,contourY, contourMarker, 'Color',contourColor, 'LineWidth',contourMarkerSize)
     
 end
 
@@ -132,6 +92,3 @@ end
 title(titleDescript, 'FontWeight', 'Bold')
 
 ff_dropboxSave;
-
-
-end

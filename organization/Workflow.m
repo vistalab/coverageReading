@@ -96,9 +96,7 @@ s_tSeriesAverageAndXform_individualRuns;
 s_pRFRun_Dumoulin_stimTypes;        % Checkers, Words, FalseFont
 s_pRFRun_Dumoulin_individualRuns;   % cross-validation;
 
-
 %% rename the prf model fits appropriately
-
 edit rm_rename; 
 
 % testRetest ret models should be xformed and saved in the main session ret
@@ -111,6 +109,9 @@ edit rm_rename;
 % Combine Checkers, Words, FalseFont for map drawing (certain regions have lower signal with Checkers, for example)
 rm_combineFile; 
 
+%% make mean map for word stim types
+% {list_sessionRet}/Gray/Words/meanMap.mat
+edit pmap_computeMeanMap
 
 %% make parameter maps from GLM and ret models
 % parameter map that is the difference of variance explained for rm models  

@@ -5,17 +5,20 @@ bookKeeping;
 %% modify this cell
 
 list_subInds = 1:20; 
-roiName = {'lVOTRC'};
+roiName = {'LV1_rl-threshByWordModel'};
 list_dtNames = {
-    'Words'
-    'Words'
+    'Words1'
+    'Words2'
     };
 list_rmNames = {
-    'retModel-Words-css.mat'
-    'retModel-Words-css.mat'
+    'retModel-Words1-css.mat'
+    'retModel-Words2-css.mat'
     };
 
 vfc = ff_vfcDefault; 
+% if we look at WITHIN subject reliability, do not threshold so that we
+% grab the same voxels as the -threshByWordModel ROI 
+vfc.cothresh = 0; 
 
 % contour region 
 contourLevel = 0.5; 
@@ -50,5 +53,6 @@ dice_allSubs(isnan(dice_allSubs)) = 0;
 
 % the average dice coefficient of between run
 dice_avg = mean(dice_allSubs)
-
+dice_min = min(dice_allSubs)
+dice_max = max(dice_allSubs)
  

@@ -15,22 +15,7 @@
 % to create the dt6
 edit wm_dtiInit
 
-%% Initialize files for running mrtrix tractography
-edit wm_mrtrix_init.m
-
-%% Run mrtrix tractography
-% fg_mrtrix_500000 -- Connectome name
-edit wm_mrtrix_track.m
-
-%% Generate an optimized connectome using Brain-Life
-edit wm_life_optimizedConnectome.m
-
-%% Xform the mrVista V1, V2, V3 rois into dti ROIs
-% saves the ROIs into dirDiffusion/ROIs -- using edit wm_xformROIs.m
-% these ROIs are later moved into {sharedAnatomy}/ROIsMrDiffusion
-edit wm_xformROIs.m
- 
-%% Draw the LGN ROIs\
+%% Draw the LGN ROIs
 % First draw them as mat files in dirDiffusion/ROIS.
 % 5mm sphere roi -- see Evernote for screenshots
     % in the coronal slice, halfway between we see clear delineation
@@ -40,36 +25,51 @@ edit wm_xformROIs.m
 % {sharedAnatomyDirectory}/ROIsNiftis/LGN_left.nii.gz
 edit wm_dtiRoiNiftiFromMat.m
 
-%% Make a connectome of all fibers that have at least one endpoint within 2mm of LGN
-% Will make subsequent code faster
-%  wm_dtiIntersectFibersWithRoi.m is the base script
-% this fiber group is: fg_mrtrix_500000_LGN_endpoint.pdb
-edit  wm_dtiIntersectFibersWithRoi_LGNEndpoint.m
+%% Xform the mrVista V1, V2, V3 rois into dti ROIs
+% saves the ROIs into dirDiffusion/ROIs -- using edit wm_xformROIs.m
+% these ROIs are later moved into {sharedAnatomy}/ROIsMrDiffusion
+edit wm_xformROIs.m
 
-%% Identify all fibers that have one endpoint in LGN and one in V2/3
-% Save fiber groups here: {sharedAnatomy}/ROIsFiberGroups
-% Will include .mat and .pdb files
-% 
-% Use the connectome that is generated above: fg_mrtrix_500000_LGNIntersection
-% and define new fiber groups: those that intersect (i.e. come within xx
-% mm) of the V1, V2, V3s
-edit wm_dtiIntersectFibersWithRoi_LGNEndpintandEarlyVisualAreas.m
+%% Initialize files for running mrtrix tractography
+edit wm_mrtrix_init.m
 
-%% Define the path neighborhood of the tract of interest
-edit wm_life_definePathNeighborhood; 
+%% Tractography ==========================================================
 
-%% Define the path neighborhood PRIME
-edit wm_life_definePathNeighborhood_prime; 
+%% (1) Generate a connectome with no endpoints in LGN-V(123).mat (the union)
+% Name: ROIsFiberGroups/WholeBrainExcluding_LGN-V1_50000fibers.pdb
+% Name: ROIsFiberGroups/WholeBrainExcluding_LGN-V2_50000fibers.pdb
+% Name: ROIsFiberGroups/WholeBrainExcluding_LGN-V3_50000fibers.pdb
+edit wm_mrtrix_noEndpointsInROIs.m 
+  
+%% (2) Generate the fibers with only one endpoint in the LGN-V(123) (the union)
+% (2a) Generate the fibers with one endpoint in LGN 
+% (2b) Generate the fibers with one endpoint in V(123)
+% Merge the 2a and 2b fibers
+    % Name: ROIsFiberGroups/OneEndpoint_LGN-V1_{numFibers}fibers.pdb
+edit wm_mrtrix_oneEndpointInROI.m
+ 
+%% (3) Generate the fibers that run between LGN and V(123)
+% Use mrtrix_track_roi2roi
+% Name: LGN-V1_200fibers. Etc
+edit wm_mrtrix_track_roi2roi; 
 
-%% Make the feStruct for each the path neighborhood (F) and path neighborhood PRIME
-% These feStructs are saved as such:
-% dirDiffusion/LiFEStructs/{connectomeName}_LiFEStruct
-edit wm_life_makeFeStruct; 
+%% Combine fibers from (1) and (2) 
+% name: EverythingExcept_LGN-V1_51100fibers.pdb
+edit wm_fgMerge_everythingExceptTractOfInterest.m; 
 
-%% Use LiFE to evaluate the strength of the evidence
-% GETTING FAMILIAR WITH THE CODE, not ready for primetime
-edit wm_life_virtualLesionTesting; % one model
-edit wm_life_rmseCompare; % two models <- use this
+%% Inteserect the fibers from combined (1) and (2) with (3) to find FPrime
+% Name: LGN-V1-FPrimeFibers
+edit wm_life_makeFPrimeFibers_LGNV1.m; 
+edit wm_life_makeFPrimeFibers_LGNV2.m;
+edit wm_life_makeFPrimeFibers_LGNV3.m;
 
+%% Merge FPrime with (3) to get F
+% Name: LGN-V1-FFibers
+edit wm_fgMerge_fAndFPrimeToMakeF.m;
 
+%% Fit the life model to these two connectomes
+% location and name: dirDiffusion/LiFEStructs/feStruct-LGN-V1-FFibers.mat
+edit wm_life_feStructCompute.m
+
+%% Compare the rmse distrubution of the voxels of f
 

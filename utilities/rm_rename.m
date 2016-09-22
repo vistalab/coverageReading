@@ -7,21 +7,21 @@ bookKeeping;
 %% modify here
 
 % do this for which subjects
-list_subInds = [3 20]; 
+list_subInds = 1:20; 
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
 % list_sessionSizeRet 
-list_path = list_sessionTestRetest; % list_sessionRet;
+list_path = list_sessionRet; % list_sessionPath;
 
 % the string we want to remove at the end
 % it will be replaced with strReplace
-strRemove = '--fFit.mat';
+strRemove = '-fFit.mat';
 
 strReplace = '.mat';
 
 % whether we only want to do this within a single datatype
 % specify the empty string if we want to do for ALL datatypes
-dtTarget = 'Checkers'; 
+dtTarget = 'Words_scale1mu0sig1p5'; 
 
 
 %% end modification section

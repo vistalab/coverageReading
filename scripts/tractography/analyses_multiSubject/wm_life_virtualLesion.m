@@ -9,20 +9,20 @@ bookKeeping;
 
 %% modify here
 tic
-list_subInds = 4; 
+list_subInds = 6; 
 list_paths = list_sessionDiffusionRun1; 
 
 % 1st connectome FE STRUCT location, relative to dirDiffusion
 % This is F: the path neighborhood of f
-feStruct1Loc = 'LiFEStructs/LGN-V2_pathNeighborhood_LiFEStruct.mat';
+feStruct1Loc = 'LiFEStructs/LGN-V1-FFibers_LiFEStruct.mat';
 
 % 2nd connectome FE STRUCT location, relative to dirDiffusion
 % This is F': F - f
-feStruct2Loc = 'LiFEStructs/LGN-V2_pathNeighborhood-PRIME_LiFEStruct.mat';
+feStruct2Loc = 'LiFEStructs/LGN-V1-FPrimeFibers_LiFEStruct.mat';
 
 % Specify the fiber tract that was used to define F and F'
 % relative to dirAnatomy
-fLoc = 'ROIsFiberGroups/LGN-V2.pdb';
+fLoc = 'ROIsFiberGroups/LGN-V1_200fibers.pdb';
 
 %%
 
@@ -104,7 +104,7 @@ for ii = list_subInds
     fh(5) = distributionPlotStrengthOfEvidence(se, conCan.descript, conLes.descript);
     titleAppendStr = [f.name '. Sub' num2str(ii)];
     ff_titleAppend(titleAppendStr);
-    ff_dropboxSave
+    ff_dropboxSave; 
     
 
     % Earth mover's distance

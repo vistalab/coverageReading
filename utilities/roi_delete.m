@@ -8,15 +8,17 @@ bookKeeping;
 %% modify here
 
 % subjects to do this for
-list_subInds = 6; 
+list_subInds = 9; 
 
-% rois that we want to delete.
-% directory relative to dirAnatomy
-roiDir = 'ROIsFiberGroups'
-
-% NAME WITH EXTENSION
+% rois that we want to delete
 list_roiNames = {
-    'LGN_left-LV1.mat'
+    'lh_mFusFace_rl'
+%     'lh_VWFA_new_rl'
+%     'rh_VWFA_new_rl'
+%     'lh_mFus_Face_new_rl'
+%     'lh_pFus_Face_new_rl'
+%     'rh_mFus_Face_new_rl'
+%     'rh_pFus_Face_new_rl'
     };
 
 
@@ -32,7 +34,7 @@ for ii = list_subInds
     for jj = 1:length(list_roiNames)
         
         roiName = list_roiNames{jj};
-        roiPath = fullfile(dirAnatomy, roiDir, roiName);
+        roiPath = fullfile(dirAnatomy, 'ROIs', [roiName '.mat']);
         
         % delete
         delete(roiPath);

@@ -14,7 +14,7 @@ threshDescript = 'threshByWordModel';
 vfc = ff_vfcDefault;
 
 subInds = 1:20; 
-roiName = {'rVOTRC'};
+roiName = {'LhV4_rl'};
 
 % the ret model that we will apply thresholds to
 list_dtNames = {
@@ -47,7 +47,7 @@ for ii = 1:numSubs
     
     for kk = 1:numRms
         rmroi = rmroiCell{ii,1,kk};
-        indsThatPass = ff_rmroiIndsThreshold(rmroi, vfc)           
+        indsThatPass = ff_rmroiIndsThreshold(rmroi, vfc);            
     end
     
     indsToKeep = intersect(indsToKeep, indsThatPass); 

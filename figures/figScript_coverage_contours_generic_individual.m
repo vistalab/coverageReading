@@ -9,7 +9,7 @@ bookKeeping
 
 %%
 
-for ii = 1:20
+for ii = [17 18]
 
 bookKeeping; 
 subInitials = list_sub{ii};
@@ -19,7 +19,7 @@ subInitials = list_sub{ii};
 titleDescript = ['Coverage with contours of Run 1 and Run 2. lVOTRC SAME VOXELS.' subInitials];
 % THE UNDERLAY -------------
 und_subInds = ii; % if more than one, will be group average
-und_roiName = {'lVOTRC-threshByWordModel'};
+und_roiName = {'rVOTRC-threshByWordModel'};
 und_dtName = {'Words'};
 und_rmName = {'retModel-Words-css.mat'};
 und_vfc = ff_vfcDefault; 
@@ -38,8 +38,8 @@ con_subInds = {
     [ii];
     };
 con_roiNames = {
-    {'lVOTRC-threshByWordModel'}
-    {'lVOTRC-threshByWordModel'}
+    {'rVOTRC-threshByWordModel'}
+    {'rVOTRC-threshByWordModel'}
     };
 con_dtNames = {
     {'Words1'}

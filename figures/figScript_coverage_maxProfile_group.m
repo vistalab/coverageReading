@@ -34,11 +34,11 @@ list_roiNames = {
 %     'rh_mFusFace_rl'
 %     'lVOTRC'
 %     'lVOTRC_fullField'
-    'rVOTRC-threshByCheckerModel'
-    'rVOTRC-threshByWordModel'
+%     'rVOTRC-threshByCheckerModel'
+%     'rVOTRC-threshByWordModel'
 %     'LV1_rl'
 %     'left_VWFA_rl'
-
+    ''
     };
 
 % data types we want to look at
@@ -48,7 +48,7 @@ list_dtNames = {
 %     'WordSmall'
 %     'FaceSmall'
 %     'FaceLarge'
-%     'Checkers'
+%     'Words'
 %     'Words1'
 %     'Words2'
     'Words_scale1mu0sig1p5'
@@ -61,7 +61,7 @@ list_rmNames = {
 %     'retModel-WordSmall-css.mat';
 %     'retModel-FaceSmall-css.mat';
 %     'retModel-FaceLarge-css.mat';
-%     'retModel-Checkers-css.mat'
+%     'retModel-Words-css.mat'
 %     'retModel-Words1-css.mat'
 %     'retModel-Words2-css.mat'
      'retModel-Words_scale1mu0sig1p5-css-rVOTRC.mat'

@@ -1,13 +1,11 @@
 % for analyzing activations. script that will display for each subject
 % specified views with whatever activations. 
-
 % original is here: '/sni-storage/kalanit/biac3/kgs4/projects/retinotopy/adult_ecc_karen/Analyses/MeshImages/readme_meshimages.m'
 
 close all; clear all; clc; 
 bookKeeping; 
 
 %%  modify here: make the struct to pass into hG_load
-% TODO: change the variable <input> into something else, because this is already a matlab function
 
 % keep mesh open to play around
 keepMeshOpen = true; 
@@ -16,7 +14,7 @@ keepMeshOpen = true;
 list_dirVista = list_sessionRet; 
 
 % subjects we want to get mesh screenshots for. based on list_dirVista
-subsToSee = 2%[13:20]; %1:length(list_dirVista); 
+subsToSee = 20 
 list_sub{subsToSee}
 % [1:15 17:21]
 
@@ -37,10 +35,10 @@ input.scan_num = 1;
 % name of roi
 % if we don't want an roi, write the empty string
 % will assume that roi is in shared directory
-input.roiname = 'lVOTRC_mask'; %'rh_WordVAll_rl.mat'; 
+input.roiname = 'lVOTRC'; %'rh_WordVAll_rl.mat'; 'lVOTRC_mask'
 
 % roi color
-input.roicolor = 'b'; 
+input.roicolor = 'w'; 
 
 % type of map we want to load.
 % 'parameter' for parameter map
@@ -53,7 +51,7 @@ input.angles = {'ventral_lh'}; % do only a single angle for now
 
 % directory where we want to save
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/paramMaps';
-saveDropbox = false; 
+saveDropbox = true; 
 
 % extension we want to save as
 extSave = 'png'; 

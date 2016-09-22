@@ -5,20 +5,20 @@ bookKeeping;
 dbstop if error
 
 % add path for life code and other preparations
-addpath(genpath('/biac4/wandell/data/rkimle/BrainSoftware/life/'))
+addpath(genpath('/biac4/wandell/data/rkimle/BrainSoftware/encode/'))
 s = Settings(); 
 set(s.matlab.desktop.workspace, 'ArraySizeLimitEnabled',false); 
 
 %% modify here
 
-list_subInds = 3;  
+list_subInds = [3     4     6     7     8     9    13    15    17];  
 
 % the comprehensive connectome. pdb file
 % relative to dirAnatomy
 conDir = 'ROIsConnectomes';
 list_conNames = {
-    'LGN-V1_pathNeighborhood.pdb'
-    'LGN-V1_pathNeighborhood-PRIME.pdb'
+    'LGN-V2-FFibers.pdb'
+    'LGN-V2-FPrimeFibers.pdb'
     };
 
 % where we will save the 
@@ -52,7 +52,7 @@ for ii = list_subInds
 
         % Assumption. That we want the feStruct to be stored in
         % dirDiffusion/LiFEStructs
-        feFileName    = fullfile(dirDiffusion, '', ['LiFE-' conName]);
+        feFileName    = fullfile(dirDiffusion, '', ['feStruct-' conName]);
 
         %% (1.1) Initialize the LiFE-BD model structure, 'fe' in the code below. 
         % This structure contains the forward model of diffusion based on the
@@ -79,8 +79,11 @@ for ii = list_subInds
         % etc) is then installed in the LiFE-BD structure.
         %
         % TODO break this down
-        fe = feSet(fe,'fit',feFitModel(feGet(fe,'model'),feGet(fe,'dsigdemeaned'),'bbnnls'));
-
+        tic
+        Niter = 500;
+        fe = feSet(fe,'fit',feFitModel(feGet(fe,'model'),feGet(fe,'dsigdemeaned'),'bbnnls', Niter, 'preconditioner'));
+        toc
+        
         % save the fe struct for the comprehensive connectome
         % assumption: save the fe struct in the same directory and with the
         % same name as the connectome it is run on

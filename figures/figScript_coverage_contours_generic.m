@@ -9,20 +9,19 @@ bookKeeping;
 
 %% modify here
 
-titleDescript = 'VOT and VOTRC comparison with mean pRF value.'
+titleDescript = 'RhV4 Coverage Checkers';
 
 % vfc
 vfc = ff_vfcDefault();
 vfc.cmap = 'jet';
 vfc.addCenters = 0;
-vfc.method = 'sum';
-
+vfc.method = 'max';
 
 % THE UNDERLAY -------------
 und_subInds = [1:20] ; % if more than one, will be group average
-und_roiName = {'lh_ventral_3_rl'};
-und_dtName = {'Words'};
-und_rmName = {'retModel-Words-css.mat'};
+und_roiName = {'RhV4_rl'};
+und_dtName = {'Checkers'};
+und_rmName = {'retModel-Checkers-css.mat'};
 
 
 % THE CONTOURS ----------------
@@ -30,34 +29,26 @@ und_rmName = {'retModel-Words-css.mat'};
 % indicate in cell array.
 con_subInds = {
     [1:20];
-    [1:20];
     };
 con_roiNames = {
-    {'lVOTRC'}
-    {'lh_ventral_3_rl'}
+    {'RhV4_rl'}
     };
 con_dtNames = {
-    {'Words'}
-    {'Words'}
+    {'Checkers'}
     };
 con_rmNames = {
-    {'retModel-Words-css.mat'}
-    {'retModel-Words-css.mat'}
+    {'retModel-Checkers-css.mat'}
     };
 con_contourLevels = {
-    0.5
     0.5
     };
 con_contourColors = {
     [0 0 0]
-    [0 0 0]
     };
 con_contourMarkers = {
     '--'
-    '--'
     };
 con_contourMarkerSizes = {
-    [2]
     [2]
     };
 

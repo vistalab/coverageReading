@@ -11,8 +11,8 @@ list_subInds = [3     4     6     7     8     9    13    15    17];
 % relative to dirAnatomy
 % ROIsConnectomes. ROIsFiberGroups
 % 'LGN-V1' 'LGN-V1_pathNeighborhood'
-fgDir =  'ROIsFiberGroups';
-fgName = 'LGN-V1.pdb';
+fgDir =  'ROIsConnectomes';
+fgName = 'LGN-V1-FFibers.pdb';
 
 %% initialize
 numSubs = length(list_subInds);

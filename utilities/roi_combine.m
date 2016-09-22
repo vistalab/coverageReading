@@ -8,13 +8,13 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % subjects to do this for
-list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16  17 18]; 
+list_subInds = 1:11; 
 
 roisToCombine = {
-    'LV3v_rl'
-    'RV3v_rl'
+    'lh_mFusFace_rl'
+    'lh_pFusFace_rl';
 }; 
-roiNewName  = 'CV3v_rl'; 
+roiNewName  = 'lh_FFA_Face_rl'; 
 roiNewColor = 'w'; 
 roiAction   = 'Union';  
 

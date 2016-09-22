@@ -7,17 +7,17 @@ bookKeeping;
 %% modify here
 
 % subjects to do this for, see bookKeeping
-list_subInds = 18;
+list_subInds = 1:20;
 
 % original roi name
 % rh_mFusFace_rl
 list_roiOriginal = {
-    'rV3d_all_nw'
+    'rV4_all_nw'
     };
   
 % new roi name
 list_roiNew = {
-    'RV3d_rl'
+    'RhV4_rl'
     };
 
 % delete the original? IMPORTANT CHECK THIS
@@ -62,8 +62,6 @@ for ii = list_subInds
             if deleteOriginal
                 delete(roiPathOriginal)
             end
-        else
-            display(['Original ROI does not exist for sub ' num2str(ii)])
         end
        
     end

@@ -20,7 +20,7 @@ vfc.addCenters = true;
 vfc.nboot = 50; 
 
 % subjects
-list_subInds = 1:20;
+list_subInds = 7 % 1:20;
 
 % session
 list_path = list_sessionRet; 
@@ -37,12 +37,12 @@ list_roiNames = {
 %     'LV1_rl'
 %     'LV2v_rl'
 %     'LV3v_rl'
-    'lVOTRC'
+    'rVOTRC'
     };
 
 % dt and rm names
 list_dtNames = {
-    'Checkers'
+    'Words'
 %     'Words1'
 %     'Words2'
 %     'Words_scale1mu0sig1'
@@ -51,7 +51,7 @@ list_dtNames = {
 %     'Checkers'
     };
 list_rmNames = {
-    'retModel-Checkers-css.mat'
+    'retModel-Words-css.mat'
 %     'retModel-Words1-css.mat'
 %     'retModel-Words2-css.mat'
 %     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'

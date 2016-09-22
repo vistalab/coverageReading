@@ -5,17 +5,22 @@ dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot05/RetAndLoc';
 
 % the names of the dataTYPES we want to create
 dtsToCreate = {
-    'Checkers';         % 1
-    'Words';            % 2
+    'Checkers';        % 1
+    'Words_English';   % 2
+    'Words_Hebrew';    % 3
     };
 
 % The datatype the scan belongs to. For example, a 1 means that the first
 % scan is in the first dataTYPE specified in dtsToCreate
 dtAssignments = [
+    0;
+    0;
     1;
     1;
     2;
     2;
+    3;
+    3;
     ];
 
 % make the new tseries from the most processed time series
@@ -36,6 +41,7 @@ numScans    = viewGet(INPLANE{1},'numScans');
 if numScans ~= length(dtAssignments)
     error('Scan length mismatch!')
 end
+
 
 % open to the gray view
 open3ViewWindow('gray'); 
