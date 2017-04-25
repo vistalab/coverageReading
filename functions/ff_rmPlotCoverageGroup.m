@@ -56,11 +56,15 @@ for ii = 1:numSubs
         % check that rf isn't all nans. (this happens when we don't have a ret model or roi defined?)
         coverageHasNans = (sum(sum(~isnan(rf))) == 0);
         
+        % Update 04/2017. If the RF is all nans it should not be averaged.
+        % But if it is all zeros, it should be ...
+        
         % also check that there voxels pass the threshold!!! (otherwise the coverage will be all 0s)
         % if no voxels pass threshold, <data> from rmPlotCoveragefromROImatfile is empty
-        noVoxelsPassThreshold = isempty(data);
-                
-        if ~coverageHasNans && ~noVoxelsPassThreshold  
+        % noVoxelsPassThreshold = isempty(data);               
+        % if ~coverageHasNans && ~noVoxelsPassThreshold 
+        
+        if ~coverageHasNans
             counter = counter + 1;
             
             % store it in RF

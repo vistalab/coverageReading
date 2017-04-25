@@ -7,17 +7,17 @@ bookKeeping;
 %% modify here
 
 % subjects to do this for, see bookKeeping
-list_subInds = 1:20;
+list_subInds = [31:38];
 
 % original roi name
 % rh_mFusFace_rl
 list_roiOriginal = {
-    'rV4_all_nw'
+    'lVOTRC_new'
     };
   
 % new roi name
 list_roiNew = {
-    'RhV4_rl'
+    'lVOTRC'
     };
 
 % delete the original? IMPORTANT CHECK THIS
@@ -46,6 +46,8 @@ for ii = list_subInds
         
         % check to make sure original ROI is defined
         if exist(roiPathOriginal, 'file')
+            display(['Original exists for ' num2str(ii)])
+            
             % load the original roi -- should load a variable called ROI
             load(roiPathOriginal)
 

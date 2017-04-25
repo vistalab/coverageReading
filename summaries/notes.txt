@@ -1,0 +1,2 @@
+Sometimes we calculate and print things out like roi size for all subjects.
+Save here for convenience. 

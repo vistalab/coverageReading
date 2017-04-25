@@ -12,18 +12,18 @@ params = mrInitDefaultParams;
 %% modify here
 
 % specify session path. usually this script is saved right there 
-dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot02/RetAndLoc'; 
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot11/RetAndHebrewLoc'; 
 
 % specify inplane
-path_inplane = fullfile(dirVista,'T1','inplane_pseudo.nii.gz'); 
+path_inplane = fullfile(dirVista, 'prescribeInplane1','inplane_xform.nii.gz'); 
 
 % specify 3DAnatomy file
-path_anatomy = '/biac4/wandell/data/anatomy/Ayzenshtat/t1.nii.gz'; 
+path_anatomy = '/biac4/wandell/data/anatomy/Taay/t1.nii.gz'; 
 
 % specify the functional files
 path_functionals = {
-    fullfile(dirVista, 'Localizer_English', 'func_xform.nii.gz');
-    fullfile(dirVista, 'Localizer_Hebrew', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Localizer_Hebrew1', 'func_xform.nii.gz');
+    fullfile(dirVista, 'Localizer_Hebrew2', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_Checkers1', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_Checkers2', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_English1', 'func_xform.nii.gz');
@@ -33,24 +33,24 @@ path_functionals = {
     }; 
 
 % session code
-params.sessionCode  = 'heb_pilot02_aa'; 
+params.sessionCode  = 'heb_pilot11_taay'; 
 
 % subject name
-params.subject      = 'aa';
+params.subject      = 'taay';
 
 % description
-params.description  = 'hebrew, english, checker ret, large fov localizer'; 
+params.description  = 'ret: hebrew, english, checker. hebrew loc'; 
 
 % note for each of the functional scans
 params.annotations  = {
-    'Localizer_English'
-    'Localizer_Hebrew'
-    'Ret_Checkers1'
-    'Ret_Checkers2'
-    'Ret_English1'
-    'Ret_English2'
-    'Ret_Hebrew1'
-    'Ret_Hebrew2'
+    'Hebrew Loc1'
+    'Hebrew Loc2'
+    'Ret Checkers1'
+    'Ret Checkers2'
+    'Ret English1'
+    'Ret English2'
+    'Ret Hebrew1'
+    'Ret Hebrew2'
     }; 
 
 % specify frames to keep. nScans x 2 matrix describing which frames to keep from 
@@ -58,19 +58,15 @@ params.annotations  = {
 % the second column specifies the number to keep. A flag of -1 in the 2nd
 % column indicates to keep all after the skip. Leaving everything empty
 % will cause all frames to be kept (the default)
-%
-% localizer: clip 6 seconds, TR of 2. so clip 3 frames
-% retinotopy: clip 12 seconds, TR of 2. so clip 6 frames
-% TILED localizer automatically clips 3 frames. so just clip 3 and keep 144 frames
 params.keepFrames = [
-    [3, 144];
-    [3, 144];
-    [3, 144];
-    [3, 144];
-    [3, 144];
-    [3, 144];
-    [3, 144];
-    [3, 144];
+    [4, 93];
+    [4, 93];
+    [10, 144];
+    [10, 144];
+    [10, 144];
+    [10, 144];
+    [10, 144];
+    [10, 144];
     ];
 
 % specify parfiles (for localizer) {1 x nScans}

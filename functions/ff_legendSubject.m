@@ -7,7 +7,8 @@ list_colors = list_colorsPerSub;
 %% define things
 numSubs = length(list_subInds);
 hvec = zeros(numSubs,1);
-list_subInitials = list_sub(list_subInds);
+% list_subInitials = list_sub(list_subInds);
+list_subNumbers = list_subNumberString(list_subInds); 
 
 %% do things 
 
@@ -23,7 +24,7 @@ for ii = 1:numSubs
     hvec(ii) = p; 
 end
 
-L = legend(hvec, list_subInitials);
+L = legend(hvec, list_subNumbers);
 
 % comment out this line if legend is doing funky things on other screens
 % this is here because the default figure is not large enough to see the

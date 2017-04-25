@@ -9,14 +9,14 @@ bookKeeping
 
 %%
 
-for ii = [17 18]
+for ii = [12]
 
 bookKeeping; 
 subInitials = list_sub{ii};
 
 %% modify here
 
-titleDescript = ['Coverage with contours of Run 1 and Run 2. lVOTRC SAME VOXELS.' subInitials];
+titleDescript = ['rVOTRC-threshByWordModel FOV with contours from individual runs. ' subInitials];
 % THE UNDERLAY -------------
 und_subInds = ii; % if more than one, will be group average
 und_roiName = {'rVOTRC-threshByWordModel'};
@@ -25,7 +25,7 @@ und_rmName = {'retModel-Words-css.mat'};
 und_vfc = ff_vfcDefault; 
 und_vfc.cmap = 'hot';
 und_vfc.addCenters = true; 
-und_vfc.cothresh = 0.2; 
+und_vfc.cothresh = 0; 
 und_vfc.smoothSmigma = 0; 
 und_vfc.tickLabel = false; 
 
@@ -54,8 +54,8 @@ con_contourLevels = {
     0.5
     };
 con_contourColors = {
-    [.15 .15 .15]
-    [.15 .15 .15]
+    [.2 .2 .2]
+    [.2 .2 .2]
     };
 con_contourMarkers = {
     '--'
@@ -66,8 +66,8 @@ con_contourMarkerSizes = { % 2 for group average
     [1]
     };
 con_contourLineWidths = {
-    [1]
-    [1]
+    [1.5]
+    [1.5]
     };
 con_centerMarkers = {
     '.'

@@ -10,19 +10,30 @@ bookKeeping;
 
 % visual field plotting thresholds
 vfc = ff_vfcDefault; 
-vfc.contourPlot = true;  
-vfc.cothresh = 0; 
-vfc.eccthresh = [0 30]; 
-vfc.sigthresh = [0 30];
+vfc.cothresh = 0.2; 
+vfc.tickLabel = 1;
+vfc.fieldRange = 7;
+vfc.eccthresh = [0 7];
+vfc.sigthresh = [0 7];
 
 % session list, see bookKeeping
 list_path = list_sessionRet; 
 
 % subjects to do this for, see bookKeeping
-list_subInds = [1:20]; % 
+list_subInds =  [31:38]; 
 
 % rois we want to look at
 list_roiNames = {
+    'rVOTRC'
+%     'Cohen2002VWFA_8mm'
+%     'VOTRC'
+%     'left_FFAFace_rl' 
+%     'right_FFAFace_rl'
+%     'LhV4_rl-threshByWordModel'
+%     'LhV4_rl-threshByWordModel'
+%     'RV1_rl'
+%     'RV2v_rl'
+%     'RV3v_rl'
 %     'combined_VWFA_rl'
 %     'right_VWFA_rl'
 %     'ch_PPA_Place_rl'
@@ -30,41 +41,40 @@ list_roiNames = {
 %     'lh_ventral_3_rl'
 %     'lh_pFusFace_rl'
 %     'lh_mFusFace_rl'
-%     'rh_pFusFace_rl'
-%     'rh_mFusFace_rl'
 %     'lVOTRC'
-%     'lVOTRC_fullField'
 %     'rVOTRC-threshByCheckerModel'
 %     'rVOTRC-threshByWordModel'
 %     'LV1_rl'
-%     'left_VWFA_rl'
-    ''
     };
 
 % data types we want to look at
 list_dtNames = {
-%     'Words'
+    'Words_Hebrew'
+    'Words_English'
+    'Checkers'
 %     'WordLarge'
 %     'WordSmall'
 %     'FaceSmall'
 %     'FaceLarge'
-%     'Words'
+%     'Checkers'
 %     'Words1'
 %     'Words2'
-    'Words_scale1mu0sig1p5'
+%     'Words_scale1mu0sig1p5'
     };
 
 % names of the rm in each dt
 list_rmNames = {
-%     'retModel-Words-css.mat'
+    'retModel-Words_Hebrew-css.mat'
+    'retModel-Words_English-css.mat'
+    'retModel-Checkers-css.mat'
 %     'retModel-WordLarge-css.mat'
 %     'retModel-WordSmall-css.mat';
 %     'retModel-FaceSmall-css.mat';
 %     'retModel-FaceLarge-css.mat';
-%     'retModel-Words-css.mat'
+%     'retModel-Checkers-css.mat'
 %     'retModel-Words1-css.mat'
 %     'retModel-Words2-css.mat'
-     'retModel-Words_scale1mu0sig1p5-css-rVOTRC.mat'
+%      'retModel-Words_scale1mu0sig1p5-css-rVOTRC.mat'
     };
 
 % save

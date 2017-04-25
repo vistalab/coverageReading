@@ -13,40 +13,57 @@ bookKeeping;
 keepMeshOpen = false; 
 
 % dropbox save name
-saveName = 'Left VOTRC variance explained'
+saveName = 'Localizer with Cohen2002VWFA_8mm.mat and rVOTRC. ventral_rh'
 
-list_subInds = 1:20 % 1:20; 
-list_path = list_sessionRet;  % list_sessionTiledLoc % list_sessionRet
+list_subInds = 31:38; % 1:20; 
+list_path = list_sessionRet;  % list_sessionTiledLoc % list_sessionRet % list_sessionLocPath
 
-% 'ventral_lh'
-meshView = 'ventral_lh';
+% 'ventral_rh'
+meshView = 'ventral_rh';
 
 % 'lh_inflated400_smooth1.mat'
-meshName = 'lh_inflated400_smooth1.mat';
+meshName = 'rh_inflated400_smooth1.mat';
 
 % rois to load. specify empty string if we don't want rois
+% list_roiNames = {
+%     'Wernicke_8mm.mat'
+%     'Broca_8mm.mat'
+%     'Blomert2009STG_1cm_left.mat'
+%     'Cohen2008DorsalHotspot_1cm_left.mat'
+%     'Cohen2002VWFA_5mm.mat'
+%     };
 list_roiNames = {
-    'lVOTRC_mask'
+    'Cohen2002VWFA_8mm.mat'
+    'rVOTRC.mat'
     };
+
 
 % correspond to rois
-list_roiColors = {
+% list_roiColors = list_colorsWangRois; 
+list_roiColors = [
+    [0.2588    0.7961    0.9569]
     [1 1 1]
-    };
+    ]
+%     [1 0 0]
+%     [1 0 0]
+%     [1 0 0]
+%     [1 0 0]
+    
 
 % 'patches' 'boxes' 'perimeter' 'filled perimeter'
-roiDrawMethod = 'perimeter';
+% patches will only show one color even if multiple ROIs are at the voxel
+roiDrawMethod = 'filled perimeter';
    
-
 % parameter maps. specify empty string if we don't want pmap
-pmapName = ''; % 'WordVFace_Scrambled.mat'; % 'WordVAll.mat'
-pmapDt = 'Words'; % 'GLMs' % Original
+% 'WordVFace_Scrambled.mat'; % 'WordVAll.mat' % 'HebrewVScrambled.mat'
+pmapName = 'HebrewVScrambled.mat'; 
+pmapDt = 'Original'; % 'GLMs' % Original
 
 % show these values of the pmap on the mesh
 % [mapWinMin, mapWinMax] % respectively. 
 % only show values greater than mapWinMin AND less than mapWinMax
 % if mapWinMin > mapWinMax, then it will do the OR condition
-pmapWinThresh = [0 .5]; % [3 10]; 
+pmapWinThresh = [2 10]; % [3 10]; % for GLM 
 
 % clip the colors of the parameter map
 pmapClipmode = []; % [-0.3 0.3]; % for even bicolor
@@ -56,14 +73,21 @@ pmapClipmode = []; % [-0.3 0.3]; % for even bicolor
 % 'autumnCmap' or 'hotCmap':  category selectivity
 % 'jetCmap': prf amp map
 % 'hsvTbCmap': ecc map
-pmapCmap = 'hotCmap';
+pmapCmap = 'autumnCmap';
 
 % RET. specify empty strings if we don't want to load
-dtName = 'Words'; %'Words';
-rmName = 'retModel-Words-css.mat'; %'retModel-Words-css.mat';
-rmField = 'co'; %'co';
+dtName = ''; %'Words_Hebrew'; %'Words';
+rmName = ''; %'retModel-Words_Hebrew-css.mat'; %'retModel-Words-css.mat';
 
-coThresh = 0.2; 
+% the field (associated with the VIEW)  we want to load.
+% ph: prf polar angle
+% co: variance explained?
+% amp: prf size
+% map: prf eccentricity??
+rmField = 'map'; %'co' | 'amp' | 'ph' | 'map';
+
+% specify empty brakcets if we don't want threshold
+rmFieldThresh = []; 
 
 %% define things
 numRois = length(list_roiNames);
@@ -79,7 +103,7 @@ for ii = list_subInds
     vw = initHiddenGray;
 
     vw = viewSet(vw, 'displaymode', 'anat'); % sometimes mesh crashes ... not sure if this fixes it
-    vw = viewSet(vw, 'roidrawmethod', 'patches'); % translucent
+    vw = viewSet(vw, 'roidrawmethod', roiDrawMethod); 
         
     % load the mesh
     meshPath = fullfile(dirAnatomy, meshName);
@@ -95,7 +119,7 @@ for ii = list_subInds
 
         for jj = 1:numRois
             roiName = list_roiNames{jj};
-            roiColor = list_roiColors{jj};
+            roiColor = list_roiColors(jj,:);
             roiPath = fullfile(dirAnatomy, 'ROIs', roiName);
             vw = loadROI(vw, roiPath, [],roiColor,1,0);        
         end
@@ -122,9 +146,16 @@ for ii = list_subInds
         % set the field we want to see
         % FOR NOW ASSUME WE WANT THE CO (VAREXP)
                 
-        % visualize the varExp map
-        vw = setDisplayMode(vw, 'co');
-        vw = setCothresh(vw, coThresh);
+        % visualize the rm field
+        vw = setDisplayMode(vw, rmField);
+        
+        % apply threshold if specified
+        if ~isempty(rmFieldThresh)
+            vw = setrmFieldThresh(vw, rmFieldThresh);
+        end
+        
+        % color map
+        vw.ui.mapMode = setColormap(vw.ui.mapMode, pmapCmap); 
         
     end
     

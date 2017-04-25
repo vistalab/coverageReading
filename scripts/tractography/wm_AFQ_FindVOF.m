@@ -55,8 +55,21 @@ clc; close all; clear all;
 bookKeeping;
 
 %% modify here
+
 % subject index we want to analyze, see bookKeeping
-list_subInds = [2];
+dirDiffusion = '/sni-storage/wandell/data/reading_prf/ad/20150717_dti_qmri/'; 
+
+% shared anatomy directory
+dirAnatomy = '/biac4/wandell/data/anatomy/dames/';
+
+% subject's fs directory % list_fsDir{subInd}
+dirFS = '/sni-storage/wandell/data/reading_prf/anatomy/dames';
+
+% names we want to give the VOF fibers.
+% because sometimes we change parameters
+% name that we settle on should be L_VOF.pdb and R_VOF.pdb
+nameLVOF = 'L_VOF';  
+nameRVOF = 'R_VOF';
 
 % Not sure to what extent these are hard-coded
 % index in fg_classified of L_arcuate
@@ -67,122 +80,120 @@ ind_RA = 20;
 
 % whole brain fiber group name
 % assumes that it is located in main diffusion directory
-fgWholeBrainName = 'fg_mrtrix_100000';
-
-% extension of this whole brain fiber group, WITHOUT the period
-fgWholeBrainExt = 'pdb'; 
+fgWholeBrainLoc = fullfile(dirAnatomy, 'ROIsConnectomes'); 
+fgWholeBrainName = 'fg_mrtrix_500000.pdb';
 
 % where we want to save the output fiber groups
 % directory in relation to subject's main diffusion directory
-dirFgSave = fullfile('dti96trilin', 'fibers');
+dirFgSave = fullfile(dirAnatomy, 'ROIsFiberGroups');
 
-%%
+%% define directories
+% go to subject's dti directory
+chdir(dirDiffusion);
 
-for ii = list_subInds
-    %% define directories
-    % go to subject's dti directory
-    dirDiffusion = list_sessionDtiQmri{ii};
-    chdir(dirDiffusion);
+%% define dt6.mat (the tensor file) and load it
+% subject's dt6.mat file
+dt6Path = fullfile(dirDiffusion, 'dti96trilin', 'dt6.mat');
 
-    % subject's fs directory
-    dirFS = list_fsDir{ii};
+% load the tensor file
+dt = dtiLoadDt6(dt6Path);
 
-    %% define dt6.mat (the tensor file) and load it
-    % subject's dt6.mat file
-    dt6Path = fullfile(dirDiffusion, 'dti96trilin', 'dt6.mat');
+%% L_arcuate and R_arcuate
+% Segmented arcuate fasciculus (left and right hemisphere). 
+% See AFQ_SegmentFiberGroups
+%
+% fg_classified: fibers structure containing all fibers assigned to
+%                   one of Mori Groups. Respective group labeles are stored
+%                   in fg.subgroups field.
+% fg_unclassified: fiber structure containing the rest of the (not Mori) fibers.
+% classification  - This variable gives the fiber group names and the group
+%                   fiber group number for each fiber in the input group
+%                   fg.  classification is a structure with two fields.
+%                   classification.names is a cell array where each cell is
+%                   the name of that fiber group. For example
+%                   classification.names{3} = 'Corticospinal tract L'.
+%                   classification.index is a vector that defines which
+%                   group number each fiber in the origional fiber group
+%                   was assigned to. For example
+%                   classification.index(150)=3 means that fg.fibers(150)
+%                   is part of the corticospinal tract fiber group.  The
+%                   values in classification may not match the origional
+%                   fiber group because of pre-processing.  However they
+%                   will match the output fg which is the origional group
+%                   with preprocessing.
+% fg              - This is the origional pre-segmented fiber group.  It
+%                   may differ slightly from the input due to preprocessing
+%                   (eg splitting fibers that cross at the pons, removing 
+%                   fibers that are too short)
 
-    % load the tensor file
-    dt = dtiLoadDt6(dt6Path);
-    
+% load fg_classified so that we can get the left and right fiber groups
+% the following command should load fg_classified, fg_unclassified, fg,
+% classification
+load(fullfile(dirDiffusion, 'afq_classification.mat'));
 
+%% whole brain fiber group
+% we need to read in the whole brain fiber group with the fgRead
+% command, so clear it (loaded with afq_classification) now to free up memory
+clear fg
 
-    %% L_arcuate and R_arcuate
-    % Segmented arcuate fasciculus (left and right hemisphere). 
-    % See AFQ_SegmentFiberGroups
-    %
-    % fg_classified: fibers structure containing all fibers assigned to
-    %                   one of Mori Groups. Respective group labeles are stored
-    %                   in fg.subgroups field.
-    % fg_unclassified: fiber structure containing the rest of the (not Mori) fibers.
-    % classification  - This variable gives the fiber group names and the group
-    %                   fiber group number for each fiber in the input group
-    %                   fg.  classification is a structure with two fields.
-    %                   classification.names is a cell array where each cell is
-    %                   the name of that fiber group. For example
-    %                   classification.names{3} = 'Corticospinal tract L'.
-    %                   classification.index is a vector that defines which
-    %                   group number each fiber in the origional fiber group
-    %                   was assigned to. For example
-    %                   classification.index(150)=3 means that fg.fibers(150)
-    %                   is part of the corticospinal tract fiber group.  The
-    %                   values in classification may not match the origional
-    %                   fiber group because of pre-processing.  However they
-    %                   will match the output fg which is the origional group
-    %                   with preprocessing.
-    % fg              - This is the origional pre-segmented fiber group.  It
-    %                   may differ slightly from the input due to preprocessing
-    %                   (eg splitting fibers that cross at the pons, removing 
-    %                   fibers that are too short)
+% path
+fgWholeBrainPath = fullfile(fgWholeBrainLoc, fgWholeBrainName);
+fg = fgRead(fgWholeBrainPath);
 
-    % load fg_classified so that we can get the left and right fiber groups
-    % the following command should load fg_classified, fg_unclassified, fg,
-    % classification
-    load(fullfile(dirDiffusion, 'afq_classification.mat'));
-    
-    %% whole brain fiber group
-    % we need to read in the whole brain fiber group with the fgRead
-    % command, so clear it (loaded with afq_classification) now to free up memory
-    clear fg
-    
-    % path
-    fgWholeBrainPath = fullfile(dirDiffusion, [fgWholeBrainName '.' fgWholeBrainExt]);
-    fg = fgRead(fgWholeBrainPath);
+% define the left and right fiber groups
+L_arcuate = fg_classified(ind_LA);
+R_arcuate = fg_classified(ind_RA);
 
 
-    % define the left and right fiber groups
-    L_arcuate = fg_classified(ind_LA);
-    R_arcuate = fg_classified(ind_RA);
+%% fsROIdir
+fsROIdir = fullfile(dirFS, 'rois');
 
+%% outdir
+% where the outputs will be saved. in {dirDiffusion}/ROIs
+% this folder also has all the xformed vista rois
+outdir = fullfile(dirDiffusion, 'ROIs');
 
-    %% fsROIdir
-    fsROIdir = fullfile(dirFS, 'rois');
+%% v_crit 
+% To find fibers that we can considder vertical, we must define a threshold
+% of how far a fiber must travel in the vertical direction. v_crit defines 
+% how much farther a fiber must travel in the vertical direction compare to
+% other directions (e.g., longitudinal) to be a candidate for the VOF. 
+% The default is 1.3
+v_crit = 1.3;
 
-    %% outdir
-    % where the outputs will be saved. in {dirDiffusion}/ROIs
-    % this folder also has all the xformed vista rois
-    outdir = fullfile(dirDiffusion, 'ROIs');
+%% do it!
+[L_VOF, R_VOF, L_pArc, R_pArc, L_pArc_vot, R_pArc_vot] = ... 
+    AFQ_FindVOF(fg, L_arcuate, R_arcuate, fsROIdir, outdir, [], v_crit, dt);
 
-    %% v_crit 
-    % To find fibers that we can considder vertical, we must define a threshold
-    % of how far a fiber must travel in the vertical direction. v_crit defines 
-    % how much farther a fiber must travel in the vertical direction compare to
-    % other directions (e.g., longitudinal) to be a candidate for the VOF. 
-    % The default is 1.3
-    v_crit = 1.3;
+%% write out these fiber groups (save)
 
-    %% do it!
-    [L_VOF, R_VOF, L_pArc, R_pArc, L_pArc_vot, R_pArc_vot] = ... 
-        AFQ_FindVOF(fg, L_arcuate, R_arcuate, fsROIdir, outdir, [], v_crit, dt);
+% names of the fiber groups
+% NOTE that if we change the output variables names of AFQ_FindVOF, we must
+% change the strings
+output_fgs = {L_VOF, R_VOF, L_pArc, R_pArc, L_pArc_vot, R_pArc_vot};
 
-    %% write out these fiber groups (save)
+for rr = 1:6
 
-    % names of the fiber groups
-    % NOTE that if we change the output variables names of AFQ_FindVOF, we must
-    % change the strings
-    output_fgs = {L_VOF, R_VOF, L_pArc, R_pArc, L_pArc_vot, R_pArc_vot};
+    % name of fiber group
+    curFg = output_fgs{rr};
 
-    for rr = 1:6
-
-        % name of fiber group
-        curFg = output_fgs{rr};
-
-        % full path, where to save fiber group
-        fiberSavePath = fullfile(dirDiffusion, dirFgSave, [curFg.name '.pdb']);
-
-        % save it
-        fgWrite(curFg, fiberSavePath, 'pdb');
-
+    % give left and right VOF the names as specified at the beginning of
+    % the code
+    if rr == 1
+        fgName = nameLVOF; 
+    elseif rr == 2
+        fgName = nameRVOF; 
+    else
+        fgName = curFg.name; 
     end
+    
+    % full path, where to save fiber group
+    fiberSavePath = fullfile(dirDiffusion, dirFgSave, [fgName '.pdb']);
+
+    % save it
+    fgWrite(curFg, fiberSavePath, 'pdb');
 
 end
+
+
 

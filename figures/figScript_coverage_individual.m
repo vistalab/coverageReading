@@ -10,25 +10,39 @@ bookKeeping;
 %% modify here
 
 % title description
-titleDescript = 'Coverage with half-max.';
+titleDescript = 'FOV';
 
 % vfc threshold
 vfc = ff_vfcDefault; 
-vfc.contourPlot = false; 
+% vfc.contourPlot = false; 
 vfc.cmap = 'hot';
 vfc.addCenters = true; 
 vfc.nboot = 50; 
+vfc.cothresh = 0.2; 
+vfc.tickLabel = 1;
+vfc.fieldRange = 7;
+vfc.eccthresh = [0 7];
+vfc.sigthresh = [0 7];
+vfc.contourPlot = true; 
 
 % subjects
-list_subInds = 7 % 1:20;
+list_subInds =  38;
 
 % session
+% list_sessionHebrewRet, list_sessionRet
 list_path = list_sessionRet; 
 
 % roi
 % lh_VWFA_rl
 % lh_VWFA_fullField_rl
 list_roiNames = {
+%     'WangAtlas_V1'
+%     'WangAtlas_V2'
+%     'WangAtlas_V3'
+%     'WangAtlas_hV4'
+    'lVOTRC'
+%     'rVOTRC'
+%     'left_VWFA'
 %     'lh_ventral_3_rl'
 %     'combined_VWFA_rl'
 %     'right_VWFA_rl'
@@ -37,12 +51,14 @@ list_roiNames = {
 %     'LV1_rl'
 %     'LV2v_rl'
 %     'LV3v_rl'
-    'rVOTRC'
+%     'rVOTRC'
     };
 
 % dt and rm names
 list_dtNames = {
-    'Words'
+%     'Words_Hebrew'
+    'Words_English'
+%     'Checkers'
 %     'Words1'
 %     'Words2'
 %     'Words_scale1mu0sig1'
@@ -51,7 +67,10 @@ list_dtNames = {
 %     'Checkers'
     };
 list_rmNames = {
-    'retModel-Words-css.mat'
+%     'retModel-Words_Hebrew-css.mat'
+    'retModel-Words_English-css.mat'
+%     'retModel-Checkers-css.mat'
+%     'retModel-Words-css.mat'
 %     'retModel-Words1-css.mat'
 %     'retModel-Words2-css.mat'
 %     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'

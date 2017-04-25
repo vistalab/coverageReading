@@ -9,45 +9,42 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % list subject index
-list_subInds = [1:11 13:17];
-list_subIndsDescript = '[1:11 13:17]';
+list_subInds = 1:20% 1:20;
+list_subIndsDescript = '1:20';
 
 % whether looking at a subject by subject basis
 subIndividually = false; 
 
 % list rois
 list_roiNames = {
-%     'LV1_rl'
-    'left_VWFA_rl';
-%     'right_VWFA_rl';
+    'lVOTRC-threshByWordModel'
     };
 
 % ret model dts
 list_dtNames = {
-    'Words'
-    'Words'
+    'Words1'
+    'Words2'
     };
 
 % ret model names
 list_rmNames = {
-    'retModel-Words.mat'
-    'retModel-Words-css.mat'
+    'retModel-Words1-css.mat'
+    'retModel-Words2-css.mat'
     };
 
 % ret model comments
 list_rmDescripts = {
-    'Words linear '
-    'Words css'
+    'Words1 '
+    'Words2'
     };
 
 % values to threshold the RM struct by
 %   vfc.cothresh
 %   vfc.eccthresh
 %   vfc.sigthresh
-vfc.cothresh = 0.2; 
+vfc.cothresh = 0; 
 vfc.eccthresh = [0 15];
 vfc.sigthresh = [0 30];
-
 
 % colors
 list_colors = list_colorsPerSub;
@@ -57,17 +54,17 @@ list_colors = list_colorsPerSub;
 % 'numvoxels' for number of voxels in roi
 % fieldToPlotDescript is for axis labels and plot titles
 list_fieldNames  = {
-%     'sigma1'
-%     'ecc'
+    'sigma1'
+    'ecc'
     'co'
-    'exponent'
+%     'exponent'
     }; 
 
 list_fieldDescripts = {
-%     'sigma major'
-%     'eccentricity'
+    'sigma major'
+    'eccentricity'
     'varExp'
-    'exponent'
+%     'exponent'
     }; 
 
 % save directory

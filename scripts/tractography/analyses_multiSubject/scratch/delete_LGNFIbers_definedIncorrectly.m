@@ -6,21 +6,29 @@ bookKeeping;
 
 %%
 
-list_subInds = [ 2     3     4     5     6     7     8     9    10    13    14    15    16    17    18  22];
+list_subInds = [3     4     6     7     8     9    13    15    17]; 
 
 % relative to dirAnatomy
 dirRoi = 'ROIsFiberGroups';
+
+% names of things to remove
+list_toRemove = {
+    'WholeBrainExcluding_LGN-V1_50000fibers.pdb'
+    'WholeBrainExcluding_LGN-V2_50000fibers.pdb'
+    'WholeBrainExcluding_LGN-V3_50000fibers.pdb'};
 
 %% 
 
 for ii = list_subInds
    
     dirAnatomy = list_anatomy{ii};
-    chdir(fullfile(dirAnatomy,dirRoi))
+    subDir = fullfile(dirAnatomy, dirRoi);
+    chdir(subDir);
     
-    % remove LGN rois
-    delete('LGN*')
-    
+    % remove the things
+    for jj = 1:length(list_toRemove)
+        delete(list_toRemove{jj})
+    end
     
 end
 

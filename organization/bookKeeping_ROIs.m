@@ -17,6 +17,9 @@
 
 %% Word Areas =============================================================
 
+% Standardized name across all subjects
+lVOTRC.mat
+
 % standard localizer =====================================================
 lh_VWFA_rl;                 % on the inferior temporal sulcus (iTS), posterior of
                             % the mid-fusiform suclus. also sometimes on posterior fusiform
@@ -109,6 +112,14 @@ lh_ventral_2_rl;
 % posterior boundary: posterior transverse collateral sulcus
 lh_ventral_3_rl;
 
+%% Talairach and MNI hotspots from the literature
+% Cohen2002VWFA_8mm.mat 
+% 
+% Cohen2008DorsalHotspot_8mm_left.mat
+% Cohen2008DorsalHotspot_8mm_right.mat	
+% Blomert2009STG_8mm_left.mat
+% Blomert2009STG_8mm_right.mat
+
 
 %% Old naming scheme
 %  old naming schemes ====================================================
@@ -130,13 +141,16 @@ lh_ventral_3_rl;
 % lVOTRC_smallField
 
 %% Thresholding by the ret model
-% 'lVOTRC-threshByWordModel'
+% 'lVOTRC-threshByWordModel' % 20% variance explained
 % 'lVOTRC-threshByCheckerModel'
 
 % 'lVOTRC-threshByWord1Model' -- created by loading lVOTRC, loading
 % retModel-Words1-css.mat, and defining a new ROI for all voxels that pass
 % the thresholds defined in vfc
 % 'lVOTRC-threshByWord1AndWord2Model' 
+
+% 'lVOTRC-threshByWordModel_anterior'
+% 'lVOTRC-threshByWordModel_posterior'
 
 %% Nifti ROIs are stored here
 %{sharedAnatomyDir}/ROIsNiftis
@@ -162,6 +176,40 @@ lh_ventral_3_rl;
 % {tract}_pathNeighborhood-PRIME: all fibers that intersect the tract
 % WITHOUT the tract
 
+%% LGN
+% LGN.nii.gz
+% LGN_left.nii.gz
+% LGN_right.nii.gz
 
+%% ROIS made from the Benson retinotopy template
+% V1_Benson.nii.gz
+% V2_Benson.nii.gz
+% V3_Benson.nii.gz
 
+%% ROIS made from the Wang retinotopy template
+%     'V1v_Wang'   % 01  
+%     'V1d_Wang'   % 02
+%     'V2v_Wang'   % 03 
+%     'V2d_Wang'   % 04  
+%     'V3v_Wang'   % 05  
+%     'V3d_Wang'   % 06  
+%     'hV4_Wang'   % 07 
+%     'VO1_Wang'   % 08 
+%     'VO2_Wang'   % 09 
+%     'PHC1_Wang'  % 10  
+%     'PHC2_Wang'  % 11  
+%     'MST_Wang'   % 12  
+%     'hMT_Wang'   % 13  
+%     'LO2_Wang'   % 14  
+%     'LO1_Wang'   % 15  
+%     'V3b_Wang'   % 16  
+%     'V3a_Wang'   % 17  
+%     'IPS0_Wang'  % 18  
+%     'IPS1_Wang'  % 19  
+%     'IPS2_Wang'  % 20   
+%     'IPS3_Wang'  % 21  
+%     'IPS4_Wang'  % 22  
+%     'IPS5_Wang'  % 23  
+%     'SPL1_Wang'  % 24  
+%     'FEF_Wang'   % 25
 

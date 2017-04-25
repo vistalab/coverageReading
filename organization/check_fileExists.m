@@ -1,34 +1,42 @@
-
+% 
 %% Checking for file existence in a given number of subjects
 % Might be able to delete most of the other "check_" scripts ...
 
 clc; bookKeeping; 
 %% modify here
 
-% list_subInds = [1:20]; 
-list_subInds = [ 3     4     6     7     8     9    13    15    17];
+list_subInds = [31:38]; 
+% list_subInds = [ 3     4     6     7     8     9    13    15    17];
 % list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18];
 
-% list_anatomy, list_sessionDiffusionRun1, list_sessionRet,
-% list_sessionTiledLoc, 
+% list_anatomy, list_sessionDiffusionRun1, list_sessionRet, list_sessionDtiQmri
+% list_sessionTiledLoc, list_session, list_sessionLocPath, list_sessionTiledLoc
+% list_sessionAfq
 list_paths = list_anatomy; 
 
 % file location relative to list_paths
 % LiFEStructs
 % ROIsNiftis
-fLoc = 'ROIsConnectomes';
+% 'ROIs' 'ROIsConnectomes'
+fLoc = 'ROIs';
 
 % file name
 % fName = 'V1.nii.gz';
 % fName = 'retModel-WordSmall-css.mat';
-% fName = 'rh_FFA_Face_rl.mat';
-% fName = 'LhV4_rl-threshByWordModel.mat';
-% fName = 'rV4_all_nw.mat';
+% fName = 'lIPS0_all_nw.mat';
+% fName = 'LIPS0_rl.mat';
 % fName = 'RhV4_rl.mat';
-% fName = 'lVOTRC_mask.mat';
-fName = 'LGN-V3-FPrimeFibers.pdb';
+% fName = 'VWFA_mni_-42_-57_-6.mat';
+% fName = 'LGN-V1-FFibers.pdb';
+% fName = 'lIPS0_all_nw.mat';
+% fName = 'lIPS3_all_nw.mat';
+% fName = 'lVO1_all_nw.mat';
+fName = 'rVOTRC_bug.mat';
 
 %% checking
+
+% to put us back where we started
+curDir = pwd; 
 
 toBeDefined = {}; 
 counter = 0; 
@@ -37,7 +45,6 @@ counter = 0;
 for ii = list_subInds
    
     dirSubject = list_paths{ii};
-    chdir(dirSubject);
     subInitials = list_sub{ii};
     
     fPath = fullfile(dirSubject, fLoc, fName);
@@ -50,3 +57,5 @@ for ii = list_subInds
 end
 display([fLoc '/' fName])
 toBeDefined
+
+chdir(curDir);

@@ -7,44 +7,27 @@ bookKeeping;
 %% modify here
 
 % subjects to include in this plot
-list_subInds = [2:4 6:13];
+list_subInds = [3,5,7:11];
 
 % name of the roi
-roiName = 'left_VWFA_rl';
+roiName = 'lVOTRC'; % left_VWFA_rl
 
 % want some ret model information -- dt and model name
 dtName = 'Words';
-rmName = 'retModel-Words.mat';
+rmName = 'retModel-Words-css.mat';
 
 % name of the behavioral data file. this value will not change
-pathBehavioralData = '/sni-storage/wandell/data/reading_prf/forAnalysis/behavioral/scores.txt';
+% pathBehavioralData = '/sni-storage/wandell/data/reading_prf/forAnalysis/behavioral/TOWRE_percentileRank.txt';
+% pathBehavioralData = '/sni-storage/wandell/data/reading_prf/forAnalysis/behavioral/TOWRE_SWE.txt';
+pathBehavioralData = '/sni-storage/wandell/data/reading_prf/forAnalysis/behavioral/TOWRE_PDE.txt';
+
+
 
 % coverage contour level, so as to calculate the extent
-contourLevel = 0.9; 
-
-% where to save these plots
-dirSave = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group';
+contourLevel = 0.5; 
 
 % parameters to plot vfc
-vfc.prf_size        = true; 
-vfc.fieldRange      = 15;
-vfc.method          = 'max';         
-vfc.newfig          = true;                      
-vfc.nboot           = 50;                          
-vfc.normalizeRange  = true;              
-vfc.smoothSigma     = true;                
-vfc.cothresh        = 0.1;         
-vfc.eccthresh       = [0 15]; 
-vfc.nSamples        = 128;            
-vfc.meanThresh      = 0;
-vfc.weight          = 'varexp';  
-vfc.weightBeta      = 0;
-vfc.cmap            = 'hot';						
-vfc.clipn           = 'fixed';                    
-vfc.threshByCoh     = false;                
-vfc.addCenters      = true;                 
-vfc.verbose         = prefsVerboseCheck;
-vfc.dualVEthresh    = 0;
+vfc = ff_vfcDefault; 
 
 %% end modification section %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % define and intialize some things
@@ -59,6 +42,12 @@ areaAll = zeros(1, numSubs);
 fid = fopen(pathBehavioralData);
 S = textscan(fid, '%s%s');  % TODO: get rid of this hard-coding
 fclose(fid);
+
+% vector corresponding to subjects of interest
+tem = S{2}(list_subInds+1);
+dataBehavioral = str2double(tem)
+nameBehavioral = S{2}{1};
+
 
 %% Get the brain data ----------------------------------------------------
 
@@ -83,7 +72,6 @@ end
 %% get the individual coverage area and store it
 
 for ii = 1:numSubs
-    
     % this subject's coverage
     RFCov = RFCovAll(:,:,ii); 
     
@@ -91,3 +79,44 @@ for ii = 1:numSubs
     areaAll(ii) = covArea;
     
 end
+
+
+
+%% plot 
+close all; 
+figure; 
+hold on; 
+
+for ii = 1:numSubs
+    
+    subInd = list_subInds(ii);
+    subColor = list_colorsPerSub(subInd, :);
+    plot(areaAll(ii), dataBehavioral(ii),'o', 'MarkerFaceColor', subColor, ...
+        'MarkerEdgeColor', [0 0 0], 'MarkerSize', 18, 'LineWidth',2);
+    
+end
+
+%% Calculate the correlation and parameters of the line
+rho = corrcoef(areaAll, dataBehavioral);
+corrValue = rho(1,2);
+
+p = polyfit(areaAll', dataBehavioral,1);
+xlim = get(gca, 'Xlim'); 
+lin = linspace(xlim(1),xlim(2)); 
+plot(lin, polyval(p,lin), 'LineWidth', 5, 'Color', [.1 .1 .1])
+
+%% Plot properties
+grid on; 
+xlabel(['Cov area (deg^2) (' num2str(contourLevel) ' contour level)'])
+ylabel(nameBehavioral)
+titleName = {
+    [nameBehavioral ' and coverage area']
+    ['rho: ' num2str(corrValue)]
+    };
+title(titleName, 'fontweight', 'bold')
+ff_dropboxSave;
+
+ff_legendSubject(list_subInds);
+title('legend')
+ff_dropboxSave; 
+

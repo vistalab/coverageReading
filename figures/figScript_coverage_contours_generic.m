@@ -9,35 +9,40 @@ bookKeeping;
 
 %% modify here
 
-titleDescript = 'RhV4 Coverage Checkers';
+titleDescript = 'rVOTRC. Words_English. Half-max contour';
 
 % vfc
 vfc = ff_vfcDefault();
 vfc.cmap = 'jet';
 vfc.addCenters = 0;
 vfc.method = 'max';
+vfc.cothresh = 0.2; 
+vfc.tickLabel = 1;
+vfc.fieldRange = 7;
+vfc.eccthresh = [0 7];
+vfc.sigthresh = [0 7];
 
 % THE UNDERLAY -------------
-und_subInds = [1:20] ; % if more than one, will be group average
-und_roiName = {'RhV4_rl'};
-und_dtName = {'Checkers'};
-und_rmName = {'retModel-Checkers-css.mat'};
+und_subInds = [31:38] ; % if more than one, will be group average
+und_roiName = {'rVOTRC.mat'};
+und_dtName = {'Words_English'};
+und_rmName = {'retModel-Words_English-css.mat'};
 
 
 % THE CONTOURS ----------------
 % can have many contours.
 % indicate in cell array.
 con_subInds = {
-    [1:20];
+   [31:38];
     };
 con_roiNames = {
-    {'RhV4_rl'}
+    {'rVOTRC.mat'}
     };
 con_dtNames = {
-    {'Checkers'}
+    {'Words_English'}
     };
 con_rmNames = {
-    {'retModel-Checkers-css.mat'}
+    {'retModel-Words_English-css.mat'}
     };
 con_contourLevels = {
     0.5

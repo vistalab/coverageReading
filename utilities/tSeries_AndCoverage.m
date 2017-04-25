@@ -10,13 +10,13 @@ list_subsToPlot = 10;
 
 % dt and rm names
 list_dtNames = {
-%     'Checkers'
-    'Words_scale1mu0sig1'
-    'Words_scale1mu0sig0p5'
-    'Words_scale0p5mu0sig0'
+    'Words'
+%     'Words_scale1mu0sig1'
+%     'Words_scale1mu0sig0p5'
+%     'Words_scale0p5mu0sig0'
     };
 list_rmNames = {
-    'retModel-Checkers-css.mat'
+    'retModel-Words-css.mat'
 %     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'
 %     'retModel-Words_scale1mu0sig0p5-css-left_VWFA_rl.mat'
 %     'retModel-Words_scale0p5mu0sig0-css-left_VWFA_rl.mat'
@@ -34,7 +34,8 @@ saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/single/cover
 % 0 = average over the entire roi
 % -1 = for the voxel in the roi with the highest variance explained. 
 % Number greater than 0 Plot the series of that roi indice number 
-plotTSeriesOpt = 80949; 
+% plotTSeriesOpt = 80949; 
+plotTSeriesOpt = -1; 
 
 %% defining things
 
@@ -148,26 +149,26 @@ for ii = 1:numSubs
 
             %% plotting ----------------------------------------------------------
             %% plot the coverage map
-            coverage_plot; 
-            
-            % title
-            roiNameDescript = ff_stringRemove(roiName, '_rl');
-            tem = ff_stringRemove(rmName, '_rl');
-            rmNameDescript = ff_stringRemove(tem, roiNameDescript);
-            titleName = ['Coverage. ' roiNameDescript '. ' rmNameDescript '. ' subInitials];
-            title(titleName, 'FontWeight', 'Bold', 'FontSize', 16)
-            % save the coverage map
-            saveas(gcf, fullfile(saveDir, [titleName '.png']), 'png')
-            saveas(gcf, fullfile(saveDir, [titleName '.fig']), 'fig')
-            ff_dropboxSave; 
+%             coverage_plot; 
+%             
+%             % title
+%             roiNameDescript = ff_stringRemove(roiName, '_rl');
+%             tem = ff_stringRemove(rmName, '_rl');
+%             rmNameDescript = ff_stringRemove(tem, roiNameDescript);
+%             titleName = ['Coverage. ' roiNameDescript '. ' rmNameDescript '. ' subInitials];
+%             title(titleName, 'FontWeight', 'Bold', 'FontSize', 16)
+%             % save the coverage map
+%             saveas(gcf, fullfile(saveDir, [titleName '.png']), 'png')
+%             saveas(gcf, fullfile(saveDir, [titleName '.fig']), 'fig')
+%             ff_dropboxSave; 
 
             %% plotting time series
             figure()
             hold on
             if plotTSeriesOpt == -1 % plot the tseries of the voxel with highest variance explained
                 
-                plot(ts_vox,'k--','LineWidth',1.5)
-                plot(ts_vox_predict,'b','LineWidth',1.5)
+                plot(ts_vox,'k--','LineWidth',3)
+                % plot(ts_vox_predict,'b','LineWidth',3)
                 titleName = {[roiNameDescript '. ' rmNameDescript '. ' subInitials], 'Voxel tSeries, Predicted and Actual' ['varExp of best voxel: ' num2str(varExp)]};
                 title(titleName, 'FontWeight', 'Bold', 'FontSize', 14)
                 xlabel('Time (s)')

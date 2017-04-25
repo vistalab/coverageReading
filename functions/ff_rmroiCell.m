@@ -23,6 +23,8 @@ rmroiCell = cell(numSubs, numRois, numRms);
 display('Making the rmroi cell  -----------')
 
 for ii = 1:numSubs
+        
+   clear global
     
    subInd =  list_subInds(ii);
    subInitials = list_sub{subInd};
@@ -52,8 +54,7 @@ for ii = 1:numSubs
            
            if roiExists && rmExists
                
-               % load the roi
-               vw = loadROI(vw, roiPath, [],[],1,0);
+               % get the rmroi params and store it
                rmroi = rmGetParamsFromROI(vw);
                rmroiCell{ii,jj,kk} = rmroi;  
                
@@ -69,7 +70,7 @@ for ii = 1:numSubs
        end
 
    end
-    
+   
 end
 
 end

@@ -41,16 +41,17 @@
 % the first volume 
 % save fake inplane under T1/inplane_xform.nii.gz
 edit s_inplane_createFake;
+
+%% might need to crop the inplane
+% REMEMBER TO CHANGE MRINIT TO REFLECT THIS!!!!
+edit s_inplaneCrop.m; 
    
 %% add to bookKeeping
 edit bookKeeping.m;
 
 %% add their T1 to wandell shared directory
-
-% xform the cropped reoriented t1 (and rename)
-edit pp_canonicalXform.m;
-
 % acpc the cropped reoriented T1 
+% this applies the canonical xform
 % and save t1 to shared directory
 edit pp_acpcAndSave.m
 
@@ -103,10 +104,23 @@ edit  s_buildMeshes;
 edit s_tSeriesAverageAndXform; 
 
 %% run the pRFs!
-
 % params and images file. rename to fit naming convention
-
 edit s_pRFRun
+
+%% Run the Benson and Wang docker on Flywheel
+% Inputs: the t1.nii.gz
+
+%% Convert the Wang ROIs into mrVista ROIs
+% this script is stored here for now:
+% /sni-storage/wandell/data/reading_prf/coverageReading/forReadingReview
+edit wangRoisToVistaRois.m
+
+%% Convert the Wang ROIs into nifti ROIs
+
+%% The Wang ROIs are bilateral -- split them into left and right
+% this script is stored here for now:
+% /sni-storage/wandell/data/LGNV123_HCP/LGNV123_Evidence/hcp_niftiRoi_splitHemispheres.m
+edit hcp_niftiRoi_splitHemispheres; 
 
 %% GLM bookkeeping
 % The .txt script file (which image is shown, more detailed notes) is in Data/
@@ -122,5 +136,8 @@ edit parfiles_edit_noColor
 % do this by hand for now
 
 %% GLM -- make the parameter maps
-edit pmap_fromGLMTiled
-edit pmap_fromGLMTiled_Hebrew
+edit pmap_fromGLMTiled_EnglishNewLocalizer.m;
+edit pmap_fromGLMTiled_HebrewNewLocalizer.m;
+
+% edit pmap_fromGLMTiled
+% edit pmap_fromGLMTiled_Hebrew

@@ -9,19 +9,14 @@
 
 % directory with the mrVista session. Usually this script is saved right in
 % that directory. 
-dirVista  = '/sni-storage/wandell/data/reading_prf/heb_pilot04/RetAndLoc/';
+dirVista  = '/sni-storage/wandell/data/reading_prf/heb_pilot16/EnglishLoc';
 
 % nifti files we want to xform
 listToXform = {
-%     fullfile(dirVista, 'Localizer_English/func.nii.gz')
-%     fullfile(dirVista, 'Localizer_Hebrew/func.nii.gz')
-%     fullfile(dirVista, 'Ret_Checkers1/func.nii.gz')
-%     fullfile(dirVista, 'Ret_Checkers2/func.nii.gz')
-%     fullfile(dirVista, 'Ret_English1/func.nii.gz')
-%     fullfile(dirVista, 'Ret_English2/func.nii.gz')
-%     fullfile(dirVista, 'Ret_Hebrew1/func.nii.gz')
-%     fullfile(dirVista, 'Ret_Hebrew2/func.nii.gz')
-    fullfile(dirVista, 'T1Fl2d_tra/inplane.nii.gz')
+    fullfile(dirVista, 'prescribeInplane1', 'inplane.nii.gz')
+    fullfile(dirVista, 'prescribeInplane2', 'inplane.nii.gz')
+%     fullfile(dirVista, 'Localizer_English1/func.nii.gz')
+%     fullfile(dirVista, 'Localizer_English2/func.nii.gz')
     };
 
 % name of the new functional, with ext

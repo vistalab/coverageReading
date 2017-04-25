@@ -9,7 +9,7 @@ function ff_dropboxSave(varargin)
 % filename is title name
 % saves both the .png and .fig file
 
-dropboxDir = '/home/rkimle/Dropbox/TRANSFERIMAGES/';
+dropboxDir = '~/Dropbox/TRANSFERIMAGES/';
 
 %% input parser
 p = inputParser; 

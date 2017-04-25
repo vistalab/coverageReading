@@ -9,20 +9,20 @@ bookKeeping;
 
 %% modify here
 tic
-list_subInds = 4; 
+list_subInds = 4 % [3     4     6     7     8     9    13    15    17]; 
 list_paths = list_sessionDiffusionRun1; 
 
 % 1st connectome FE STRUCT location, relative to dirDiffusion
 % This is F: the path neighborhood of f
-feStruct1Loc = 'LiFEStructs/LGN-V2-FFibers_LiFEStruct.mat';
+feStruct1Loc = 'LiFEStructs/LGN-V1-FFibers_LiFEStruct.mat';
 
 % 2nd connectome FE STRUCT location, relative to dirDiffusion
 % This is F': F - f
-feStruct2Loc = 'LiFEStructs/LGN-V2-FPrimeFibers_LiFEStruct.mat';
+feStruct2Loc = 'LiFEStructs/LGN-V1-FPrimeFibers_LiFEStruct.mat';
 
 % Specify the fiber tract that was used to define F and F'
 % relative to dirAnatomy
-fLoc = 'ROIsFiberGroups/LGN-V2_200fibers.pdb';
+fLoc = 'ROIsFiberGroups/LGN-V1_200fibers.pdb';
 
 %%
 

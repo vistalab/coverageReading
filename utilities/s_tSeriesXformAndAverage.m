@@ -10,7 +10,7 @@ close all; clear all; clc;
 
 %%
 
-dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot01/Analyze';
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot13/RetAndHebrewLoc';
 
 % the names of the dataTYPES we want to create
 dtsToCreate = {

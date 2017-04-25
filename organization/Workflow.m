@@ -14,13 +14,13 @@
 % Add the Stimuli folder to loc
 
 %% canonical xform
- pp_canonicalXform;     % localizer
- pp_canonicalXform;     % retinotopy
+edit pp_canonicalXform;     % localizer
+edit pp_canonicalXform;     % retinotopy
 
 %% acpc align the t1 file
 % script that brings up a gui to specify landmarks and saves the acpc'd t1 file
 % {dirAnat}/t1.nii.gz     - what to save the acpc’d file as
-pp_acpcAndSave; 
+edit pp_acpcAndSave; 
 
 %% double check that the acpc alignment makes sense for talairach coordinates
 
@@ -46,14 +46,14 @@ pp_freesurfer;
 % clip frames
 % 2 frames (2 sec) for the whole brain MUX
 % 6 frames (12 sec) for the retinotopy
-pp_mrInit; % localizer
-pp_mrInit; % retinotopy
+edit pp_mrInit; % localizer
+edit pp_mrInit; % retinotopy
 
 %% Align Inplane to Anatomical
 % knk alignment code, compatible with mrVista
 % Run this script cell-by-cell, self-explanatory
-s_alignInplaneToAnatomical; % localizer
-s_alignInplaneToAnatomical; % retinotopy
+edit s_alignInplaneToAnatomical; % localizer
+edit s_alignInplaneToAnatomical; % retinotopy
 
 %% Build the meshes
 % Automatically builds the following left and right meshes and save as the following:
@@ -187,11 +187,11 @@ roi_makeFromMesh.m
 % Ventral_Words         : combine VWFA and OWFA
 % FFA_Face              : combine mFus and pFus
 % Ventral_Face          : combine mFus, pFus, and iOG
-roi_combine;
+edit roi_combine;
 
 % VWFA_tal1             : [-42,-57,-6]      Cohen 2000
 % VWFA_tal2             : [-42,-57,-15]     Cohen 2002
-roi_talCreate
+edit roi_makeFromMNIOrTal.m
 
 
 %% thresholding folders

@@ -1,3 +1,4 @@
+
 %% script to make the paramter maps we're interested in
 % will then xform the parameter into the gray
 % from the tiled localizer experiment
@@ -8,15 +9,12 @@ bookKeeping;
 %% modify here
 
 % subject session list
-list_path = list_sessionTiledLoc; 
-
-% subjects we want to do this for. see bookKeeping
-list_subInds = [26]; %[3 16 17]
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot07/RetAndHebrewLoc'; 
 
 % condition names of the kidLoc:
 % add 1 to what is in the par file (eg Baseline is condition 0 in the parfile)
 s.condNames = {
-    'Baseline'                  % 1
+    'baseline'                  % 1
     'adult_grayBackground';     % 2 Face
     'hebrew';                   % 3 Hebrew
     'scrambled';                % 4
@@ -26,7 +24,7 @@ s.condNames = {
 testType = 'T'; % {'T' 'F'}
 
 % test unit
-testUnits = 'log10p'; % {'log10p' 'p' 't' 'f' 'ces'}
+testUnits = ' '; % {'log10p' 'p' 't' 'f' 'ces'}
 
 % name of parameter maps
 list_nameSave = {
@@ -60,43 +58,40 @@ list_control = {
  
 
 %% 
-
-for ii = list_subInds; 
     
-    chdir(list_path{ii});
-    
-    vwI = initHiddenInplane;
-    vwG = initHiddenGray;
+chdir(dirVista);
 
-    % assumes the GLM has already been run. change to this dt.
-    vwI = viewSet(vwI, 'curdt', 'GLMs');
-    vwG  = viewSet(vwG,'curdt', 'GLMs'); 
+vwI = initHiddenInplane;
+vwG = initHiddenGray;
 
-    % number of pmaps to make
-    numContrasts = length(list_active); 
+% assumes the GLM has already been run. change to this dt.
+vwI = viewSet(vwI, 'curdt', 'GLMs');
+vwG  = viewSet(vwG,'curdt', 'GLMs'); 
+
+% number of pmaps to make
+numContrasts = length(list_active); 
 
 
-    for kk = 1:numContrasts
+for kk = 1:numContrasts
 
-        active      = list_active{kk}; 
-        control     = list_control{kk}; 
-        nameSave    = list_nameSave{kk};
+    active      = list_active{kk}; 
+    control     = list_control{kk}; 
+    nameSave    = list_nameSave{kk};
 
-        % account for null condition: -1 offset to get to condNums
-        active  = active - 1;
-        control = control - 1;
+    % account for null condition: -1 offset to get to condNums
+    active  = active - 1;
+    control = control - 1;
 
-        % make the contrast parameter map
-        vwI  = computeContrastMap2(vwI, active, control, nameSave, ...
-        'test', testType, 'mapUnits', testUnits);
-
-    end
-
-    % xform all parameter map into the gray view
-    ip2volAllParMaps(vwI, vwG);
+    % make the contrast parameter map
+    vwI  = computeContrastMap2(vwI, active, control, nameSave, ...
+    'test', testType, 'mapUnits', testUnits);
 
 end
-                      
+
+% xform all parameter map into the gray view
+ip2volAllParMaps(vwI, vwG);
+
+
                        
                        
                        

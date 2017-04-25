@@ -41,6 +41,9 @@ end
 
 %% mixed effects -- calculate per subject
 
+subs_percentInCenter = subs_numInCenter ./ subs_numInFOV
 
+minPercent = min(subs_percentInCenter)
+maxPercent = max(subs_percentInCenter)
 
 %% pool all subjects

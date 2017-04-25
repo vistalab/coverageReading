@@ -1,16 +1,12 @@
 %% make meshes with standardized names
 close all; clear all; clc; 
-bookKeeping;
 
 %% make any modifications here
-% subject number we want to make mesh for, as indicated by bookKeeping
-subInd = 26;
 
-% session path
-list_path = list_sessionRet; 
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot16/RetAndHebrewLoc';
 
-% number of smooth iterations
-p.smoothIters   = 400; 
+% number of smooth iterations % 400
+p.smoothIters   = 400; % 400
 
 % relaxation parameter
 p.smoothRelax   = 1; 
@@ -21,7 +17,7 @@ p.rightMeshName = ['rh_inflated' num2str(p.smoothIters) '_smooth' num2str(p.smoo
 
 
 %% mrVista
-dirVista = list_path{subInd};
+
 chdir(dirVista);
 mrVista 3; 
 

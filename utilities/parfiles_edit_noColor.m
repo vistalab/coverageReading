@@ -10,15 +10,11 @@ bookKeeping;
 
 %% modify here
 
-% subInd
-subInd = 26; 
+% directory with vista session
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot07/EnglishLoc';
 
-% session list
-list_path = list_sessionTiledLoc; 
-
-% ASSUMES THIS SCRIPT IS IN THE SAME DIR AS THE PAR FILE
-% path of the parfile to be edited
-parFileName = 'tiledLoc_Hebrew_raw.par';
+% name of the parfile to be edited
+parFileName = 'script_fLoc_tiled_oddball_run1_16-Nov-2016.par';
 
 % name of the new parfile. will be stored in the same dir as the orig
 parFileNewName = 'tiledLoc_Hebrew.par';
@@ -39,8 +35,7 @@ list_condNames = {
 
 %% end modification section
 
-% dirVista
-dirVista = list_path{subInd};
+% move to dirVista
 chdir(fullfile(dirVista, 'Stimuli', 'Parfiles'))
 
 % number of conditions

@@ -11,8 +11,8 @@
 % 3: hG
 wView = 2;
 
-newroi.color    = 'w';
-newroi.name     = 'RhV4_rl'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 'GLM_WordVFace_Scrambled'
+newroi.color    = 'k';
+newroi.name     = 'rVOTRC'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 'GLM_WordVFace_Scrambled'
 newroi.comment  = '';
 restrictToFunc  = 1;  % 0 for visual field maps, 1 for categories
 saveWhere       = 0; % 1 = local, 0 = shared

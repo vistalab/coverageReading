@@ -35,13 +35,13 @@ edit wm_mrtrix_init.m
 
 %% Tractography ==========================================================
 
-%% (1) Generate a connectome with no endpoints in LGN-V(123).mat (the union)
+%% (1) Generate a connectome with no endpoints in LGN-V(123).mat 
 % Name: ROIsFiberGroups/WholeBrainExcluding_LGN-V1_50000fibers.pdb
 % Name: ROIsFiberGroups/WholeBrainExcluding_LGN-V2_50000fibers.pdb
 % Name: ROIsFiberGroups/WholeBrainExcluding_LGN-V3_50000fibers.pdb
 edit wm_mrtrix_noEndpointsInROIs.m 
   
-%% (2) Generate the fibers with only one endpoint in the LGN-V(123) (the union)
+%% (2) Generate the fibers with only one endpoint in the LGN-V(123) 
 % (2a) Generate the fibers with one endpoint in LGN 
 % (2b) Generate the fibers with one endpoint in V(123)
 % Merge the 2a and 2b fibers
@@ -50,21 +50,21 @@ edit wm_mrtrix_oneEndpointInROI.m
  
 %% (3) Generate the fibers that run between LGN and V(123)
 % Use mrtrix_track_roi2roi
-% Name: LGN-V1_200fibers. Etc
+% Name: ROIsFiberGroups/LGN-V1_200fibers.pdb Etc
 edit wm_mrtrix_track_roi2roi; 
 
 %% Combine fibers from (1) and (2) 
-% name: EverythingExcept_LGN-V1_51100fibers.pdb
+% name: ROIsConnectomes/EverythingExcept_LGN-V1_51100fibers.pdb
 edit wm_fgMerge_everythingExceptTractOfInterest.m; 
 
 %% Inteserect the fibers from combined (1) and (2) with (3) to find FPrime
-% Name: LGN-V1-FPrimeFibers
+% Name: ROIsConnectomes/LGN-V1-FPrimeFibers.pdb
 edit wm_life_makeFPrimeFibers_LGNV1.m; 
 edit wm_life_makeFPrimeFibers_LGNV2.m;
 edit wm_life_makeFPrimeFibers_LGNV3.m;
 
 %% Merge FPrime with (3) to get F
-% Name: LGN-V1-FFibers
+% Name: ROIsConnectomes/LGN-V1-FFibers.pdb
 edit wm_fgMerge_fAndFPrimeToMakeF.m;
 
 %% Fit the life model to these two connectomes
@@ -72,4 +72,8 @@ edit wm_fgMerge_fAndFPrimeToMakeF.m;
 edit wm_life_feStructCompute.m
 
 %% Compare the rmse distrubution of the voxels of f
+edit wm_life_virtualLesion.m
+
+%% See the fiber weights
+edit wm_life_fiberWeights.m
 

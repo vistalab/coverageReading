@@ -8,13 +8,14 @@ bookKeeping;
 %% modify here
 
 % name to give newly defined ROI
-threshDescript = 'threshByWordModel';
+threshDescript = 'threshByWordModel-co0p05';
 
 % make new roi with voxels that pass this threshold
 vfc = ff_vfcDefault;
+vfc.cothresh = 0.05; 
 
 subInds = 1:20; 
-roiName = {'LhV4_rl'};
+roiName = {'lVOTRC'};
 
 % the ret model that we will apply thresholds to
 list_dtNames = {

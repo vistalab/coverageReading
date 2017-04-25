@@ -10,23 +10,26 @@ bookKeeping;
 
 %% modify here
 % subjects we want to do this for
-list_subInds = [4];
+list_subInds = [18 22];
 
+% Binary vector indicating which group. 1 for patient 0 for control
+sub_group = [0 1]; 
+
+% session list
+list_paths = list_sessionDtiQmri; 
+
+% name of the dt6 base folder
+dt6Name = 'dti96trilin_run1_res2';
 
 %% end modification section
-
 % number of subjects
-numSUbs = length(list_subInds);
+numSubs = length(list_subInds);
 
 %% sub_dirs 
 % 1 x N cell array where N is the number of subjects in the study. 
 % Each cell should contain the full path to a subjects data directory 
 % where their dt6.mat file is.
-sub_dirs = fullfile(list_sessionDtiQmri(list_subInds), 'dti96trilin')';
-
-%% sub_group
-% Binary vector defining each subject's group. 0 for control and 1 for patient.
-sub_group = ~(list_subInds < indDysStart); 
+sub_dirs = fullfile(list_paths(list_subInds), dt6Name)';
 
 %% create the afq struct
 afq = AFQ_Create('sub_dirs', sub_dirs, 'sub_group', sub_group, ...
@@ -34,7 +37,6 @@ afq = AFQ_Create('sub_dirs', sub_dirs, 'sub_group', sub_group, ...
 
 % Overwrite any previously computed fiber groups
 afq = AFQ_set(afq, 'overwritefibers', 1)
-
 
 %% run it!
 [afq patient_data control_data norms abn abnTracts] = AFQ_run([],[],afq);

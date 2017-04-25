@@ -1,0 +1,32 @@
+%% legend that corresponds to subject 
+% there is a function version of this script, so we can delete this
+% actually
+
+bookKeeping; 
+list_colors = list_colorsWangRois;
+
+%% modify here
+list_roiInds = 1:25; 
+
+
+%% define things
+numRois = length(list_roiInds);
+hvec = zeros(numRois,1);
+list_subInitials = list_sub(list_roiInds);
+
+%% do things 
+
+figure; hold on; 
+for ii = 1:numRois
+    subInd = list_roiInds(ii);
+    subColor = list_colors(subInd, :); 
+    p = plot(0,0, ...
+        'Marker', 'o', ...
+        'MarkerSize', 10, ...
+        'MarkerFaceColor', subColor, ...
+        'MarkerEdgeColor', [0 0 0]);
+    hvec(ii) = p; 
+end
+
+L = legend(hvec, list_subInitials)
+

@@ -11,18 +11,18 @@ set(s.matlab.desktop.workspace, 'ArraySizeLimitEnabled',false);
 
 %% modify here
 
-list_subInds = [4     6     7     8     9    13    15    17];  % 3
+list_subInds = [   4     6     7     8     9    13    15    17];  % 3
 
 % the comprehensive connectome. pdb file
 % relative to dirAnatomy
 conDir = 'ROIsConnectomes';
 list_conNames = {
-    'LGN-V1-FFibers.pdb'
-    'LGN-V1-FPrimeFibers.pdb'
-    'LGN-V2-FFibers.pdb'
-    'LGN-V2-FPrimeFibers.pdb'
-%     'LGN-V3-FFibers.pdb'
-%     'LGN-V3-FPrimeFibers.pdb'
+%     'LGN-V1-FFibers.pdb'
+%     'LGN-V1-FPrimeFibers.pdb'
+%     'LGN-V2-FFibers.pdb'
+%     'LGN-V2-FPrimeFibers.pdb'
+    'LGN-V3-FFibers.pdb'
+    'LGN-V3-FPrimeFibers.pdb'
     };
 
 % where we will save the 

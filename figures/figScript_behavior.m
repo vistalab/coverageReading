@@ -1,16 +1,19 @@
+%% SOME THINGS TO CHECK HERE
+% use summary_behavioral_vsCoveragePlot
+
 %% x axis: behavioral score. y axis: some coverage parameter
 close all; clear all; clc; 
 bookKeeping; 
 
 %% modify here
 
-markerSize = 30; % 11
+markerSize = 18; % 11
 
 % the behavior score to use. options:
 % 'towre_percentile', 'towre_swe', 'towre_pde', ...
 list_behaviors = {
     'towre_swe'
-%     'towre_pde'
+    'towre_pde'
 %     'towre_percentile'
     };
 
@@ -34,7 +37,7 @@ list_behaviorData = {
 
 % rois we want to look at
 list_roiNames = {
-    'left_VWFA_rl'
+    'lVOTRC'
 %     'right_VWFA_rl'
 %     'combined_VWFA_rl'
     };
@@ -133,6 +136,19 @@ for bb = 1:numBehaviors
                 'Color', 'k');
        
         end
+                
+        %% plot line
+        coverageData = coverageParamMat(:,cc);
+        behaviorData = behaviorMat(:,cc);
+        
+        p = polyfit(coverageData, behaviorData,1); 
+        xlim = get(gca, 'Xlim'); 
+        lin = linspace(xlim(1),xlim(2)); 
+        plot(lin, polyval(p,lin), 'LineWidth', 5, 'Color', [.1 .1 .1])
+        
+        % the correlation
+        rho = corrcoef(coverageData, behaviorData);
+        corrValue = rho(1,2);
         
         % plot properties
         L = legend(h, list_sub{list_subInds});
@@ -141,7 +157,11 @@ for bb = 1:numBehaviors
         grid on;
         xlabel(coverageParam, 'FontWeight', 'Bold')
         ylabel(behavior, 'FontWeight', 'Bold')
-        title([behavior ' vs. ' coverageParam], 'FontWeight', 'Bold', 'FontSize',18)
+        titleName = {
+            [behavior ' vs. ' coverageParam]
+            ['rho: ' num2str(corrValue)]
+            };
+        title(titleName, 'FontWeight', 'Bold', 'FontSize',18)
         ff_dropboxSave;
         
     end

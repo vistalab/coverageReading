@@ -9,7 +9,7 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = 2% [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22];
+list_subInds = 4 % [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18    22];
 
 % save the nifti
 saveFlag = true;
@@ -30,7 +30,7 @@ for ii = list_subInds
     end
     
     % assumption: the diffusion rois are in {dirDiffusion}/ROIs
-    dirROIs = fullfile(dirDiffusion, 'ROIs'); 
+    dirROIs = fullfile(dirAnatomy, 'ROIsMrDiffusion'); 
     
     % get the names and paths of all ROIs
     chdir(dirROIs)

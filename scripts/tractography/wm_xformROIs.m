@@ -11,7 +11,7 @@ bookKeeping;
 %% modify here
 % subjects we want to do this for, see bookKeeping
 %  2     3     4     5     6     7     8     9    
-list_subInds = [10    13    14    15    16    17    18    22];
+list_subInds = 4;
 
 %% end modification section
 

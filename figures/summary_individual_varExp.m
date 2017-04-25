@@ -7,9 +7,9 @@ bookKeeping;
 %% modify here
 
 % plot title
-titleDescript = 'Checkers and Words and Words1. Thresholded';%'Checkers and and Words and Words_scale1mu0sig1p5';
+titleDescript = 'Checkers and Words. Thresholded';%'Checkers and and Words and Words_scale1mu0sig1p5';
 
-roiName = 'rVOTRC-threshByWordModel';
+roiName = 'lVOTRC-threshByWordModel';
 
 % the usual thresholds for making FOVs
 vfc = ff_vfcDefault; 
@@ -20,12 +20,12 @@ list_path = list_sessionRet;
 list_dtNames = {
     'Checkers'
     'Words'
-    'Words_scale1mu0sig1p5'
+%     'Words_scale1mu0sig1p5'
     };
 list_rmNames = {
     'retModel-Checkers-css.mat'
     'retModel-Words-css.mat'
-    'retModel-Words_scale1mu0sig1p5-css-rVOTRC.mat'
+%     'retModel-Words_scale1mu0sig1p5-css-lVOTRC.mat'
     };
 
 list_markerTypes = {

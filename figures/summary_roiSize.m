@@ -6,8 +6,10 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = 1%1:20;
-roiName = 'lh_VWFA_rl';
+list_subInds = 1:20;
+
+% lVOTRC-threshByWordModel
+roiName = 'rVOTRC-threshByWordModel';
 
 %% define here
 numSubs = length(list_subInds);
