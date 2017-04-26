@@ -22,47 +22,50 @@ inplaneFile           = 'inplane_xform.nii.gz';
 functionalAcquisition = 'Ret_English_Run1';
 functionalFile        = 'func_xform.nii.gz';
 
-stimulusAquisition    = 'Stimuli_Retinotopy';
+stimulusAcquisition    = 'Stimuli_Retinotopy';
 stimulusFile          = {'images_knk_fliplr.mat','params_knkfull_multibar_blank.mat'};
 
 workingDir = fullfile(crRootPath,'local');
 chdir(workingDir);
 
-%% Get the anatomical file
-clear srch
-srch.path = 'sessions';
-srch.projects.match.label = thisProject;
-srch.sessions.match.subjectx0x2E_code = subjectCode;
-sessions = st.search(srch);
+%% Pick the session by subject so we can refer to it later
 
-clear srch
-srch.path = 'files';
-srch.sessions.match.x0x5F_id = sessions{1}.id;
-srch.files.match.name = anatomicalFile;
-files = st.search(srch);
+sessions = st.simpleSearch('sessions',...
+    'project label',thisProject,...
+    'subject code',subjectCode);
+
+%% Get the anatomical file in the session
+
+files = st.simpleSearch('files',...
+    'session id',sessions{1}.id,...
+    'file name',anatomicalFile);
 
 st.get(files{1},'destination',fullfile(workingDir,anatomicalFile));
 
 %% Get the inplane file
 
-clear srch
-srch.path = 'files';
-srch.sessions.match.x0x5F_id = sessions{1}.id;
-srch.files.match.name = inplaneFile;
-files = st.search(srch);
+files = st.simpleSearch('files',...
+    'session id',sessions{1}.id,...
+    'file name',inplaneFile);
 
 st.get(files{1},'destination',fullfile(workingDir,inplaneFile));
 
 %% Stimulus description
-clear srch
-srch.path = 'files';
-srch.sessions.match.x0x5F_id = sessions{1}.id;
-srch.acquisitions.match.label = stimulusAquisition;
+
 for ii=1:length(stimulusFile)
-    srch.files.match.name = stimulusFile{ii};
-    files = st.search(srch);
+    files = st.simpleSearch('files',...
+        'session id',sessions{1}.id,...
+        'acquisition label',stimulusAcquisition, ...
+        'file name',stimulusFile{ii});
     st.get(files{1},'destination',fullfile(workingDir,stimulusFile{ii}));
 end
+
+%% Get the functional file
+files = st.simpleSearch('files',...
+    'session id',sessions{1}.id,...
+    'acquisition label',functionalAcquisition, ...
+    'file name',functionalFile);
+st.get(files{1},'destination',fullfile(workingDir,functionalFile));
 
 %%
 
