@@ -1,7 +1,7 @@
 %% script that will call freesurfer command and 
 %% convert the ribbon file into a nifti class file
 
-clear all; close all; clc
+% clear all; close all; clc
 
 %% modify here
 
@@ -43,7 +43,7 @@ eval(['! recon-all -i ' pathT1 ' -subjid ' dirNameFreesurfer ' -all'])
 fs_ribbon2itk(inputRibbonFile, outputClassNii, [], pathT1, [])
 
 
-
+%%
 
 
 

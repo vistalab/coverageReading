@@ -50,13 +50,23 @@ sessions = st.search('sessions',...
     'subject code',subjectCode);
 thisSession = sessions{1};
 
-files = st.search('sessions',...
-    'session id',thisSession.id,...
-    'files',thisFile);
+files = st.search('files',...
+    'subject code',subjectCode, ...
+    'file name',thisFile);
 
-%%
+%% Need to
+st.get(files{1},'destination','t1.nii.gz');
+niftiView('t1.nii.gz');
+
+% Need a FreeSurferConfig to set the environment variables
+% system('/Applications/freesurfer/bin/freeview  t1.nii.gz');
+
+%% Read the data directly this way, and show
+
 T1 = st.read(files{1},'fileType','nifti');
 niftiView(T1);
+
+%%
 
 %% rt_sub000_lh.ribbon.nii.gz
 clear srch
