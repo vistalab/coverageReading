@@ -9,20 +9,24 @@ pathT1 = fullfile(dirAnatomy, 't1.nii.gz');
 
 fgLoc = fullfile(dirAnatomy, 'ROIsFiberGroups');
 list_fgNames = {
-%     'Left SLF_cleaned.pdb'
-%     'Left ILF_cleaned.pdb'
+    'Left SLF_cleaned.pdb'
+    'Left ILF_cleaned.pdb'
     'Left Arcuate_cleaned.pdb'
-%     'L_VOF_cleaned.pdb'
+    'L_VOF_cleaned.pdb'
     };
 
 % some colors
 % [0.5373    0.4980    0.1882] % gold   
 % [0.4431    0.4471    0.4078] % silver
-list_fgColors = [
 %     [0.1333    0.3333    0.6471]
 %     [0.6471    0.5882    0.1333]
-    [0.7686    0.1569    0.3608]
+%     [0.7686    0.1569    0.3608]
 %     [0.0784    0.4196    0.1176]
+list_fgColors = [
+    [0.1333    0.3333    0.6471]
+    [0.6471    0.5882    0.1333]
+    [0.7686    0.1569    0.3608]
+    [0.0784    0.4196    0.1176]
     ];
 
 

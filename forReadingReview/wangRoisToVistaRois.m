@@ -1,14 +1,20 @@
 %% Convert the Wang rois into Vista rois and save in shared anatomy dir
 
 clear all; close all; clc; 
+bookKeeping; 
 
 %% modify here
 
-dirVista = '/sni-storage/wandell/data/reading_prf/ab/tiledLoc_sizeRet';
+subInd = 39; 
+
+%% end modification
+
+dirVista = list_sessionRet{subInd}; 
+dirSubject = fileparts(dirVista); 
 
 % where the wang atlas nifti lives
-wangLoc  = '/sni-storage/wandell/data/reading_prf/ab/retTemplate_20170106';
-wangName = 'scanner.wang2015_atlas_nearest.nii.gz';
+wangLoc = fullfile(dirSubject, 'retTemplate/output');
+wangName = 'rt_sub000_scanner.wang2015_atlas.nii.gz';
 wangAtlasPath = fullfile(wangLoc, wangName);
 
 %% load a view
@@ -24,3 +30,5 @@ vw = wangAtlasToROIs(vw, wangAtlasPath);
 % Save the ROIs
 local = false; forceSave = true;
 saveAllROIs(vw, local, forceSave);
+
+

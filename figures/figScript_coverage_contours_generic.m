@@ -9,40 +9,36 @@ bookKeeping;
 
 %% modify here
 
-titleDescript = 'rVOTRC. Words_English. Half-max contour';
+titleDescript = 'lVOTRC. Half-max contour. Checkers';
 
 % vfc
-vfc = ff_vfcDefault();
-vfc.cmap = 'jet';
-vfc.addCenters = 0;
-vfc.method = 'max';
-vfc.cothresh = 0.2; 
-vfc.tickLabel = 1;
-vfc.fieldRange = 7;
-vfc.eccthresh = [0 7];
-vfc.sigthresh = [0 7];
+vfc = ff_vfcDefault;
 
 % THE UNDERLAY -------------
-und_subInds = [31:38] ; % if more than one, will be group average
-und_roiName = {'rVOTRC.mat'};
-und_dtName = {'Words_English'};
-und_rmName = {'retModel-Words_English-css.mat'};
-
+und_subInds = [1:20] ; % if more than one, will be group average
+und_roiName = {'lVOTRC.mat'};
+und_dtName = {'Checkers'};
+und_rmName = {'retModel-Checkers-css.mat'};
 
 % THE CONTOURS ----------------
 % can have many contours.
 % indicate in cell array.
+
+% if this option is true, we do one contour for each individual listed in
+% con_subInds
+individualContours = false; 
+
 con_subInds = {
-   [31:38];
+    [1:17 19 20]
     };
 con_roiNames = {
-    {'rVOTRC.mat'}
+    {'lVOTRC.mat'}
     };
 con_dtNames = {
-    {'Words_English'}
+    {'Checkers'}
     };
 con_rmNames = {
-    {'retModel-Words_English-css.mat'}
+    {'retModel-Checkers-css.mat'}
     };
 con_contourLevels = {
     0.5
@@ -61,39 +57,69 @@ con_contourMarkerSizes = {
 
 %% underlay rmroi -------
 und_rmroiCell  = ff_rmroiCell(und_subInds, und_roiName, und_dtName, und_rmName);
+
+%% plot the underlay rmroi 
 und_rfcov = ff_rmPlotCoverageGroup(und_rmroiCell, vfc, 'flip', false);
 und_h = gcf; 
 
 %% contours on top
 
-for cc = 1:length(con_rmNames)
+if individualContours
+    numContours = length(con_subInds{1});
+else
+    numContours = length(con_subInds);
+end
+
+for cc = 1:numContours
     
-    contourLevel = con_contourLevels{cc};
-    contourColor = con_contourColors{cc};
-    contourMarker = con_contourMarkers{cc};
-    contourMarkerSize = con_contourMarkerSizes{cc};
+    %% 
+    if individualContours
+        conSubIndsList = con_subInds{1};
+        
+        contourLevel = con_contourLevels{1};
+        contourColor = con_contourColors{1};
+        contourMarker = con_contourMarkers{1};
+        contourMarkerSize = con_contourMarkerSizes{1};
+        contourDtName = con_dtNames{1};
+        contourRmName = con_rmNames{1};
+        contourRoiName = con_roiNames{1};
+    else
+        contourLevel = con_contourLevels{cc};
+        contourColor = con_contourColors{cc};
+        contourMarker = con_contourMarkers{cc};
+        contourMarkerSize = con_contourMarkerSizes{cc};
+        contourDtName = con_dtNames{cc};
+        contourRmName = con_rmNames{cc};
+        contourRoiName = con_roiNames{cc};
+    end
+        
+    % subjects individual or group average
+    if individualContours
+        conSubInds = conSubIndsList(cc);
+    else
+        conSubInds = con_subInds{cc};
+    end
     
-    % rmroiCell
-    con_rmroiCell = ff_rmroiCell(con_subInds{cc}, con_roiNames{cc}, con_dtNames{cc}, con_rmNames{cc});
+    % rmroiCell    
+    con_rmroiCell = ff_rmroiCell(conSubInds, contourRoiName, contourDtName, contourRmName);
     
     % get the mean rfcov matrix
     con_rfcov = ff_rmPlotCoverageGroup(con_rmroiCell, vfc, 'flip', false);
     
+    % check to make the con_rfcov is not all zeros   
     % make the contour
     [contourMatrix, contourCoordsX, contourCoordsY] = ff_contourMatrix_makeFromMatrix(con_rfcov,vfc,contourLevel);
-    
     % transform so that we can plot it on the polar plot
     contourX = contourCoordsX/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange; 
     contourY = contourCoordsY/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange;
-    
-    % add to underlay plot
+
     figure(und_h)
-    plot(contourX,contourY, contourMarker, 'Color',contourColor, 'LineWidth',contourMarkerSize)
-    
+    plot(contourX,contourY, contourMarker, 'Color',contourColor, 'LineWidth',contourMarkerSize)   
+
 end
 
 %% title and save
 
 title(titleDescript, 'FontWeight', 'Bold')
 
-ff_dropboxSave;
+set(gca, 'xlim', [-vfc.fieldRange, vfc.fieldRange])

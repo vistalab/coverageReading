@@ -159,10 +159,15 @@ function ellipse_t = ff_fit_ellipse( x,y,axis_handle, varargin)
 %
 %
 %% TODO: input parser
+p = inputParser; 
+addParameter(p,'ellipseColor',[0 0 1]); 
+addParameter(p,'ellipseLineWidth', 2); 
 
-ellipseColor = [0 0 1];; %[.65 .65 .65]; % [0 0 1];
-ellipseLineWidth = 2; %.25; % 2
+% this fills the p.Results field
+parse(p, varargin{:}); 
 
+ellipseColor = p.Results.ellipseColor; 
+ellipseLineWidth = p.Results.ellipseLineWidth; 
 
 %%
 % initialize

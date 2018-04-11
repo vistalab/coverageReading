@@ -13,13 +13,13 @@ end
 set(0, 'DefaultTextInterpreter', 'none'); 
 
 
-%% plot the circle centers
-% plot the centers: (rm.x0(ii), rm.y0(ii))
-hf = plot(rm.x0, rm.y0,'.', 'Color',[.7 .7 .7]);
-hold on
-
+%% polar plot
+% add polar grid on top
+p.ringTicks = (1:3)/3*vfc.fieldRange;
+p.color = 'k';
+polarPlot([], p);    
 t = 0:0.01:2*pi;
-    
+
 
 %% plotting the circles if indicated
 if ~plotOnlyCenters
@@ -35,7 +35,10 @@ if ~plotOnlyCenters
 
         % plot each circle
         % plot(X,Y,'k')
-        patch(X,Y,'k', 'EdgeColor','none','FaceAlpha', 0.1); 
+        faceAlpha = 0.5; 
+        circleColor = [0 .5 .5]; 
+        patch(X,Y,circleColor, 'EdgeColor',circleColor,'FaceAlpha', faceAlpha,...
+            'Linewidth',1.5); 
 
     end
 end
@@ -61,11 +64,15 @@ axis square
 line([-themax themax], [0 0], 'Color', [0 0 0]); 
 line([0 0], [-themax themax], 'Color', [0 0 0]);
 
-%% polar plot
-% add polar grid on top
-p.ringTicks = (1:3)/3*vfc.fieldRange;
-p.color = 'k';
-polarPlot([], p);
+
+
+
+%% plot the circle centers
+% plot the centers: (rm.x0(ii), rm.y0(ii))
+% hf = plot(rm.x0, rm.y0,'.', 'Color',[.7 .7 .7]);
+hf = plot(rm.x0, rm.y0,'.', 'Color',circleColor, 'MarkerSize', 14);
+hold on
+
 
 %% Limit plot to visual field circle
 axis([-vfc.fieldRange vfc.fieldRange -vfc.fieldRange vfc.fieldRange])

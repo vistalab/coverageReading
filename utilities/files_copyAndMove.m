@@ -7,29 +7,14 @@ bookKeeping;
 %% modify here
 
 % subjects to do this for
-list_subInds = [20];
+list_subInds = [32 35];
 
 % session list
-list_path = list_sessionRet; 
+list_path = list_sessionHebrewRet_resize; 
 
 % absolute paths of things we want copied over
 list_thingsToCopy = {
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep1.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep2.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep3.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep4.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep5.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep6.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep7.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_RemoveSweep8.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep1.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep2.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep3.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep4.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep5.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep6.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep7.mat'
-    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_knkfull_multibar_RemoveSweep8.mat'
+    '/sni-storage/wandell/data/reading_prf/forAnalysis/knkret/params_checkers_hebrew_delayStart8secs.mat'
     };
 
 % path, relative to subject's dirVista, that we want things copied into

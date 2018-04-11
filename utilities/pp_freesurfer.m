@@ -8,7 +8,7 @@ clear all; close all; clc
 % last name of the subject
 % assumes that is a directory in the shared anatomy directory of this name
 % assumes that we want the freesurfer ouputs to be in a directory of this name 
-lastName = 'Blta'; 
+lastName = 'Avhi'; 
 
 
 %% define things and run freesurfer
@@ -40,7 +40,7 @@ inputRibbonFile = fullfile(dirFSsubject, 'mri','ribbon.mgz');
 eval(['! recon-all -i ' pathT1 ' -subjid ' dirNameFreesurfer ' -all'])
 
 % fs_ribbon2itk(<subjid>, <outfile>, [], <PATH_TO_YOUR_T1_NIFTI_FILE>)
-fs_ribbon2itk(inputRibbonFile, outputClassNii, [], pathT1, [])
+
 
 
 

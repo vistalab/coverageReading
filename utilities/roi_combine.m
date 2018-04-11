@@ -8,26 +8,28 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % subjects to do this for
-list_subInds = [31:38]; 
+list_subInds = 1:20; %[1:20]; 
 
 roisToCombine = {
-    'lVOTRC.mat' % 'lVOTRC-threshByWordModel'
-    'rVOTRC.mat' % 'rVOTRC-threshByWordModel';
-}; 
-roiNewName  = 'cVOTRC.mat' % 'cVOTRC-threshByWordModel'; 
+    'lVOTRC-threshBy-Words-co0p2'
+    'lVOTRC-threshBy-Checkers-co0p2'
+    }; 
+
+roiNewName  = 'lVOTRC-threshBy-WordsAndCheckers-co0p2'; % 'cVOTRC-threshByWordModel'; 
 roiNewColor = 'w'; 
-roiAction   = 'Union';  
 
+% IMPORTANT CHECK THIS!!!!
+roiAction   = 'intersect';  
 
-% -- combine mFus_Face and pFus_Face and iOG into Ventral_Face
-% roisToCombine = {
-%     'lh_mFus_Face_rl'; 
-%     'lh_pFus_Face_rl'; 
-%     'lh_iOG_Face_rl';
-% }; 
-% roiNewName  = 'lh_FacesVentral_rl'; 
-% roiNewColor = 'm'; 
-% roiAction   = 'Union';  
+% roi actions:
+%	'intersect' / 'and': Take only coordinates that lie in coords1 AND
+%						 coords2. 
+%	'union' / 'or': Take coordinates that lie in coords1 OR coords2.
+%	
+%	'xor': Take coordinates that only lie in EITHER coords1 or coords2,
+%			but not both.
+%	'a not b' / 'setdiff': Take coordinates that lie in coords1 BUT NOT
+%			coords2.
 
 
 %%
@@ -62,10 +64,10 @@ for ii =  list_subInds
     % first find starting ROI (selected ROI):
     coords = rois(1).coords;
     
-    for r=2:size((rois),2)
-        if ~isempty(rois(r).coords)
+for r=2:size((rois),2)
+        % if ~isempty(rois(r).coords)
             coords = combineCoords(coords,rois(r).coords,roiAction);
-        end
+        % end
     end
 
     % now add new ROI:

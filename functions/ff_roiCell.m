@@ -1,4 +1,6 @@
 function roiCell = ff_roiCell(list_subInds, list_roiNames)
+error('OUTDATED function ... USE << ff_rmroiCell >>')
+
 %% makes a numSub x numRoi cell
 % useful for plotting roi size
 

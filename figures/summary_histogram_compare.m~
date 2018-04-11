@@ -1,0 +1,310 @@
+%% Make a histogram of the pRF distributions (size, eccentricity, etc)
+clear all; close all; clc;
+bookKeeping; 
+
+%% modify here
+
+% session list, see bookKeeping.m
+list_path = list_sessionRet; 
+
+% list subject index
+list_subInds = 1:20;
+list_subIndsDescript = ' ';
+
+% values to threshold the RM struct by
+vfc = ff_vfcDefault;  
+vfc.cothresh = 0.2; 
+
+% whether looking at a subject by subject basis
+subIndividually = false; 
+
+% list rois
+list_roiNames = {
+    'LV1_rl'
+    'LV2v_rl'
+    'LV3v_rl'
+    'LhV4_rl'
+    'lVOTRC'
+%     'LV2d_rl'
+%     'LV3d_rl'
+%     'LV3ab_rl'
+%     'LIPS0_rl'
+    };
+
+% whether or not we want to control for the same voxels over all rms
+sameVoxels = false; 
+
+
+list_dtNames = {
+    'Words'
+    'Words'
+    'Checkers'
+    'Checkers'
+    };
+
+% ret model names
+list_rmNames = {
+    'retModel-Words-css.mat'
+    'retModel-Words.mat'
+    'retModel-Checkers-css.mat'
+    'retModel-Checkers.mat'
+    };
+
+% ret model comments
+list_rmDescripts = {
+    'Words css'
+    'Words linear'
+    'Checkers css'
+    'Checkers linear'
+    };
+
+list_rmColors = [
+    [1 0 0]         % Words
+    [1 0 0.4]       % Words linear
+    [0 0 1]         % Checkers
+    [0 0.6 1]       % Checkers linear
+    ];
+%     [1 0 0]         % Words
+%     [0 0.6 1]       % FalseFont
+%     [0 0 1]         % Checkers
+
+
+% binCenters = [0:vfc.fieldRange/10:vfc.fieldRange];
+% binCenters = [0:15];
+binCenters = [0:0.05:1];
+
+% fieldNames  
+%     'sigma'
+%     'sigma1'
+%     'ecc'
+%     'co'
+%     'exponent'
+%      'phase'
+fieldName = 'co'; 
+
+% fieldName descript
+%     'sigma effective'
+%     'sigma major'
+%     'eccentricity'
+%     'varExp'
+%     'exponent'
+%     'theta'
+fieldNameDescript = 'variance explained';
+
+% what plots to make
+plot_histogram = false;     % the standard histogram
+plot_beta = true;           % fit a beta distribution to the data
+plot_standardError = false; % standard error bars. turn off if only one subject
+
+%% initialize things
+numRois = length(list_roiNames);
+numRms = length(list_rmNames);
+numSubs = length(list_subInds); 
+numBins = length(binCenters);
+
+rmDescript1 = list_rmDescripts{1};
+rmDescript2 = list_rmDescripts{2};
+
+SEvalues = zeros(numBins,numRois,numRms); 
+
+%% get the cell of rms so that we can threshold
+rmroiCellTemp = ff_rmroiCell(list_subInds, list_roiNames, list_dtNames, list_rmNames);
+
+%% do the things
+
+% do we grab the same voxels for both rms or no?
+if sameVoxels
+    rmroiCell = cell(size(rmroiCellTemp));
+    for jj = 1:numRois
+        for ii = 1:numSubs        
+            % get identical voxels for each subject's roi over all ret models
+            D = rmroiCellTemp(ii,jj,:);
+            rmroiCell(ii,jj,:) = ff_rmroiGetSameVoxels(D, vfc);        
+        end
+    end
+else
+    rmroiCell = cell(size(rmroiCellTemp)); 
+    % threshold the voxels regardless
+    for kk = 1:numRms
+        for jj = 1:numRois
+            for ii = 1:numSubs
+                rmroiUnthresh = rmroiCellTemp{ii,jj,kk};
+                rmroi = ff_thresholdRMData(rmroiUnthresh, vfc);
+                rmroiCell{ii,jj,kk} = rmroi; 
+            end
+        end
+    end
+end
+
+% calculate and store the standard error values
+for jj = 1:numRois
+    for kk = 1:numRms
+        
+        % initialize the storing of subject data
+        CountBySub = zeros(numSubs, length(binCenters));               
+        for ii= 1:numSubs         
+            rmroi = rmroiCell{ii,jj,kk};
+            if ~isempty(rmroi)
+                ldatasub = eval(['rmroi.' fieldName]); 
+                countbs = hist(ldatasub, binCenters);
+                CountBySub(ii,:) = countbs;
+            end
+            
+        end % end loop over subjects
+        
+        % standard deviation and error over subjects
+        stdSub = std(CountBySub); 
+        steSub = stdSub / sqrt(numSubs);
+        
+        SEvalues(:,jj,kk) = steSub'; 
+    end    
+end
+
+% plotting
+
+maxValue = max(binCenters); 
+minValue = min(binCenters);
+
+if strcmp(fieldName, 'co')
+    axisLims = [-0.2 1.2];   
+else
+    axisLims = [minValue-1 maxValue+1]; 
+end
+
+
+close all; 
+for jj = 1:numRois
+    
+    %% looping over ROIs
+    roiName = list_roiNames{jj};
+        
+    if plot_histogram
+        figure; hold on;
+    end
+    
+    % linearize the data
+    LData = cell(1,numRms); 
+    for kk = 1:numRms
+        
+        rmroiMultiple = rmroiCell(:,jj, kk);         
+        ldata = ff_rmroiLinearize(rmroiMultiple, fieldName);
+        
+        rmColor = list_rmColors(kk, :);
+        [count, center] = hist(ldata,binCenters); 
+        
+        if plot_histogram
+            bar(center, count, 'FaceColor', rmColor);
+        end
+        
+        LData{kk} = ldata; 
+        
+        % TODO: functionalize the getting of the standard error
+        % calculate standard error over subjects by first getting the bin
+        % data for each subject               
+        for ii = 1:numSubs
+            rmroi = rmroiCell{ii,jj,kk};            
+            if ~isempty(rmroi)
+                ldatasub = eval(['rmroi.' fieldName]); 
+                countbs = hist(ldatasub, binCenters);
+                CountBySub(ii,:) = countbs;               
+            end
+        end 
+        
+        % title purposes. whether or not we use the same voxels
+        if sameVoxels
+            voxelTitle = '(same voxels both models)'; 
+        else
+            voxelTitle = '(voxels that pass threshold)'; 
+        end
+        
+        % get the values though sometimes we don't need the plot
+         if plot_histogram & plot_standardError
+            % standard error bars
+            steSub = SEvalues(:,jj,kk); 
+            errorbar(binCenters, count, steSub,'.', 'Color', [0 0 0], ...
+                'LineWidth',1)
+
+             % plot properties
+            alpha(0.5)
+            grid on; 
+            hold off; 
+
+            xlim(axisLims)
+            titleName = {
+                [roiName ' ' voxelTitle]
+                [fieldNameDescript]
+                ff_cellstring2string(list_dtNames)
+                };
+            title(titleName, 'fontweight', 'bold')
+        
+        end    
+    end
+    
+   
+    
+     %% fit beta distributions to the marginal distributions
+    if plot_beta
+        figure; hold on; 
+        
+        for kk = 1:numRms 
+          
+            % first normalize because the beta distribution needs to be
+            % between the open interval (0,1)
+            BarData = LData{kk};
+            BarDataNorm = BarData / maxValue; 
+            
+            rmColor = list_rmColors(kk,:); 
+            [count, center] = hist(BarData, binCenters);
+            barArea = trapz(center, count);
+            
+            % get the beta fits
+            [phat, pci] = betafit(BarDataNorm, 0.05);
+            betaX = linspace(0,1);
+            betaY = betapdf(betaX, phat(1), phat(2));
+            
+            % plot the histogram
+            bar(center, count, 'FaceColor', rmColor, 'FaceAlpha', 0.2, ...
+            'EdgeColor', 'none', 'BarWidth',0.9);
+            
+            % plot the standard error
+            if plot_standardError
+                steSub1 = SEvalues(:,jj,kk); 
+
+                plot([binCenters; binCenters], [count-steSub'; count+steSub'], ...
+                    'Color', rmColor, 'Linewidth',4)
+            end
+            
+            % Plot the curves
+            % The area under the curve needs to be the area of the histogram
+            % The beta is fit on the range (0,1).
+            % We already multiply the x-axis by maxValue. Figure out how much
+            % more we need to multiply the y-axis by to get the area correct       
+            yScale = barArea / maxValue; 
+            plot(betaX*maxValue, betaY*yScale, 'Color', rmColor, 'Linewidth', 3)
+           
+            % Plot properties
+            grid on; 
+            xlim(axisLims)
+            xlabel(fieldNameDescript)
+            ylabel('Number of voxels')
+       
+        end
+        
+        
+        
+        titleName = {
+            ['Beta distribution. ' roiName]
+            ff_cellstring2string(list_rmDescripts)
+            voxelTitle
+            };
+        title(titleName, 'fontweight', 'bold')
+        
+    end       
+end
+
+% legend
+figure;  hold on
+for kk = 1:numRms
+    rmColor = list_rmColors(kk,:);
+    plot(0,0,'')
+end

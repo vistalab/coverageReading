@@ -32,8 +32,6 @@
 
 
 %% (1) Do our best alignment in rxAlign
-
-
 % Open the rxAlign GUI. Either get a decent alignment manually, or if you
 % have already done so, select the best alignment in the GUI.
 % if you are going to use knk's automated alignment, the alignment you

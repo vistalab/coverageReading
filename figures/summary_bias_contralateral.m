@@ -5,20 +5,19 @@ bookKeeping;
 
 %%
 
-list_subInds = 1:20; % 1:20; 
+list_subInds = 31:38; % 1:20; 
 
 list_roiNames = {
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
-    'LhV4_rl'
     'lVOTRC'
     };
 
-dtName = {'Checkers'};
-rmName = {'retModel-Checkers-css.mat'};
+dtName = {'Words_Hebrew'};
+rmName = {'retModel-Words_Hebrew-css.mat'};
 
-vfc = ff_vfcDefault; 
+% vfc = ff_vfcDefault | ff_vfcDefault_Hebrew;
+vfc = ff_vfcDefault_Hebrew; 
+vfc.cothresh = 0.05; 
+
 contourLevel = 0.5; 
 
 %% define and initialize
@@ -56,7 +55,7 @@ for ii = 1:numSubs
         leftAmount = sum(sum(rfcovBinary & leftBinary)); 
         
         % lateralization index
-        lat = leftAmount / rightAmount; 
+        lat = rightAmount / leftAmount; 
         latMatrix(ii,jj) = lat; 
         
     end

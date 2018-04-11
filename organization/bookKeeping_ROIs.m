@@ -1,4 +1,3 @@
-
 %% ROI naming scheme
 % some extra bookKeeping because there are 2 localizers
 % lh, rh, ch
@@ -13,7 +12,11 @@
 
 % LV2_rl, RV2_rl, LV3_rl, RV3_rl: ventral and dorsal V2 (V3) in left (right) hemisphere
 % CV2d_rl, CV2v_rl, CV3d_rl, CV3v_rl: left and right V2d etc
-% CV2_rl, CV3_rl: left and right and ventral and dorsal
+%VOT CV2_rl, CV3_rl: left and right and ventral and dorsal
+
+%% all of cortex
+% allOfCortex_left
+% allOfCortex_right
 
 %% Word Areas =============================================================
 
@@ -52,14 +55,25 @@ lh_VWFA_tal2_rl;        % [-42,-57,-15]     Cohen 2002
 
 % MNI -- a repeat perhaps but better naming
 'VWFA_mni_-42_-57_-6'; % wait need to check that this is MNI ...
-'VWFA_mni_-45_-57_-12'; % Vogel 2012
+'VWFA_mni_-45_-57_-12_8mm'; % Vogel 2012
 
+%% Talairach and MNI hotspots from the literature
+% Cohen2002VWFA_8mm.mat 
+% 
+% Cohen2008DorsalHotspot_8mm_left.mat
+% Cohen2008DorsalHotspot_8mm_right.mat	
+% Blomert2009STG_8mm_left.mat
+% Blomert2009STG_8mm_right.mat
 
 
 %% Face Areas ============================================================
 
-% standard localizer =====================================================
+% all subjects ===========================================================
+left_mFusFace_rl            % left, right, combined
+left_pFusFace_rl            % left, right, combined
+left_FFAFace_rl           	% left, right, combined
 
+% standard localizer =====================================================
 lh_mFusFace_rl          %  mid fusiform. medial or on the OTS.
 lh_pFusFace_rl          %  posterior fusiform. anterior or on the pTCS.
 lh_iOGFace_rl           %  posterior of the pTCS
@@ -74,14 +88,6 @@ lh_mFusFace_fullField_rl    %
 lh_pFusFace_fullField_rl    %
 lh_iOGFace_fullField_rl     % 
 lh_FFAFace_fullField_rl     % combination of mFus and pFus
-
-
-% all subjects ===========================================================
-
-left_mFusFace_rl            % left, right, combined
-left_pFusFace_rl            % left, right, combined
-left_FFAFace_rl           	% left, right, combined
-
 
 %% Place areas ===========================================================
 
@@ -111,15 +117,6 @@ lh_ventral_2_rl;
 % anterior boundary: where parietal sulcus hits collateral sulcus
 % posterior boundary: posterior transverse collateral sulcus
 lh_ventral_3_rl;
-
-%% Talairach and MNI hotspots from the literature
-% Cohen2002VWFA_8mm.mat 
-% 
-% Cohen2008DorsalHotspot_8mm_left.mat
-% Cohen2008DorsalHotspot_8mm_right.mat	
-% Blomert2009STG_8mm_left.mat
-% Blomert2009STG_8mm_right.mat
-
 
 %% Old naming scheme
 %  old naming schemes ====================================================
@@ -151,6 +148,8 @@ lh_ventral_3_rl;
 
 % 'lVOTRC-threshByWordModel_anterior'
 % 'lVOTRC-threshByWordModel_posterior'
+
+% lVOTRC-threshBy-Words_English-co0p05
 
 %% Nifti ROIs are stored here
 %{sharedAnatomyDir}/ROIsNiftis
@@ -186,6 +185,10 @@ lh_ventral_3_rl;
 % V2_Benson.nii.gz
 % V3_Benson.nii.gz
 
+% vista rois
+% 'Benson_V1_lessThan_20'
+% 'Benson_V1_greaterThan_20'
+
 %% ROIS made from the Wang retinotopy template
 %     'V1v_Wang'   % 01  
 %     'V1d_Wang'   % 02
@@ -212,4 +215,82 @@ lh_ventral_3_rl;
 %     'IPS5_Wang'  % 23  
 %     'SPL1_Wang'  % 24  
 %     'FEF_Wang'   % 25
+
+%%
+
+    'WangAtlas_FEF_left.mat'
+    'WangAtlas_FEF.mat'
+    'WangAtlas_FEF_right.mat'
+    'WangAtlas_hV4_left.mat'
+    'WangAtlas_hV4.mat'
+    'WangAtlas_hV4_right.mat'
+    'WangAtlas_IPS0_left.mat'
+    'WangAtlas_IPS0.mat'
+    'WangAtlas_IPS0_right.mat'
+    'WangAtlas_IPS1_left.mat'
+    'WangAtlas_IPS1.mat'
+    'WangAtlas_IPS1_right.mat'
+    'WangAtlas_IPS2_left.mat'
+    'WangAtlas_IPS2.mat'
+    'WangAtlas_IPS2_right.mat'
+    'WangAtlas_IPS3_left.mat'
+    'WangAtlas_IPS3.mat'
+    'WangAtlas_IPS3_right.mat'
+    'WangAtlas_IPS4_left.mat'
+    'WangAtlas_IPS4.mat'
+    'WangAtlas_IPS4_right.mat'
+    'WangAtlas_IPS5_left.mat'
+    'WangAtlas_IPS5.mat'
+    'WangAtlas_IPS5_right.mat'
+    'WangAtlas_LO1_left.mat'
+    'WangAtlas_LO1.mat'
+    'WangAtlas_LO1_right.mat'
+    'WangAtlas_LO2_left.mat'
+    'WangAtlas_LO2.mat'
+    'WangAtlas_LO2_right.mat'
+    'WangAtlas_PHC1_left.mat'
+    'WangAtlas_PHC1.mat'
+    'WangAtlas_PHC1_right.mat'
+    'WangAtlas_PHC2_left.mat'
+    'WangAtlas_PHC2.mat'
+    'WangAtlas_PHC2_right.mat'
+    'WangAtlas_SPL1_left.mat'
+    'WangAtlas_SPL1.mat'
+    'WangAtlas_SPL1_right.mat'
+    'WangAtlas_TO1_left.mat'
+    'WangAtlas_TO1.mat'
+    'WangAtlas_TO1_right.mat'
+    'WangAtlas_TO2_left.mat'
+    'WangAtlas_TO2.mat'
+    'WangAtlas_TO2_right.mat'
+    'WangAtlas_V1d_left.mat'
+    'WangAtlas_V1d.mat'
+    'WangAtlas_V1d_right.mat'
+    'WangAtlas_V1v_left.mat'
+    'WangAtlas_V1v.mat'
+    'WangAtlas_V1v_right.mat'
+    'WangAtlas_V2d_left.mat'
+    'WangAtlas_V2d.mat'
+    'WangAtlas_V2d_right.mat'
+    'WangAtlas_V2v_left.mat'
+    'WangAtlas_V2v.mat'
+    'WangAtlas_V2v_right.mat'
+    'WangAtlas_V3A_left.mat'
+    'WangAtlas_V3A.mat'
+    'WangAtlas_V3A_right.mat'
+    'WangAtlas_V3B_left.mat'
+    'WangAtlas_V3B.mat'
+    'WangAtlas_V3B_right.mat'
+    'WangAtlas_V3d_left.mat'
+    'WangAtlas_V3d.mat'
+    'WangAtlas_V3d_right.mat'
+    'WangAtlas_V3v_left.mat'
+    'WangAtlas_V3v.mat'
+    'WangAtlas_V3v_right.mat'
+    'WangAtlas_VO1_left.mat'
+    'WangAtlas_VO1.mat'
+    'WangAtlas_VO1_right.mat'
+    'WangAtlas_VO2_left.mat'
+    'WangAtlas_VO2.mat'
+    'WangAtlas_VO2_right.mat'
 

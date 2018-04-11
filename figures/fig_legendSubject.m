@@ -6,7 +6,7 @@ bookKeeping;
 list_colors = list_colorsPerSub;
 
 %% modify here
-list_subInds = 1:20; 
+list_subInds = 31:39; 
 
 
 %% define things

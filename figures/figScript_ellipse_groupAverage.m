@@ -5,13 +5,13 @@ bookKeeping;
 
 %% modify here
 
-vfc = ff_vfcDefault; 
-contourLevel = 0.5; 
+vfc = ff_vfcDefault_Hebrew; 
+contourLevel = 0.5;
 
-roiName = {'left_VWFA_rl'};
-subInds = 1:20; % subjects to average over
-dtName = {'Words'};
-rmName = {'retModel-Words-css.mat'};
+roiName = {'lVOTRC'}; % {'left_VWFA_rl'}; 
+subInds = 31:38; % subjects to average over
+dtName = {'Words_Hebrew'};
+rmName = {'retModel-Words_Hebrew-css.mat'};
 
 
 %% rmroicell
@@ -45,5 +45,4 @@ titleName = {
     [mfilename '.m']
     }
 title(titleName, 'FontWeight', 'Bold')
-ff_dropboxSave; 
  

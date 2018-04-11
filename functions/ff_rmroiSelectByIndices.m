@@ -1,4 +1,6 @@
 function newRmroi = ff_rmroiSelectByIndices(rmroi, indxMaster)
+error('outdated function use ff_rmroi_subset !!!!')
+
 % newRmroi = ff_rmroiSelectByIndices(rmroi, indxMaster); 
 
 % These are the fields that must be changed

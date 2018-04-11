@@ -10,7 +10,7 @@ bookKeeping;
 %% modify here
 
 % subject index, as stored in bookKeeping
-subInd = 1; 
+subInd = 2; 
 
 % session list as a string
 list_path =  list_sessionRet;
@@ -19,7 +19,10 @@ list_path =  list_sessionRet;
 % we can find these coordinates from the rmPlotGUI
 % alternatively, if we specify an ROI, it will do this for every voxel in
 % the roi
-points = [ 126   164    53]';
+% points = [ 126   164    53]'; % sub01
+% points = [126 176 66]';
+points = [116 158 65]
+
 
 % time series of voxels individually (1) or of the mean tseries of the roi (0)?
 individualVoxel = 1; 
@@ -34,7 +37,7 @@ list_stimTypes = {
 %     'WordLarge';
 %      'FaceSmall';
 %     'FaceLarge';
-    'Words_scale1mu0sig1p5'
+%     'Words_scale1mu0sig1p5'
     };
 
 
@@ -230,7 +233,7 @@ for vv = 1:numVoxels
         [mfilename]
         };
     title(titleName, 'FontWeight', 'Bold')
-    ff_dropboxSave;
+    % ff_dropboxSave;
     
 end
 

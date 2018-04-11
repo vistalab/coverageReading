@@ -9,7 +9,7 @@ bookKeeping;
 list_subInds = 1:20;
 
 % lVOTRC-threshByWordModel
-roiName = 'rVOTRC-threshByWordModel';
+roiName = 'lVOTRC-threshBy-WordModel-co0p05';
 
 %% define here
 numSubs = length(list_subInds);
@@ -37,4 +37,7 @@ for ii = 1:numSubs
     roiVolume_subjects(ii) = roiVolume;  
     
 end
+
+%% print
+roiVolume_subjects
 

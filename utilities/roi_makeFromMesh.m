@@ -11,11 +11,11 @@
 % 3: hG
 wView = 2;
 
-newroi.color    = 'k';
+newroi.color    = 'b';
 newroi.name     = 'rVOTRC'; % 'lh_VWFA_fullField_WordVFaceScrambled_rl' 'GLM_WordVFace_Scrambled'
 newroi.comment  = '';
 restrictToFunc  = 1;  % 0 for visual field maps, 1 for categories
-saveWhere       = 0; % 1 = local, 0 = shared
+saveWhere       = 0; % 1 = lmocal, 0 = shared
 % 'lh_VWFA_rl'          : on the inferior temporal sulcus (iTS), posterior of
 %       the mid-fusiform suclus. also sometimes on posterior fusiform
 %       gyrus. the iTS kind of curves upwards and is L-shaped

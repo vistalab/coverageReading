@@ -3,28 +3,41 @@
 % function)
 % (this script used to be called: figScript_coverage_maxProfile_group)
 
-clear all; close all; clc; 
+clear all; % close all; clc; 
 bookKeeping;
     
 %% modify here
 
 % visual field plotting thresholds
-vfc = ff_vfcDefault; 
+vfc = ff_vfcDefault_Hebrew; 
 vfc.cothresh = 0.2; 
-vfc.tickLabel = 1;
-vfc.fieldRange = 7;
-vfc.eccthresh = [0 7];
-vfc.sigthresh = [0 7];
+vfc.method = 'max'; % avg | 'max'
 
 % session list, see bookKeeping
 list_path = list_sessionRet; 
 
 % subjects to do this for, see bookKeeping
-list_subInds =  [31:38]; 
+list_subInds =  [31:36 38 39:44]; 
+
+% whether we want to plot the half max contour
+plotContour = true; 
+contourLevel = 0.5; 
 
 % rois we want to look at
 list_roiNames = {
     'rVOTRC'
+%     'WangAtlas_V1v.mat'
+%     'WangAtlas_V2v.mat'
+%     'WangAtlas_V3v.mat'
+%     'WangAtlas_hV4.mat'
+%     'WangAtlas_IPS1'
+%     'WangAtlas_IPS2'
+%     'WangAtlas_IPS3'
+%     'WangAtlas_IPS4'
+%     'WangAtlas_IPS5'
+%      'cVOTRC'
+%      'lVOTRC'
+%      'rVOTRC'
 %     'Cohen2002VWFA_8mm'
 %     'VOTRC'
 %     'left_FFAFace_rl' 
@@ -49,9 +62,9 @@ list_roiNames = {
 
 % data types we want to look at
 list_dtNames = {
-    'Words_Hebrew'
+%     'Words_Hebrew'
     'Words_English'
-    'Checkers'
+%     'Checkers'
 %     'WordLarge'
 %     'WordSmall'
 %     'FaceSmall'
@@ -64,9 +77,9 @@ list_dtNames = {
 
 % names of the rm in each dt
 list_rmNames = {
-    'retModel-Words_Hebrew-css.mat'
+%     'retModel-Words_Hebrew-css.mat'
     'retModel-Words_English-css.mat'
-    'retModel-Checkers-css.mat'
+%     'retModel-Checkers-css.mat'
 %     'retModel-WordLarge-css.mat'
 %     'retModel-WordSmall-css.mat';
 %     'retModel-FaceSmall-css.mat';
@@ -80,93 +93,69 @@ list_rmNames = {
 % save
 % saveDir = '/biac4/wandell/data/reading_prf/forAnalysis/images/working/';
 saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/coverages';
-saveDropbox = true; 
+saveDropbox = false; 
 
 %% define things
 numRois = length(list_roiNames);
 numRms = length(list_dtNames);
 numSubs = length(list_subInds);
 
-%% make averaged coverage plot for each roi and rm model
+%% get the rmroi cell
+  rmroiCell = ff_rmroiCell(list_subInds, list_roiNames, list_dtNames, list_rmNames);
 
+
+%% make averaged coverage plot for each roi and rm model
 %% loop over rois
 for jj = 1:numRois
     
-    % this roi
+    
+    %% this roi
     roiName = list_roiNames{jj};
-
-        
-    %% loop over dts
-    for kk = 1:numRms
+    
+    % loop over dts
+    for kk = 1%:numRms
+        figure; 
         
         % name of this dt and rm
         dtName = list_dtNames{kk};
-        rmName = list_rmNames{kk};
-        
-        % initialize cell to store all subject's rmroi files
-        R = cell(1, numSubs);       
+        rmName = list_rmNames{kk};    
         
         % counter for subjects with valid roi definitions
         counter = 0;
-        
-        %% subjects to average over
-        for ii = 1:numSubs
-            
-            % subject index
-            subInd = list_subInds(ii);
-            
-            % subject's vista and anatomy dir
-            dirAnatomy = list_anatomy{subInd};
-            dirVista = list_path{subInd};
-            chdir(dirVista);
-                        
-            % initialize hidden view
-            vw = initHiddenGray; 
-            
-            % roi path
-            roiPath = fullfile(dirAnatomy, 'ROIs', roiName);
-            
-            % check to see if roi is defined
-            if exist([roiPath '.mat'], 'file')
                 
-                counter = counter + 1;
-                
-                vw = loadROI(vw, roiPath, [], [], 1, 0);
-
-                % load the rm
-                rmPath = fullfile(dirVista, 'Gray', dtName, rmName);
-                vw = rmSelect(vw, 1, rmPath);
-
-                % get the rmroi struct
-                rmroi = rmGetParamsFromROI(vw);
-
-                % do some flipping (ugh)
-                rmroi.y0 = -rmroi.y0;
-
-                % store it
-                R{counter} = rmroi; 
-            end
-        
-        end
-        
         % dtName = list_dtNames{kk};
         % R = rmroi(kk,:);
-        RF_mean = ff_rmPlotCoverageGroup(R, vfc);
+        figure; 
+        RF_mean = ff_rmPlotCoverageGroup(rmroiCell(:,jj,kk), vfc);
         
         % set user data to have RF_mean
         set(gcf, 'UserData', RF_mean);
         
-        % save 
-        titleName = {['Group Avg Coverage- ' roiName '- ' rmName], ...
-            [vfc.method '. ' mfilename '.m'], ...
-            ['n = ' num2str(counter)]};
-        title(titleName, 'FontWeight', 'Bold')
-        saveas(gcf, fullfile(saveDir, [titleName{1} '.png']), 'png');
-        saveas(gcf, fullfile(saveDir, [titleName{1} '.fig']), 'fig');
-        if saveDropbox
-            ff_dropboxSave;
+        %% plot the contour if so desired
+        if plotContour
+            [contourMatrix, contourCoordsX, contourCoordsY] = ...
+                 ff_contourMatrix_makeFromMatrix(RF_mean,vfc,contourLevel); 
+
+            % transform so that we can plot it on the polar plot
+            % and so that everything is in units of visual angle degrees
+            contourX = contourCoordsX/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange; 
+            contourY = contourCoordsY/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange; 
+            
+            % plotting
+            plot(contourX, contourY, '--', 'LineWidth',2, 'Color', [0 0 0])
         end
         
+        axis([-vfc.fieldRange vfc.fieldRange -vfc.fieldRange vfc.fieldRange])
+        
+        %% save 
+        titleName = {
+            ['Group Avg Coverage'], ...
+            [roiName '- ' rmName], ...
+            ['vfc.method: ' vfc.method]
+            };
+        title(titleName, 'FontWeight', 'Bold')
+
+                
     end
     
 end

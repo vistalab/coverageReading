@@ -1,14 +1,15 @@
-function RF_mean = ff_rmPlotCoverageGroup(M, vfc, varargin)
+function [RF_mean, RF_individuals] = ff_rmPlotCoverageGroup(M, vfc, varargin)
 %% function to plot the group average visual field coverage
-% RF_mean = ff_rmPlotCoverageGroup(M, vfc)
-% RF_mean = ff_rmPlotCoverageGroup(M, vfc, 'flip', false)
+% [RF_mean, RF_individuals] = ff_rmPlotCoverageGroup(M, vfc)
+% [RF_mean, RF_individuals] = ff_rmPlotCoverageGroup(M, vfc, 'flip', false)
 % INPUTS
 % M:    M should be a cell vector of length numSubs  where M{ii} is the rm struct for a
         % particular roi for the iith subject
 % vfc   visual field coverage information thresholds. TODO: provide more detail here. 
 %
 % OUTPUTS
-% RF_mean
+% RF_mean: a 128 x 128 matrix
+% RF_individuals: a 128 x 128 x numSubs matrix
 
 % NOTE: there are 2 places where we do y flipping: lines 35 andn 57
 
@@ -34,6 +35,7 @@ counter = 0;
 centersx0 = []; 
 centersy0 = []; 
 
+
 %% input parser -- flipping
 par = inputParser; 
 addOptional(par, 'flip', true); 
@@ -42,7 +44,7 @@ flip = par.Results.flip;
 
 %% get the rf information for each subject
 for ii = 1:numSubs
-   if ~isempty(M{ii}) 
+   if ~isempty(M{ii})
         [rf, figHandle, all_models, weight, data]  = rmPlotCoveragefromROImatfile(M{ii}, vfc);
         
         % y flippage!
@@ -148,5 +150,7 @@ if ~isempty(RF)
     end
     
 end
+
+RF_individuals = RF; 
 
 end

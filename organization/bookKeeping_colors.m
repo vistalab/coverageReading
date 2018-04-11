@@ -9,7 +9,7 @@ chdir('/biac4/wandell/data/reading_prf/coverageReading/organization')
 
 %% initialize
 numSubs = length(list_sub);
-list_colorsPerSub = zeros(numSubs, 3);
+list_colorsPerSub = rand(numSubs, 3);
 
 %% Colors corresponding to the 20 subjects in the FOV paper
 % hand pick
@@ -33,6 +33,18 @@ list_colorsPerSub(17,:)     = [0    0.2   1];
 list_colorsPerSub(18,:)     = [.7    0.9   0.8];
 list_colorsPerSub(19,:)     = [.5    0   .4];
 list_colorsPerSub(20,:)     = [ .8  0    .8];
+
+list_colorsPerSub(22,:)     = [0    1      .2]
+
+list_colorsPerSub(31,:) = [22, 22, 160]/255;   
+list_colorsPerSub(32,:) = [33, 141, 198]/255;   
+list_colorsPerSub(33,:) = [17, 122, 71]/255;  
+list_colorsPerSub(34,:) = [139, 150, 21]/255; 
+list_colorsPerSub(35,:) = [224, 121, 11]/255;  
+list_colorsPerSub(36,:) = [160, 9, 9]/255;     
+list_colorsPerSub(37,:) = [186, 22, 183]/255; 
+list_colorsPerSub(38,:) = [103, 21, 142]/255; 
+list_colorsPerSub(39,:) = [147 91 17]/255; 
 
 save('list_colorsPerSub.mat', 'list_colorsPerSub')
 

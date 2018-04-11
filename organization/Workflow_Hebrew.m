@@ -37,11 +37,6 @@
 %         images_8barswithblank_fliplr.mat
 
 
-%% might need to create a fake inplane :(
-% the first volume 
-% save fake inplane under T1/inplane_xform.nii.gz
-edit s_inplane_createFake;
-
 %% might need to crop the inplane
 % REMEMBER TO CHANGE MRINIT TO REFLECT THIS!!!!
 edit s_inplaneCrop.m; 
@@ -100,7 +95,7 @@ edit  s_buildMeshes;
 %% make the averaged time series
 %     'Checkers';        % 1
 %     'Words_English';   % 2
-%     'Words_Hebrew';    % 3
+%     'Words_Hebrew';    % 3  
 edit s_tSeriesAverageAndXform; 
 
 %% run the pRFs!

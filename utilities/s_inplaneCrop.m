@@ -6,12 +6,12 @@ clear all; close all; clc;
 %% modify here
 
 % original inplane that was collected (with xform)
-dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot07/RetAndHebrewLoc';
-inplaneLoc = 'prescribeInplane/inplane_xform.nii.gz';
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot15/RetAndHebrewLoc_resize';
+inplaneLoc = 'prescribeInplane/inplane_uncropped_xform.nii.gz';
 inplanePath = fullfile(dirVista, inplaneLoc); 
 
 % new name to give the cropped inplane
-newName = 'inplane_xform_functionalMatch.nii.gz';
+newName = 'inplane_xform.nii.gz';
 
 %% do things
 

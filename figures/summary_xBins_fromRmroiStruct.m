@@ -8,8 +8,7 @@ bookKeeping;
 %% modify here
 
 list_rois = {
-    'LV1_rl'
-    'ch_VWFA_rl'
+    'lVOTRC'
     }; 
 % lh_VWFA_rl
 
@@ -24,14 +23,12 @@ fieldRange          = [0 15];
 
 % subjects to analyze (indices defined in bookKeeping.m)
 % sometimes we only want to do a subset of the subjects, or only look at 1
-subsToAnalyze =  1:(indDysStart - 1);
+subsToAnalyze =  31:38
 
 
 % list of stim types to look at
 list_stimTypes = {
-    'Checkers'; 
-    'Words'; 
-    'FalseFont'; 
+    'Words_Hebrew'
 }; 
 
 % colors corresponding to stim types
@@ -50,10 +47,6 @@ h.minvoxelcount = 0;
 % path wwhereith the rmroi structs are stored
 rmroiPath = '/sni-storage/wandell/data/reading_prf/forAnalysis/rmrois';
 
-% save
-% saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/working'; 
-saveDir = '~/Dropbox/TRANSFERIMAGES/';
-saveExt = 'png';
 
 
 %% initialize some info
@@ -134,12 +127,6 @@ end
     legend(list_stimTypes);
     grid on; 
     hold off; 
-
-    % save
-    saveas(gcf, fullfile(saveDir, [titleName '.' saveExt]), saveExt); 
-    saveas(gcf, fullfile(saveDir, [titleName '.fig' ]), 'fig'); 
-
-
 
 end
 

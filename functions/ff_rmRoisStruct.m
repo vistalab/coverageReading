@@ -1,4 +1,5 @@
 function S = ff_rmRoisStruct(vw, list_rmFiles, list_roiNames, pth)
+error('outdated function ... USE ff_rmroiCell;')
 % INPUTS:
 % 1. vw: mrVista view
 % 2. list of ret model pths

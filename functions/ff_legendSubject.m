@@ -4,6 +4,10 @@ function L = ff_legendSubject(list_subInds)
 bookKeeping; 
 list_colors = list_colorsPerSub;
 
+%% define coloring here
+textColor = [0 0 0];
+legColor = [.9 .9 .9];
+
 %% define things
 numSubs = length(list_subInds);
 hvec = zeros(numSubs,1);
@@ -25,6 +29,13 @@ for ii = 1:numSubs
 end
 
 L = legend(hvec, list_subNumbers);
+
+%% color things
+set(L, 'TextColor',textColor)
+set(L, 'Color', legColor)
+set(L, 'EdgeColor', textColor)
+set(gca, 'Color', legColor)
+
 
 % comment out this line if legend is doing funky things on other screens
 % this is here because the default figure is not large enough to see the

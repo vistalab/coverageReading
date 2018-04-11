@@ -7,21 +7,23 @@ bookKeeping;
 %% modify here
 
 % do this for which subjects
-list_subInds = 1:20; 
+list_subInds = [20]; 
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
 % list_sessionSizeRet 
-list_path = list_sessionRet; % list_sessionPath;
+% list_sessionHebrewRet_resize
+list_path = list_sessionRet; % list_sessionRet;
 
 % the string we want to remove at the end
 % it will be replaced with strReplace
-strRemove = '-fFit.mat';
+% strRemove = '-misAligned.mat';
+strRemove = '-one oval gaussian-fFit.mat';
 
-strReplace = '.mat';
+strReplace = '-oval.mat';
 
 % whether we only want to do this within a single datatype
 % specify the empty string if we want to do for ALL datatypes
-dtTarget = 'Words_scale1mu0sig1p5'; 
+dtTarget = 'Checkers'; 
 
 
 %% end modification section
@@ -42,10 +44,7 @@ for ii = list_subInds
     
     dirDt = fullfile(dirVista, 'Gray');
     chdir(dirDt);
-    
-    
-
-    
+      
     % if this is the empty string, do for all dts
     if ~size(dtTarget)
         
@@ -104,5 +103,3 @@ for ii = list_subInds
     
 end
 
-% return to starting place
-chdir(dirCurrent)

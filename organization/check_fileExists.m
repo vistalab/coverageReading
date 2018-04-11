@@ -1,17 +1,20 @@
 % 
 %% Checking for file existence in a given number of subjects
 % Might be able to delete most of the other "check_" scripts ...
+% bookKeeping; 
+% bookKeeping_rory; 
 
 clc; bookKeeping; 
 %% modify here
 
-list_subInds = [31:38]; 
+list_subInds = 1:20; %[1:3 5:7];%[31:36 38:44]; 
 % list_subInds = [ 3     4     6     7     8     9    13    15    17];
 % list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18];
 
 % list_anatomy, list_sessionDiffusionRun1, list_sessionRet, list_sessionDtiQmri
 % list_sessionTiledLoc, list_session, list_sessionLocPath, list_sessionTiledLoc
 % list_sessionAfq
+% list_sessionRoryFace
 list_paths = list_anatomy; 
 
 % file location relative to list_paths
@@ -31,7 +34,12 @@ fLoc = 'ROIs';
 % fName = 'lIPS0_all_nw.mat';
 % fName = 'lIPS3_all_nw.mat';
 % fName = 'lVO1_all_nw.mat';
-fName = 'rVOTRC_bug.mat';
+% fName = 'lVOTRC-threshBy-WordModel-co0p2.mat';
+% fName = 'retModel-Words-css.mat';
+% fName = 'retModel-FaceLarge-css.mat'
+% fName = 'right_FFAFace_rl.mat';
+% fName = 'rV3v_all_nw.mat';
+fName = 'lVOTRC-threshBy-WordsAndCheckers-co0p2.mat';
 
 %% checking
 

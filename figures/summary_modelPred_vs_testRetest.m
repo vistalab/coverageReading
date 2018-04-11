@@ -7,28 +7,30 @@ bookKeeping;
 %% end modification section
 
 % session list
-list_path = list_sessionRet; 
+list_path = list_sessionRet; % list_sessionTestRetest; 
 % {'/sni-storage/wandell/data/reading_prf/rosemary/20141213_1020'};
 
 % subjects
-list_subInds = [1:20];
+list_subInds = [4];
 
 % roi names
 % things to consider - make a separate plot for each roi?
 list_roiNames = {
+%     'allOfCortex_left'
 %     'cVOTRC' 
 %     'LV1_rl'
 %     'LV2v_rl'
 %     'LV3v_rl'
     'LhV4_rl'
+%     'lVOTRC-threshBy-CheckersAndCheckersTestRetest-co0p2'
     };
 
 % RETMODEL dt and rm names
-dtName = 'Words1'; 
-rmName = 'retModel-Words1-css.mat'; 
+dtName = 'Checkers'; 
+rmName = 'retModel-Checkers-css.mat'; 
 
 % INDPENDENT DATA. dt name
-dtNameInd = 'Words2'; 
+dtNameInd = 'Words'; 
 
 %% define things and intialize things
 % number of rois
@@ -97,6 +99,7 @@ for jj = 1:numRois
             % loop over voxels
             for vv = 1:numVoxels
 
+                %%
                 % GET THE PREDICTED TIME SERIES
                 [prediction, ~, ~, varexp, ~] = rmPlotGUI_makePrediction(M, [], vv); 
                 
@@ -186,13 +189,12 @@ tem = ff_stringRemove(rmName, ['-' roiName]);
 tem = ff_stringRemove(tem, '.mat');
 descript = ff_stringRemove(tem, 'retModel-');
 
-titleName = {['Group RMSE. ' roiNameDescript ], ...
-    ['. Model: ' descript '. IndependentData: ' dtNameInd], ...
+titleName = {
+    ['Group RMSE. ' roiNameDescript ]
+    ['Model: ' descript '. IndependentData: ' dtNameInd]
+    ['Median: ' num2str(dataMedian)]
     [mfilename]
     }; 
 title(titleName, 'FontWeight', 'Bold')
 
-%% save
-
-ff_dropboxSave; 
 

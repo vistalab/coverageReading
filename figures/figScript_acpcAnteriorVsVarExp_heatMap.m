@@ -2,13 +2,13 @@
 
 %% select current figure
 % ~/Dropbox/TRANSFERIMAGES/Anteriorness and variance explained-lVOTRC-.fig
-H = hgload('~/Dropbox/TRANSFERIMAGES/Anteriorness and variance explained-lVOTRC-.fig');
+% H = hgload('~/Dropbox/TRANSFERIMAGES/Anteriorness and variance explained-lVOTRC-.fig');
 
 % allPoints is a numAllVoxels x 1 line
 allPoints = get(gca,'Children'); 
 
 % number of voxels from all subjects
-numVoxels = length(allPoints); 
+numVoxels = length(allPoints.XData); 
 
 % initialize
 anteriorness = zeros(1,numVoxels); 

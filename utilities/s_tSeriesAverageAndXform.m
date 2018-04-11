@@ -1,7 +1,7 @@
 %% script that will create a new dataTYPES that is the average of existing scans
 clear all; close all; clc; 
 
-dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot14/RetAndLoc';
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot13/RetAndHebrewLoc_resize';
 
 % the names of the dataTYPES we want to create
 dtsToCreate = {

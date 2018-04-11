@@ -3,6 +3,11 @@
 close all; clear all; clc; 
 bookKeeping; 
 
+dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot09/RetAndHebrewLoc';
+chdir(dirVista)
+
+
+
 %% modify here
 
 % the names of the dataTYPES we want to create
@@ -11,28 +16,22 @@ bookKeeping;
 %     'WordFalse2';     % 2 % the 2nd checker and the 1st word
 %     };
 dtsToCreate = {
-    'Checkers1'     % 1
-    'Checkers2and3' % 2
-    'Words1'        % 3
-    'Words2'        % 4
+    'Checkers1'         % 1
+    'Words_English1'    % 2  
+    'Words_Hebrew1'     % 3
+    'Words_Hebrew2'     % 4
     };
 
 % The datatype the scan belongs to. For example, a 1 means that the first
 % scan is in the first dataTYPE specified in dtsToCreate
 % use 0 if the scan is not used in the creation of a new dt
 dtAssignments = [
+    0;
+    0;
     1;
     2;
     3;
-    0;
-    0;
-    0;
-    0;
-    2;
-    0;
     4;
-    0;
-    0;
     ];
 
 % make the new tseries from the most processed time series

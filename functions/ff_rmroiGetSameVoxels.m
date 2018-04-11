@@ -1,18 +1,14 @@
 function rmroiCellSameVox = ff_rmroiGetSameVoxels(rmroiCell, vfc)
 %
-% sameVoxRmroi = ff_rmroiGetSameVoxels(rmroiCell)
-%
-% NOTE: RL introduced sigthresh which is not backwards compatible and will
-% cause code to crash. But it is for the best because we should've been
-% thresholding sigma all along
-%
+% sameVoxRmroi = ff_rmroiGetSameVoxels(rmroiCell, vfc)
 % We want to be sure that we're looking at the same voxels.
 % INPUTS:
-% - rmroiCell
+% - rmroiCell (cell array of rmrois (corresponding to different stimuli, e.g.) for a subject)
 % - vfc
 %   vfc.cothresh
 %   vfc.eccthresh
-%   vfc.sigthresh
+%   vfc.sigmaMajthresh
+%   vfc.sigmaEffthresh
 %
 % OUTPUTS: 
 % sameVoxRmroi: a cell of the same dimension as rmroiCell. Each element is an
@@ -25,54 +21,55 @@ rmroiCellSameVox = cell(size(rmroiCell));
 % get a single rmroi to get basic info
 rmroi = rmroiCell{1}; 
 
-% the number of voxels in the original roi definition
-numVoxels = length(rmroi.indices); 
+    if ~isempty(rmroi)
 
-% number of ret models we are working with
-numRms = length(rmroiCell); 
+    % the number of voxels in the original roi definition
+    numVoxels = length(rmroi.indices); 
 
-% initialize
-indxMaster = 1:numVoxels; 
+    % number of ret models we are working with
+    numRms = length(rmroiCell); 
 
-%% indices bookKeeping
-for kk = 1:numRms
-    
-    rmroi = rmroiCell{kk}; 
-    
-    % the original list, 1:numVoxels. We will start shaving this down.
-    indx = 1:numVoxels; 
-    
-    % the indices that pass the varExp threshold
-    coindx = find(rmroi.co > vfc.cothresh);
-    
-    % update the indices
-    indx = intersect(indx, coindx);
-    
-    % the indices that pass the ecc threshold
-    eccindx = find((rmroi.ecc < vfc.eccthresh(2)) & (rmroi.ecc > vfc.eccthresh(1)));
-    
-    % update the indices
-    indx = intersect(indx, eccindx);
-    
-    % the indices after looping through rmrois
-    indxMaster = intersect(indx, indxMaster); 
-    
-    % the indices that pass the sig threshold
-    sigindx = find((rmroi.ecc < vfc.sigthresh(2)) & (rmroi.ecc > vfc.sigthresh(1)));
-    
-    % update the indices
-    indx = intersect(indx, sigindx);
-    
-end
+    % initialize
+    indxMaster = ones(1,numVoxels); 
+
+    %% indices bookKeeping
+    for kk = 1:numRms
+
+        rmroi = rmroiCell{kk}; 
+
+        % the indices that pass the varExp threshold
+        coindx = (rmroi.co > vfc.cothresh);
+
+        % the indices that pass the ecc threshold
+        eccindx = (rmroi.ecc < vfc.eccthresh(2)) & (rmroi.ecc > vfc.eccthresh(1));
+
+        % sigma major threshold
+        sigmaMajindx = (rmroi.sigma1 < vfc.sigmaMajthresh(2)) & ...
+            (rmroi.sigma1 > vfc.sigmaMajthresh(1)); 
+        
+        % sigma effective threshold
+        sigmaEffindx = (rmroi.sigma < vfc.sigmaEffthresh(2)) & ...
+            (rmroi.sigma > vfc.sigmaEffthresh(1)); 
+        
+        % the indices below a certain co threshold
+        % useful for when we are looking for noise
+        % specify 1 otherwise
+         coceilindx = (rmroi.co <= vfc.cothreshceil);
+                
+        % the indices after looping through rmrois
+        indx = coindx & eccindx & sigmaMajindx & sigmaEffindx & coceilindx; 
+
+        indxMaster = indx & indxMaster; 
+        
+    end
 
 
-%% the same voxels
-for kk = 1:numRms
+        %% the same voxels
+        for kk = 1:numRms
+            rmroi = rmroiCell{kk}; 
+            newRmroi = ff_rmroi_subset(rmroi, indxMaster); 
+            rmroiCellSameVox{kk} = newRmroi;  
+        end
     
-    rmroi = rmroiCell{kk}; 
-    newRmroi = ff_rmroiSelectByIndices(rmroi, indxMaster); 
-    rmroiCellSameVox{kk} = newRmroi;  
-    
-end
-
+    end
 end

@@ -1,4 +1,6 @@
 function rmroi = ff_rmroiMake(roiName, list_subInds, dtName, rmName)
+error('outdated function ... USE ff_rmroiCell')
+
 %% function that will make the rmroi struct for a given list of subjects
 % rmroi = ff_rmroiMake(roiName, list_subInds, dtName, rmName)
 % use ff_rmroiCell instead. more updated.

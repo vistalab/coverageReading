@@ -1,4 +1,5 @@
 function Sth = ff_rmRoisStructThresh(S, h)
+error('outdated function ... USE ff_thresholdRMData'); 
 % thresholds S by values specified in h
 % S can be 3 dimensional or less
 % INPUTS:

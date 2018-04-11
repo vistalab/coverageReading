@@ -11,14 +11,9 @@ bookKeeping;
 list_subInds = 31:38; 
 
 % rois that we want to delete
+% WITHOUT THE .mat extension
 list_roiNames = {
-    'VOTRC'
-%     'lh_VWFA_new_rl'
-%     'rh_VWFA_new_rl'
-%     'lh_mFus_Face_new_rl'
-%     'lh_pFus_Face_new_rl'
-%     'rh_mFus_Face_new_rl'
-%     'rh_pFus_Face_new_rl'
+    'lVOTRC-threshBy-Words_EnglishOrCheckers-co0p05'
     };
 
 

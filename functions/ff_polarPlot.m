@@ -4,7 +4,7 @@ function ff_polarPlot(vfc)
 % add polar grid on top
 
 p.ringTicks = (1:3)/3*vfc.fieldRange;
-p.color = [0 0 0];                          % does not seem to do anything?
+p.gridColor = vfc.gridColor;                % default is [.6 .6 .6]
 p.backgroundColor = vfc.backgroundColor;    % what it will be displayed as (fig)
 
 % what the png will be saved as

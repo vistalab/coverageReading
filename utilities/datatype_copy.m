@@ -2,8 +2,7 @@
 % to standardize naming conventions
 
 close all; clear all; clc; 
-bookKeeping
-
+bookKeeping;
 
 %% modify here
 
@@ -16,15 +15,14 @@ list_subInds = 1:20;
 % name of the original datatype we want copied
 % can be a list
 list_dtOriginal = {
-    'WordLarge'
+    'Checkers'
     };
 
 % name that we want to rename the datatype to be
 % can also be a list
 list_dtRename = {
-    'Words'
+    'Checkers_Residual'
     };
-
 
 % INPLANE OR GRAY?
 % previously we've been doing it in the gray, and saving ourselves the step
@@ -33,7 +31,7 @@ list_dtRename = {
 % to xform those that have not been xformed. 
 % Anyway we have the option here
 % OPTIONS: 'gray'| 'inplane'
-xformType = 'inplane';
+% xformType = 'inplane';
 
 %% end modification section
 

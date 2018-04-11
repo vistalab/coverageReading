@@ -1,5 +1,5 @@
-function thresholdedData = ff_thresholdRMData(rmroi,vfc)
-% thresholdedData = ff_thresholdRMData(rmroi,vfc)
+function [rmroiThresh, indx] = ff_thresholdRMData(rmroi,vfc)
+% [rmroiThresh, indx] = ff_thresholdRMData(rmroi,vfc)
 
 % take a set of rm data and return only the
 % voxel data which satisfy thresholds
@@ -12,52 +12,27 @@ function thresholdedData = ff_thresholdRMData(rmroi,vfc)
 if iscell(rmroi)
     rmroi = rmroi{1};
 end
-
     
-% get index to values satisfying thresholds
-indx = 1:length(rmroi.co);
-
 % threshold by coherence
-coindx = find(rmroi.co>=vfc.cothresh);
-
-% good voxels by coherence
-indx = intersect(indx,coindx);
+co_indx = rmroi.co>=vfc.cothresh;
 
 % threshold by ecc
-eccindx = intersect(find(rmroi.ecc>=vfc.eccthresh(1)),...
-find( rmroi.ecc<=vfc.eccthresh(2)));
+ecc_indx = (rmroi.ecc>=vfc.eccthresh(1))  & ... 
+    (rmroi.ecc <= vfc.eccthresh(2)); 
 
-% good voxels by eccentricity
-indx = intersect(indx,eccindx);
-% 
-% % threshold by sigma
-sigindx = intersect(find(rmroi.sigma>=vfc.sigthresh(1)),...
-find(rmroi.sigma<=vfc.sigthresh(2)));
+% threshold by the sigmas effective (sigma major divided by exponent)
+sigmaEff_indx = (rmroi.sigma>= vfc.sigmaEffthresh(1)) & ...
+    (rmroi.sigma <= vfc.sigmaEffthresh(2));
 
-% good voxels by sigma
-indx = intersect(indx,sigindx);
-    
-    
-% store thresholded data if there are more than minimum number of voxels
-thresholdedData = rmroi; 
+% threshold by sigma major
+sigmaMaj_indx = (rmroi.sigma1>= vfc.sigmaMajthresh(1)) & ...
+    (rmroi.sigma1 <= vfc.sigmaMajthresh(2));
 
-thresholdedData.coords   = rmroi.coords(indx);
-thresholdedData.indices  = rmroi.indices(indx);
-thresholdedData.co       = rmroi.co(indx);
-thresholdedData.sigma1   = rmroi.sigma1(indx);
-thresholdedData.sigma2   = rmroi.sigma2(indx);
-thresholdedData.sigma    = rmroi.sigma(indx);
-thresholdedData.theta    = rmroi.theta(indx);
-thresholdedData.beta     = rmroi.beta(indx);
-thresholdedData.x0       = rmroi.x0(indx);
-thresholdedData.y0       = rmroi.y0(indx);
-thresholdedData.ph       = rmroi.ph(indx);
-thresholdedData.ecc      = rmroi.ecc(indx);
-thresholdedData.exponent = rmroi.exponent(indx);
-thresholdedData.polar    = rmroi.polar(indx);
-thresholdedData.rawrss   = rmroi.rawrss(indx);
-thresholdedData.rss      = rmroi.rss(indx);
+% the good indices
+indx = co_indx & ecc_indx & sigmaEff_indx & sigmaMaj_indx;
 
+%% the new rmroi
+rmroiThresh = ff_rmroi_subset(rmroi, indx);
 
 return
 

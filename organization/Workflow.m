@@ -14,8 +14,7 @@
 % Add the Stimuli folder to loc
 
 %% canonical xform
-edit pp_canonicalXform;     % localizer
-edit pp_canonicalXform;     % retinotopy
+edit pp_canonicalXform;    
 
 %% acpc align the t1 file
 % script that brings up a gui to specify landmarks and saves the acpc'd t1 file
@@ -46,8 +45,7 @@ pp_freesurfer;
 % clip frames
 % 2 frames (2 sec) for the whole brain MUX
 % 6 frames (12 sec) for the retinotopy
-edit pp_mrInit; % localizer
-edit pp_mrInit; % retinotopy
+edit pp_mrInit; 
 
 %% Align Inplane to Anatomical
 % knk alignment code, compatible with mrVista

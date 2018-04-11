@@ -1,4 +1,7 @@
 function M = ff_rmRoiStructAcrossSubs(list_sessionPath, list_pathRoi, list_pathRmFile, list_sub, subsToSee)
+%% outdated function ... USE ff_rmroiCell; 
+error('outdated function ... USE ff_rmroiCell; ')
+
 %% function that will create a 1xnumSubs cell array, where each element is
 % the rm roi struct for a subject
 % INPUTS

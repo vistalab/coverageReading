@@ -13,16 +13,16 @@ bookKeeping;
 keepMeshOpen = false; 
 
 % dropbox save name
-saveName = 'Localizer with Cohen2002VWFA_8mm.mat and rVOTRC. ventral_rh'
+saveName = 'Localizer and Tal and MNI VWFA 8mm. ventral_lh'
 
 list_subInds = 31:38; % 1:20; 
 list_path = list_sessionRet;  % list_sessionTiledLoc % list_sessionRet % list_sessionLocPath
 
 % 'ventral_rh'
-meshView = 'ventral_rh';
+meshView = 'ventral_lh';
 
 % 'lh_inflated400_smooth1.mat'
-meshName = 'rh_inflated400_smooth1.mat';
+meshName = 'lh_inflated400_smooth1.mat';
 
 % rois to load. specify empty string if we don't want rois
 % list_roiNames = {
@@ -34,6 +34,7 @@ meshName = 'rh_inflated400_smooth1.mat';
 %     };
 list_roiNames = {
     'Cohen2002VWFA_8mm.mat'
+    'VWFA_mni_-45_-57_-12_8mm.mat'
     'rVOTRC.mat'
     };
 
@@ -41,7 +42,8 @@ list_roiNames = {
 % correspond to rois
 % list_roiColors = list_colorsWangRois; 
 list_roiColors = [
-    [0.2588    0.7961    0.9569]
+    [0.2588    0.0961    0.9569]
+    [0.2588    0.9961    0.1569]
     [1 1 1]
     ]
 %     [1 0 0]

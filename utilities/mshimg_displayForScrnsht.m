@@ -159,6 +159,7 @@ for ii = subsToSee
         % load up the mesh and apply the view and add the maps
         input.meshangle = {input.angles{j}};
         hG = meshimage_load(hG, input);
+        
         % get a screenshot of the image
         img{j} = mesh_scrnsht(hG,input);
     end

@@ -1,4 +1,5 @@
 function indsThatPass = ff_rmroiIndsThreshold(rmroi, vfc)
+error('OUTDATED FUNCTION. Use ff_thresholdRMData! ')
 % Given an rmroi (obtained from rmGetParamsfromROI) and vfc struct (obtained from ff_vfcDefault)
 % return the indices that pass the cothresh, sigthresh, and eccthresh
 % fields specified in vfc
@@ -22,4 +23,11 @@ indsThatPass = intersect(indsThatPass, eccindx);
 sigindx = find((rmroi.sigma >= vfc.sigthresh(1)) & (rmroi.sigma <= vfc.sigthresh(2)));
 indsThatPass = intersect(indsThatPass, sigindx); 
 
+% voxels that are less than a given variance explained
+% IF this is a field in vfc
+if isfield(vfc, 'cothreshCeil')
+    coceilindx = find((rmroi.co <= vfc.cothreshCeil));
+    indsThatPass = intersect(indsThatPass, coceilindx);
+    
+end
 end

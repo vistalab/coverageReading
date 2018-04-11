@@ -9,7 +9,7 @@
 
 % directory with the mrVista session. Usually this script is saved right in
 % that directory. 
-dirVista  = '/sni-storage/wandell/data/reading_prf/heb_pilot16/EnglishLoc';
+dirVista  = '/sni-storage/wandell/data/reading_prf/heb_pilot15/RetAndHebrewLoc_resize';
 
 % nifti files we want to xform
 listToXform = {

@@ -5,9 +5,10 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = [31:38];
+list_subInds = 31%[31:38];
 
 list_coords = [
+%     [-45 -57 -12]   % Vogel 2012. MNI
 %     [-47 -47 11]    % Wernicke
 %     [-48 7 17]      % Broca
 %     [-46, -26, 6];  % Blomert left. Talairach
@@ -20,16 +21,18 @@ list_coords = [
 
 % radius of talairach volume in MILLIMETERS
 % default is 5
-rad = 10; 
+rad = 8; 
 
 list_roiNames = {
+%     'VWFA_mni_-45_-57_-12'
+%     'VWFA_mni_-45_-57_-12_8mm'
 %     'Wernicke_12mm'
 %     'Broca_12mm'
 %     'Blomert2009STG_8mm_left';
 %     'Blomert2009STG_8mm_right'; 
 %     'Cohen2008DorsalHotspot_8mm_left'
 %     'Cohen2008DorsalHotspot_8mm_right'
-    'Cohen2002VWFA_1cm'
+    'Cohen2002VWFA_8mm'
     };
 
 % which coordinate system. 'mni' | 'tal'
