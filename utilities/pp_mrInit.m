@@ -18,25 +18,23 @@ dirVista = '/sni-storage/wandell/data/reading_prf/heb_pilot11/RetAndHebrewLoc';
 path_inplane = fullfile(dirVista, 'prescribeInplane1','inplane_xform.nii.gz'); 
 
 % specify 3DAnatomy file
-path_anatomy = '/biac4/wandell/data/anatomy/Taay/t1.nii.gz'; 
+path_anatomy = '/biac4/wandell/data/anatomy/Avbe/t1.nii.gz'; 
 
 % specify the functional files
 path_functionals = {
     fullfile(dirVista, 'Localizer_Hebrew1', 'func_xform.nii.gz');
     fullfile(dirVista, 'Localizer_Hebrew2', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_Checkers1', 'func_xform.nii.gz');
-    fullfile(dirVista, 'Ret_Checkers2', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_English1', 'func_xform.nii.gz');
-    fullfile(dirVista, 'Ret_English2', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_Hebrew1', 'func_xform.nii.gz');
     fullfile(dirVista, 'Ret_Hebrew2', 'func_xform.nii.gz');
     }; 
 
 % session code
-params.sessionCode  = 'heb_pilot11_taay'; 
+params.sessionCode  = 'heb_pilot09_avbe'; 
 
 % subject name
-params.subject      = 'taay';
+params.subject      = 'avbe';
 
 % description
 params.description  = 'ret: hebrew, english, checker. hebrew loc'; 
@@ -46,9 +44,7 @@ params.annotations  = {
     'Hebrew Loc1'
     'Hebrew Loc2'
     'Ret Checkers1'
-    'Ret Checkers2'
     'Ret English1'
-    'Ret English2'
     'Ret Hebrew1'
     'Ret Hebrew2'
     }; 
@@ -61,8 +57,6 @@ params.annotations  = {
 params.keepFrames = [
     [4, 93];
     [4, 93];
-    [10, 144];
-    [10, 144];
     [10, 144];
     [10, 144];
     [10, 144];
