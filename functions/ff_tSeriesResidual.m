@@ -51,8 +51,8 @@ clear tSeriesCell;
 
 %% Get the predicted time series 
 % this function isn't the most updated though (doesn't know how to deal with css) so problems
-% [prediction, RFs, rfParams, varexp] = rmPredictedTSeries(vw, vw.coords, [], [], []); % crashes
-[prediction, ~, ~, ~] = rmPredictedTSeries(vw, theCoords, [], [], []);
+% [prediction, RFs, rfParams, varexp] = ff_rmPredictedTSeries(vw, vw.coords, [], [], []); % crashes
+[prediction, ~, ~, ~] = ff_rmPredictedTSeries(vw, theCoords, [], [], []);
 
 
 %% Make it so that the residual tseries are not centered about zero because that causes problems

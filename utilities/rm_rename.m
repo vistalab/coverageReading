@@ -7,7 +7,7 @@ bookKeeping;
 %% modify here
 
 % do this for which subjects
-list_subInds = [20]; 
+list_subInds = [1:20]; 
 
 % which session? {'list_sessionPath'| 'list_sessionRetFaceWord'}
 % list_sessionSizeRet 
@@ -23,7 +23,7 @@ strReplace = '-oval.mat';
 
 % whether we only want to do this within a single datatype
 % specify the empty string if we want to do for ALL datatypes
-dtTarget = 'Checkers'; 
+dtTarget = 'Words1'; 
 
 
 %% end modification section

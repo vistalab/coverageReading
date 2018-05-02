@@ -1,16 +1,16 @@
-%% rmField vs. rmField
+%% size vs. eccentricity for all subjects
 clear all; close all; clc;
 chdir('/biac4/wandell/data/reading_prf/')
 bookKeeping; 
 
 %%
 list_path = list_sessionRet; 
-list_subInds = [1:20];
+list_subInds = [16:19];
 
 list_roiNames = {
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
     'LhV4_rl'
     'lVOTRC'
 %     'RV2d_rl'
@@ -138,20 +138,52 @@ for jj = 1:numRois
         
         % plotting
         figure; hold on; 
-        ff_histogramHeat(ldatax, ldatay, maxValueX, maxValueY, numHistBins)    
+
+        ff_histogramHeat(ldatax, ldatay, maxValueX, maxValueY, numHistBins)
+        
+        
+%         Ctrs = cell(1,2); 
+%         % Ctrs{1} = linspace(0,vfc.fieldRange, numHistBins); 
+%         % Ctrs{2} = linspace(0,vfc.fieldRange, numHistBins); 
+%         Ctrs{1} = linspace(0,histMaxX, numHistBins); 
+%         Ctrs{2} = linspace(0,histMaxY, numHistBins); 
+%         
+%         hist3([ldatax' ldatay'],'Ctrs', Ctrs)
+%         set(get(gca,'child'),'FaceColor','interp','CDataMode','auto')
+%         
+%         % identityLine goes above everything else so that it can be seen
+%         maxZ = max(get(gca, 'ZLim'));
+%         maxX = max(get(gca, 'Xlim'));
+%         % plot3(linspace(0, maxX, 50), linspace(0, maxX, 50), maxZ*ones(1,50), ...
+%         %     '--', 'Color', [0 0 1], 'LineWidth',2)
+%         
+%         if plot_identityLine
+%             numidpoints = 100; 
+%             idpointsX = linspace(0, histMaxX, numidpoints); 
+%             idpointsY = linspace(0, histMaxY, numidpoints); 
+%             plot3(idpointsX, idpointsY, maxZ*ones(1,numidpoints), ...
+%                 '--', 'Color', [.6 .6 .6], 'Linewidth',2)
+%         end
+%         
+%         axis square;         
+%         colormap(cmapValuesHist); 
+%         colorbar;
+%         caxis([0 maxZ/5]);
+% 
+%         set(gca, 'xlim', axisLimsX);
+%         set(gca, 'ylim', axisLimsY);
+        
         xlabel(rmFieldXDescript)
         ylabel(rmFieldYDescript)
         
         % bootstrap across subjects
-        plotOnCurFig = 0; 
-        [ci, meanSlope, slopes] =  ...
-            ff_bootstrapAcrossSubs(subCellPairwise, plotOnCurFig, maxValueX)
+        plotOnCurFig = 1; 
+        [ci, bootstat, slopes] = ff_bootstrapAcrossSubs(subCellPairwise, plotOnCurFig, maxValueX)
+
         
         titleName = {
-            [rmFieldY  ' by ' rmFieldX]
-            [roiName]            
-            ['slope: ' num2str(meanSlope)];
-            ['ci: ' num2str(ci')];    
+            ['Size by Ecc. ' roiName '. ' dtName]
+            ['y = ' num2str(coeffsGroup(1)) 'x + ' num2str(coeffsGroup(2))]
             };
         title(titleName, 'fontweight', 'bold')
        

@@ -22,6 +22,8 @@ rfParams(:,7) =  rmCoordsGet(viewType, model, 'exponent'  ,coords); % pRF expone
 rfParams(:,8) =  rmCoordsGet(viewType, model, 'bcomp1',    coords); % gain ?                      
 rfParams(:,5) =  rfParams(:,3) ./ sqrt(rfParams(:,7));              % sigma adjusted by exponent 
 
+% rfParams(:,4) is beta related, but we get more specific in rfParams(:,9)
+% and rfParams(:,10)
 
 % beta-related rfParams
 % get/make trends so that we can get beta
@@ -37,5 +39,10 @@ betaShift = beta(:,2);
 
 rfParams(:,9)   = betaScale; 
 rfParams(:,10)  = betaShift; 
+
+% add a case for sigma minor
+rfParams(:,11)  = rmCoordsGet(viewType, model, 'sigmaminor',coords); % sigma (in deg)   
+
+
 
 end

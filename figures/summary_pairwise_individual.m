@@ -15,11 +15,11 @@ end
 list_path = list_sessionRet; 
 
 % list subject index
-list_subInds = [31:36 38:44]%; 1:12 %[1:3 5:7]; % [1:20];
+list_subInds = 1:9 %[31:36 38:44]%; 1:12 %[1:3 5:7]; 
 list_subIndsDescript = ' ';
 
 % values to threshold the RM struct by
-vfc = ff_vfcDefault_Hebrew; 
+vfc = ff_vfcDefault; 
 vfc.cothresh = 0.2;
 vfc.cothreshceil = 1; 
 
@@ -28,18 +28,18 @@ subIndividually = false;
 
 % list rois
 list_roiNames = {
-%     'LV1'
-%     'LV2v'
-%     'LV3v'
-%     'LhV4_rl'
-%     'lVOTRC'
+    'LV1_rl'
+    'LV2v_rl'
+    'LV3v_rl'
+    'LhV4_rl'
+    'lVOTRC'
 %     'WangAtlas_V1v.mat'
 %     'WangAtlas_V2v.mat'
 %     'WangAtlas_V3v.mat'
 %     'WangAtlas_hV4.mat'
 %     'WangAtlas_VO1.mat'
 %     'WangAtlas_VO2.mat'
-    'WangAtlas_VO2_left.mat'
+%     'WangAtlas_VO2_left.mat'
 %     'temporalblob'
 %     'Benson_V1_lessThan_20'
 %     'Benson_V1_greaterThan_20'
@@ -57,22 +57,22 @@ list_roiNames = {
 
 % ret model dts
 list_dtNames = {
-    'Words_Hebrew'
-    'Words_English'
+    'Words'
+    'Words'
 %     'NoScaling'
 %     'ScaleFactor2'
     };
 
 % ret model names
 list_rmNames = {
-    'retModel-Words_Hebrew-css.mat'
-    'retModel-Words_English-css.mat'
+    'retModel-Words.mat'
+    'retModel-Words-oval.mat'
     };
 
 % ret model comments
 list_rmDescripts = {
-    'Words_Hebrew'
-    'Words_English'
+    'Words Circular'
+    'Words Ellipse'
     };
 
 % HOW TO COLOR. 
@@ -93,16 +93,16 @@ colorMethod = 'bySubject';
 % 'numvoxels' for number of voxels in roi
 % fieldToPlotDescript is for axis labels and plot titles
 list_fieldNames  = {
-%     'co'
-    'ecc'
+    'co'
+    'sigma2'
 %     'ecc'
 %     'co'
 %     'exponent'
     }; 
 
 list_fieldDescripts = {
-%     'varExp'
-    'eccentricity'
+    'varExp'
+    'sigma minor'
 %     'eccentricity'
 %     'varExp'
 %     'exponent'
@@ -120,10 +120,10 @@ cmapRange = [0 pi];
 cmapValues = flipud(jetCmap(0,128));
 
 % which plots do we want? lots we can make ...
-plot_scatter = true; 
-plot_heat = false; 
+plot_scatter = false; 
+plot_heat = true; 
 plot_fitFixed = false; % fit a line to the pooled voxels
-plot_fitMixed = true; % fit a line to individual subjects
+plot_fitMixed = false; % fit a line to individual subjects
 
 % transparency of the plots
 alphaValue = 0.4; 
@@ -205,7 +205,7 @@ for jj = 1:numRois
         fieldName = list_fieldNames{ff};
         fieldNameDescript = list_fieldDescripts{ff}; 
 
-        if strcmp(fieldName, 'sigma1') 
+        if strcmp(fieldName, 'sigma1') || strcmp(fieldName, 'sigma2')
             maxValue = vfc.sigmaMajthresh(2);
         elseif strcmp(fieldName, 'sigma')
             maxValue = vfc.sigmaEffthresh(2); 
@@ -219,6 +219,7 @@ for jj = 1:numRois
             error('Define the maxValue so we can normalize and fit the beta distribution.');
         end
         
+        axisLims = [0 maxValue]; 
         BarData1 = [];
         BarData2 = [];
 
@@ -288,14 +289,21 @@ for jj = 1:numRois
         end % end loop over subjects
         
         % plot properties -- scatter plot with all subjects
-        grid on; 
-        xlabel(rm1Descript, 'FontSize', 14)
-        ylabel(rm2Descript, 'FontSize', 14)
-        set(gca,'fontweight', 'bold')
-        axis([0 maxValue 0 maxValue])
+        if plot_scatter
+            grid on; 
+            xlabel(rm1Descript, 'FontSize', 14)
+            ylabel(rm2Descript, 'FontSize', 14)
+            set(gca,'fontweight', 'bold')
+            axis([0 maxValue 0 maxValue])
 
-        % identity
-        ff_identityLine(gca, [.5 .5 .5]);       
+            % identity
+            ff_identityLine(gca, [.5 .5 .5]);  
+
+            titleName = {
+                [roiName '. ' fieldNameDescript]
+            };
+            title(titleName, 'fontweight', 'bold')
+        end
           
         %% 3d histogram heat map
         if plot_heat
@@ -303,7 +311,7 @@ for jj = 1:numRois
             numHistBins = 50; 
             Ctrs = cell(1,2); 
 
-            if strcmp(fieldName, 'sigma1') % sigma major
+            if strcmp(fieldName, 'sigma1') || strcmp(fieldName, 'sigma2') % sigmas
                 Ctrs{1} = linspace(0, vfc.sigmaMajthresh(2), numHistBins); 
                 Ctrs{2} = linspace(0, vfc.sigmaMajthresh(2), numHistBins);
             elseif strcmp(fieldName, 'sigma') % effective sigma
@@ -343,8 +351,7 @@ for jj = 1:numRois
             xlabel(rm1Descript)
             ylabel(rm2Descript)
             titleName = {
-                [ff_stringRemove(roiName, '_rl')] 
-                [fieldName]
+                [ff_stringRemove(roiName, '_rl') '. ' fieldNameDescript] 
                 };
             title(titleName, 'FontWeight', 'Bold')
         end
@@ -418,8 +425,8 @@ for jj = 1:numRois
             plot(bx, byupper, '-')
 
             titleName = {
-                'Line fit to pooled data (regress)'
-                roiName
+                'Line fit to pooled data'
+                [ff_stringRemove(roiName, '_rl') '. ' fieldNameDescript]
                 ['slope: ' num2str(B)]
                 ['ci: (' num2str(BINT) ')']
                 };

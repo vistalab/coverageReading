@@ -40,4 +40,18 @@ edit image_filter.m;
 %% the distribution of RMSE
 edit summary_rmseBetweenRetModels.m;
 
+%% heat map with bootstrapped line (across subjects)
+edit summary_pairwise_heatMapWithFittedLine.m;
+
+%% Cross-model validation plot
+% Fit a model to run A
+% Get the time series of run B and obtain
+% x axis: rmse for the circular model
+% y axis: rmse for the oval model
+edit summary_rmseCrossValidation.m; 
+
+%% Understand / debug / write rmPredictedTSeries.m
+edit hashing_rmPredictedTSeries.m
+edit hashing_rmPredictedTSeries_nanError.m
+
 

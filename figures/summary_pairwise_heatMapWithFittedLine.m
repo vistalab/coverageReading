@@ -20,7 +20,7 @@ end
 list_path = list_sessionRet; 
 
 % list subject index
-list_subInds = [1:20]%[1:3 5:7] %[31:36 38:44]; % [1:12];
+list_subInds = [16:19]%[1:3 5:7] %[31:36 38:44]; % [1:12];
 list_subIndsDescript = ' ';
 
 % values to threshold the RM struct by
@@ -34,13 +34,17 @@ subIndividually = false;
 % list rois
 list_roiNames = {
 %     'right_FFAFace_rl'
-    'WangAtlas_V1v_left'
-    'WangAtlas_V2v_left'
-    'WangAtlas_V3v_left'
-    'WangAtlas_hV4_left'
-    'WangAtlas_VO1_left'
-    'WangAtlas_VO2_left'
+%     'WangAtlas_V1v_left'
+%     'WangAtlas_V2v_left'
+%     'WangAtlas_V3v_left'
+%     'WangAtlas_hV4_left'
+%     'WangAtlas_VO1_left'
+%     'WangAtlas_VO2_left'
 %     'right_FFAFace_rl'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+    'LhV4_rl'
     'lVOTRC'
 %     'rVOTRC'
 %     'cVOTRC'
@@ -68,14 +72,14 @@ list_dtNames = {
 
 % ret model names
 list_rmNames = {
-    'retModel-Words-css.mat'
-    'retModel-Words.mat'
+    'retModel-Words-oval.mat'
+    'retModel-Words-oval.mat'
     };
 
 % ret model comments
 list_rmDescripts = {
-    'Words CSS'
-    'Words linear'
+    'Oval. sigma1'
+    'Oval. sigma2'
     };
 
 % field to plot. Ex:  
@@ -94,11 +98,11 @@ list_rmDescripts = {
 %     'meanMax'     : mean of the top 8 values
 %     'meanPeaks'   : mean of the outputs of matlab's meanPeaks
 list_fieldNames  = {
-    'sigma'
+    'co'
     }; 
 
 list_fieldDescripts = {
-    'sigma effective'
+    'variance explained'
     }; 
 
 % which plots do we want? lots we can make ...
@@ -238,75 +242,38 @@ for jj = 1:numRois
         % the calculating
         slopes(isnan(slopes)) = []; 
         
-        numbs = 1000; 
-        [ci, bootstat] = bootci(numbs, @mean, slopes);
-        meanSlope = mean(bootstat); 
+        if numSubs > 1
+            numbs = 1000; 
+            [ci, bootstat] = bootci(numbs, @mean, slopes);
+            meanSlope = mean(bootstat); 
+        else
+            meanSlope = nan; 
+            ci = nan; 
+        end
         
         
         %% 3d histogram heat map
         figure; hold on; 
-        numHistBins = 50; 
-        Ctrs = cell(1,2); 
-
-        if strcmp(fieldName, 'sigma1') % sigma major
-            Ctrs{1} = linspace(0, vfc.sigmaMajthresh(2), numHistBins); 
-            Ctrs{2} = linspace(0, vfc.sigmaMajthresh(2), numHistBins);
-        elseif strcmp(fieldName, 'sigma') % effective sigma
-            Ctrs{1} = linspace(0, vfc.sigmaEffthresh(2), numHistBins);          
-            Ctrs{2} = linspace(0, vfc.sigmaEffthresh(2), numHistBins); 
-        elseif strcmp(fieldName, 'ecc')
-            Ctrs{1} = linspace(0, vfc.eccthresh(2), numHistBins);          
-            Ctrs{2} = linspace(0, vfc.eccthresh(2), numHistBins); 
-        elseif strcmp(fieldName, 'co')
-            Ctrs{1} = linspace(0, 1, numHistBins); 
-            Ctrs{2} = linspace(0, 1, numHistBins);
-        elseif strcmp(fieldName, 'exponent')
-            Ctrs{1} = linspace(0,2, numHistBins);
-            Ctrs{2} = linspace(0,2, numHistBins);
-        elseif strcmp(fieldName, 'meanMax')
-            Ctrs{1} = linspace(0,20, numHistBins);
-            Ctrs{2} = linspace(0,20, numHistBins);
-        elseif strcmp(fieldName, 'meanPeaks');f
-            Ctrs{1} = linspace(0,10, numHistBins);
-            Ctrs{2} = linspace(0,10, numHistBins);
-        elseif strcmp(fieldName, 'betaScale')
-            Ctrs{1} = linspace(0,5, numHistBins);
-            Ctrs{2} = linspace(0,5, numHistBins); 
-        else
-            error('Need to define bin centers')
-        end
-
-        hist3([BarData1' BarData2'],'Ctrs', Ctrs)
-        set(get(gca,'child'),'FaceColor','interp','CDataMode','auto')
-
-        % identityLine goes above everything else so that it can be seen
+        ff_histogramHeat(BarData1, BarData2, maxValue);
+        
         npoints = 100; 
         maxZ = max(get(gca, 'ZLim'));
         zVec = maxZ*ones(1, npoints); 
-        plot3(linspace(0, maxValue, npoints), linspace(0, maxValue, npoints), zVec, ...
-            '--', 'Color', [0 0 1], 'LineWidth',2)
 
         % fitted line goes above everything else
-        bx = linspace(0, maxValue, npoints);
-        by = bx * meanSlope; 
-        bylower = bx * ci(1); 
-        byupper = bx * ci(2);
-        
-        if plot_fit
-            plot3(bx, by, zVec, '-', 'Linewidth',3, 'color', [0 1 1])
-            plot3(bx, bylower, zVec, '-', 'Linewidth',.1, 'color', [0 .7 .7])
-            plot3(bx, byupper, zVec, '-', 'Linewidth',.1, 'color', [0 .7 .7])
+        if numSubs > 1 
+            bx = linspace(0, maxValue, npoints);
+            by = bx * meanSlope; 
+            bylower = bx * ci(1); 
+            byupper = bx * ci(2);
+            
+            if plot_fit
+                plot3(bx, by, zVec, '-', 'Linewidth',3, 'color', [0 1 1])
+                plot3(bx, bylower, zVec, '-', 'Linewidth',.1, 'color', [0 .7 .7])
+                plot3(bx, byupper, zVec, '-', 'Linewidth',.1, 'color', [0 .7 .7])
+            end           
         end
             
-        axis square;         
-        colormap(cmapValuesHist); 
-        c = colorbar;
-        set(c, 'location', cbarLocation)
-        caxis([0 maxZ/5]);
-
-        set(gca, 'xlim', axisLims);
-        set(gca, 'ylim', axisLims);
-
         % axes and title
         xlabel(rm1Descript)
         ylabel(rm2Descript)

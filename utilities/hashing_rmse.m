@@ -68,7 +68,7 @@ for jj = 1:numRois
              %% get the predicted time series
              % for debugging purposes
             roiCoords = [110 161 86]';
-            [prediction, ~, ~, varexp] = rmPredictedTSeries(vw, roiCoords, [], [], []);
+            [prediction, ~, ~, varexp] = ff_rmPredictedTSeries(vw, roiCoords, [], [], []);
     
             
             %% get the actual time series

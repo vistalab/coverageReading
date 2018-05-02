@@ -5,6 +5,8 @@ function subInd = ff_subInd(initials)
 bookKeeping; 
 subInd = 'subject not found'; 
 
+curdir = pwd; 
+
 % if a string
 if ischar(initials)
     for ii = 1:length(list_sub)
@@ -25,6 +27,8 @@ if isnumeric(initials)
         display('Check subject number')
     end
 end
+
+chdir(curdir);
 
 
 end

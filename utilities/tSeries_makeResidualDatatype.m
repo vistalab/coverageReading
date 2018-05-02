@@ -85,11 +85,11 @@ for ii = 1:numSubs
         
         %% Get the predicted time series 
         % this function isn't the most updated though (doesn't know how to deal with css) so problems
-        % [prediction, RFs, rfParams, varexp] = rmPredictedTSeries(vw, vw.coords, [], [], []); % crashes
+        % [prediction, RFs, rfParams, varexp] = ff_rmPredictedTSeries(vw, vw.coords, [], [], []); % crashes
         if particularVoxels
-            [prediction_zeroed, RFs, rfParams, varexp] = rmPredictedTSeries(vw, theCoords, [], [], []);
+            [prediction_zeroed, RFs, rfParams, varexp] = ff_rmPredictedTSeries(vw, theCoords, [], [], []);
         else
-            [prediction_zeroed, RFs, rfParams, varexp] = rmPredictedTSeries(vw, 1:numCoords, [], [], []);
+            [prediction_zeroed, RFs, rfParams, varexp] = ff_rmPredictedTSeries(vw, 1:numCoords, [], [], []);
         end
       
         %% Calculate the residual

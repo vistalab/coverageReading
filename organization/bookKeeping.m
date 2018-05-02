@@ -1,7 +1,8 @@
+curdir = pwd; 
+
 %% bookkeeping for retinotopy and words analysis
 chdir('/share/wandell/data/reading_prf/coverageReading/organization')
 % chdir('/share/wandell/data/reading_prf/coverageReading/organization')
-
 
 %% name of sessions, abbreviations, and their paths
 
@@ -1215,3 +1216,4 @@ load('list_colorsPerWangRois')
 % WangDorsalView
 
 
+chdir(curdir)

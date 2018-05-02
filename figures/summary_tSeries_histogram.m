@@ -62,7 +62,7 @@ for ii = 1:numSubs
            clear tSeriesCell;
 
            % the predicted tseries so that we can get the residual
-           [prediction, RFs, rfParams, varexp] = rmPredictedTSeries(vw, roiCoords, [], [], []);              
+           [prediction, RFs, rfParams, varexp] = ff_rmPredictedTSeries(vw, roiCoords, [], [], []);              
            residual = tSeries - prediction; 
            
            

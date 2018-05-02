@@ -2,7 +2,7 @@
 % the stimulus
 % the RF params
 %
-% this code is largely based on rmPredictedTSeries
+% this code is largely based on ff_rmPredictedTSeries
 
 clear all; close all; clc
 bookKeeping; 

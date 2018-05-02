@@ -11,20 +11,30 @@ list_subsToPlot = 10;
 % dt and rm names
 list_dtNames = {
     'Words'
+    'Words'
+    'Words'
 %     'Words_scale1mu0sig1'
 %     'Words_scale1mu0sig0p5'
 %     'Words_scale0p5mu0sig0'
     };
 list_rmNames = {
     'retModel-Words-css.mat'
+    'retModel-Words.mat'
+    'retModel-Words-oval.mat'
 %     'retModel-Words_scale1mu0sig1-css-left_VWFA_rl.mat'
 %     'retModel-Words_scale1mu0sig0p5-css-left_VWFA_rl.mat'
 %     'retModel-Words_scale0p5mu0sig0-css-left_VWFA_rl.mat'
     };
 
+list_rmNameDesripts = {
+    'CSS circular'
+    'Linear circular'
+    'Linear ellipse'
+    };
+
 % name of the roi
 list_roiNames = {
-     'left_VWFA_rl' 
+     'lVOTRC' 
     }; 
 
 % save directory
@@ -75,6 +85,7 @@ for ii = 1:numSubs
         dtName = list_dtNames{kk};
         % ret model name
         rmName = list_rmNames{kk};
+        rmNameDescript = list_rmNameDesripts{kk};
            
         % set the datatype
         vw = viewSet(vw, 'curdt', dtName);
@@ -88,6 +99,7 @@ for ii = 1:numSubs
 
             % roiName and path
             roiName = list_roiNames{jj}; 
+            roiNameDescript = ff_stringRemove(roiName, '_rl');
             roiPath = fullfile(dirRoi, roiName); 
 
             % [vw, ok] = loadROI(vw, filename, [select], [color], [absPathFlag], [local=1])
@@ -209,7 +221,8 @@ for ii = 1:numSubs
                 
                 varExp = varExp_roi(voxInd);
                 
-                % % ------------- 
+                %% ------------- 
+                hold on; 
                 plot(ts_vox,'k--','LineWidth',1.5)
                 plot(ts_vox_predict,'b','LineWidth',1.5)
                 titleName = {[roiNameDescript '. ' rmNameDescript '. ' subInitials], 'Voxel tSeries, Predicted and Actual', ['varExp of voxel ' num2str(brainInd) ': ' num2str(varExp)]};
@@ -224,10 +237,6 @@ for ii = 1:numSubs
                 
                
             end
-            % save time series
-            saveas(gcf, fullfile(saveDir, [titleName{1} '_ts.png']), 'png')
-            saveas(gcf, fullfile(saveDir, [titleName{1} '_ts.fig']), 'fig')
-            ff_dropboxSave; 
 
             %% store the information
             % maxVE = zeros(numRms, numSubs, numRois); 

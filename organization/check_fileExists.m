@@ -15,13 +15,13 @@ list_subInds = 1:20; %[1:3 5:7];%[31:36 38:44];
 % list_sessionTiledLoc, list_session, list_sessionLocPath, list_sessionTiledLoc
 % list_sessionAfq
 % list_sessionRoryFace
-list_paths = list_anatomy; 
+list_paths = list_sessionRet; 
 
 % file location relative to list_paths
 % LiFEStructs
 % ROIsNiftis
 % 'ROIs' 'ROIsConnectomes'
-fLoc = 'ROIs';
+fLoc = 'Gray/Checkers';
 
 % file name
 % fName = 'V1.nii.gz';
@@ -39,7 +39,9 @@ fLoc = 'ROIs';
 % fName = 'retModel-FaceLarge-css.mat'
 % fName = 'right_FFAFace_rl.mat';
 % fName = 'rV3v_all_nw.mat';
-fName = 'lVOTRC-threshBy-WordsAndCheckers-co0p2.mat';
+% fName = 'lVOTRC-threshBy-WordsAndCheckers-co0p2.mat';
+fName = 'retModel-Checkers-one oval gaussian-fFit.mat';
+% fName = 'retModel-Checkers-oval.mat'
 
 %% checking
 

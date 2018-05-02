@@ -31,7 +31,7 @@ rmPath = fullfile(dirVista, 'Gray', dtName, rmName);
 
 vw = rmSelect(vw,1, rmPath);
 vw = rmLoadDefault(vw);
-[tSeriesPredicted] = rmPredictedTSeries(vw, roiCoords);
+[tSeriesPredicted] = ff_rmPredictedTSeries(vw, roiCoords);
 
 %% get the calculated residual time series
 vw = viewSet(vw, 'curdt','Words_Residual');

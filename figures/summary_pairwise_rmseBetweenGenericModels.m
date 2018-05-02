@@ -9,11 +9,15 @@ bookKeeping;
 
 %% modify here
 
-list_subInds = 1:20;
+list_subInds = [1:9];
 vfc = ff_vfcDefault; 
 
 list_roiNames = {
 %     'lVOTRC-threshBy-WordsAndCheckers-co0p2'
+    'LV1_rl'
+    'LV2v_rl'
+    'LV3v_rl'
+    'LhV4_rl'
     'lVOTRC'
 %     'WangAtlas_V1v_left'
 %     'WangAtlas_V2v_left'
@@ -24,28 +28,32 @@ list_roiNames = {
 % the two ret models being compared
 list_dtNames = {
     'Words'
-    'Checkers'
+    'Words'
     };
 list_rmNames = {
-    'retModel-Words-css.mat'
-    'retModel-Checkers-css.mat'
+    'retModel-Words.mat'
+    'retModel-Words-oval.mat'
+%     'retModel-Words.mat'
+%     'retModel-Words-oval.mat'
+    };
+list_dtDescripts = {
+    'Circular Gaussian (Words linear)'
+    'Elliptical Gaussian (Words linear)'
+%     'Linear. circular model'
+%     'Linear. oval model'
     };
 list_nFrames = [
-    144;
-    96;
+    144 %96;
+    144 %144;
     ];
-
-% which rfParams are we using? 1st or 2nd
-wRfParams = 1; 
-
 
 %% calculate
 numSubs = length(list_subInds);
 numRois = length(list_roiNames);
 numDts = length(list_dtNames);
 
-dtName1 = list_dtNames{1};
-dtName2 = list_dtNames{2};
+dtDescript1 = list_dtDescripts{1};
+dtDescript2 = list_dtDescripts{2};
 
 %% initialize
 predictionCrossCell = cell(numSubs, numRois, numDts);
@@ -127,21 +135,21 @@ for jj = 1:numRois
     %% plotting cross-model validated variance explained
  
     ff_scatterHeated(varexp1, varexpCross1, [0 1])
-    xlabel([dtName1 ' time series'])
-    ylabel([dtName2 ' time series'])
+    xlabel([dtDescript1 ' time series'])
+    ylabel([dtDescript2 ' time series'])
     titleName = {
         'Cross-model variance explained with'
-        [dtName1 ' pRF parameters']
+        [dtDescript1 ' pRF parameters']
         [roiName]
     };
     title(titleName, 'fontweight', 'bold')
 
     ff_scatterHeated(varexpCross2, varexp2, [0 1])
-    xlabel([dtName1 ' time series'])
-    ylabel([dtName2 ' time series'])
+    xlabel([dtDescript1 ' time series'])
+    ylabel([dtDescript2 ' time series'])
     titleName = {
         'Cross-model variance explained with'
-        [dtName2 ' pRF parameters']
+        [dtDescript2 ' pRF parameters']
         [roiName]
     };
     title(titleName, 'fontweight', 'bold')

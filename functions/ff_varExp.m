@@ -11,6 +11,9 @@ function varExp = ff_varExp(ts1, ts2)
 % val(~isfinite(val)) = 0;
 % val = max(val, 0);
 % val = min(val, 1);
+%
+% ts1 and ts2 can be matrices! where each column is a voxel
+% e.g. 144 x numCoord matrices
 
 
 %% calculating
