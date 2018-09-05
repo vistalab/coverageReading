@@ -59,7 +59,3 @@
 
 
 
-## Notes
-
-#### About bookKeeping.m
-
