@@ -48,7 +48,7 @@
 
 **rm**          - Ret model related code
 
-**rmroi**       - See below for what an rmroi is. Might expire this code actually
+**rmroi**       - Ret model data for an roi
 
 **s**           - Stands for scripts. We like to save these into the subject's directory. 
                 Includes things like the script used to prf models, info we want to keep around
