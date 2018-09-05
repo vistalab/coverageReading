@@ -6,9 +6,9 @@
 
 **organization**    - code related to subject organization, naming conventions
 
-**tractography**    - tractography. just getting started with this
+**tractography**    - tractography-related code
 
-**tutorials**       - tutorials for preprocessing, processing pipeline
+**tutorials**       - tutorials for preprocessing, for running a pRF model, etc
 
 
 
