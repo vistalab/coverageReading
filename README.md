@@ -2,9 +2,9 @@
 
 **figures**         - code that generates figures, including figures for papers, posters, presentations
 
-**functions**       - functions
+**functions**       - all functions live here
 
-**organization**    - code related to subject organization, naming conventions
+**organization**    - scripts that keep track of the workflow, bookKeeping scripts
 
 **tractography**    - tractography-related code
 
