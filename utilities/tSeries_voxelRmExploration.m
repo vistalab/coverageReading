@@ -4,25 +4,25 @@ bookKeeping;
 
 %% modify here
 
-subInd = 1; 
+subInd = 20; 
 
 % roiNames
 % ASSUME ONE ROI FOR NOW
 % list_roiNames = {'LV2v_rl-threshBy-WordsAndCheckers-co0p5'}; 
-list_roiNames = {'LhV4_rl'};
+list_roiNames = {'lVOTRC'};
 
 % ret models
 list_dtNames = {
     'Words'
-    'Words'
+    'Checkers'
     };
 list_rmNames = {
     'retModel-Words-css.mat';
-    'retModel-Words-css.mat';
+    'retModel-Checkers-css.mat';
     };
 list_rmDescripts = {
     'Words'
-    'Words'
+    'Checkers'
     };
 
 % vfc thresh
@@ -59,13 +59,13 @@ numVoxels = length(rmroiFull.co)
 rmroi1 = rmroiCell{1}; 
 rmroi2 = rmroiCell{2}; 
 
-vfc.cothresh = 0.5; 
+vfc.cothresh = .5; 
 coInds = rmroi1.co > vfc.cothresh & rmroi2.co > vfc.cothresh; 
 
-% eccInds = (abs(rmroi1.ecc - rmroi2.ecc)) > 0; % rmroi2.ecc < 11
-eccInds = rmroi2.ecc < 5;
-sigInds = (abs(rmroi1.sigma - rmroi2.sigma)) > 0; 
-ellipseInds = (abs(rmroi2.sigma1 - abs(rmroi2.sigma2))) > 0;
+% eccInds = rmroi2.ecc > 0;
+eccInds = (abs(rmroi1.ecc - rmroi2.ecc)) < 10; % rmroi2.ecc < 11
+sigInds = (abs(rmroi1.sigma - rmroi2.sigma)) < 4; 
+ellipseInds = (abs(rmroi2.sigma1 - abs(rmroi2.sigma2))) > -1;
 
 indInds = coInds & eccInds & sigInds & ellipseInds; 
 numVoxelsPassed = sum(indInds)
@@ -90,7 +90,7 @@ T
 %% plotting
 
 % get coordinate information
-coordInd = 804; 
+coordInd = 47; 
 % coordInd = 15; % sub 4. LhV4_rl
 % coordInd = 734; 
 

@@ -13,14 +13,15 @@ bookKeeping;
 transparent = true; 
 
 % alpha value -- transparency
-alphaValue = .2; 
+alphaValue = 1; 
 
 % subjects to include
-list_subInds = 	[13:20]; %[1:20];
+% %[31:36 38 39:44] % Hebrew
+list_subInds = 	1:12; %[1:20];
 
 % threshold and other visualization parameters
 vfc = ff_vfcDefault; 
-vfc.backgroundColor = [.9 .9 .9]; 
+vfc.backgroundColor = [1 1 1]; % [.9 .9 .9]; 
 vfc.gridColor = [.5 .5 .5];
 
 % rois plotted individually or all on one plot
@@ -29,18 +30,17 @@ vfc.gridColor = [.5 .5 .5];
 % list_colors will then correspond to rois
 roisIndividual = false; 
 
-% if true, colors will correspond to ROI
-colorIndividual = true;
-
 % rois to do this for
 list_roiNames = {
 %     'LV1_rl'
-%     'cVOTRC'
-%     'lVOTRC-threshBy-WordsAndCheckers-co0p2'
-    'right_FFAFace_rl'
+%     'lVOTRC'
+%     'LV2v_rl'
+    'lVOTRC-threshBy-WordsAndCheckers-co0p2'
+%     'right_FFAFace_rl'
 %     'rVOTRC'
 %     'cVOTRC'
-%     'lVOTRC-threshBy-Words_HebrewAndWords_English-co0p05.mat'
+%     'lVOTRC'
+%     'lVOTRC-threshBy-Words_HebrewAndWords_English-co0p2.mat'
 %     'lVOTRC-threshBy-WordsOrCheckers-co0p05.mat'
 %     'lVOTRC-threshBy-Words_English-Model-co0p2.mat'
 %     'ch_PPA_Place_rl'
@@ -53,19 +53,16 @@ list_roiNames = {
 %     'LV2v_rl'
     };
 
-% modify this if ~roiIndividual
-list_colors = {
-    [.5 .4 1]
-%     [.2 1 0] % green - right visual hemisphere
-%     [0 .2 1] % blue - left visual hemisphere
-    };
 
-% modify this if roiIndividual
-dotColor = [.7 .1 .5];
+% whether each subject is a different color
+colorIndividual = true; 
+
+% pRF center color. if we want every subject to have same color
+centerColor = [1 0 0];
 
 % ret model dt and name
-dtName = {'FaceSmall'};
-rmName = {'retModel-FaceSmall-css.mat'}; 
+dtName = {'FalseFont'};
+rmName = {'retModel-FalseFont-css.mat'}; 
 
 %% define things
 
@@ -92,8 +89,6 @@ for jj = 1:length(list_roiNames)
     % each roi is its own figure
     if roisIndividual
         figure; hold on;
-    else
-        dotColor = list_colors{jj};
     end
 
     % loop over subjects
@@ -102,6 +97,8 @@ for jj = 1:length(list_roiNames)
         if colorIndividual
             subInd = list_subInds(ii);
             dotColor = list_colorsPerSub(subInd,:);
+        else
+            dotColor = centerColor; 
         end
         
         rmroi = rmroiCell{ii,jj};   
@@ -116,7 +113,8 @@ for jj = 1:length(list_roiNames)
         if ~isempty(rmroithresh)
             if transparent
                 % semi-transparent centers
-                scatter(rmroithresh.x0, rmroithresh.y0, 60, ...
+                dotSize = 60; %60 
+                scatter(rmroithresh.x0, rmroithresh.y0, dotSize, ...
                     repmat(dotColor,[length(rmroithresh.x0), 1]), 'filled', ...
                     'markerEdgeColor', [.1 .1 .1], ...
                     'LineWidth',.05);

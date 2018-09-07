@@ -15,7 +15,7 @@ end
 list_path = list_sessionRet; 
 
 % list subject index
-list_subInds = 1:9 %[31:36 38:44]%; 1:12 %[1:3 5:7]; 
+list_subInds = 1:20; %[31:36 38:44]%; 1:12 %[1:3 5:7]; 
 list_subIndsDescript = ' ';
 
 % values to threshold the RM struct by
@@ -28,16 +28,17 @@ subIndividually = false;
 
 % list rois
 list_roiNames = {
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
-    'LhV4_rl'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+%     'LhV4_rl'
+%     'lVOTRC'
+%     'WangAtlas_V1v_left'
+%     'WangAtlas_V2v_left'
+%     'WangAtlas_V3v_left'
+%     'WangAtlas_hV4_left'
+%     'WangAtlas_VO1_left'
     'lVOTRC'
-%     'WangAtlas_V1v.mat'
-%     'WangAtlas_V2v.mat'
-%     'WangAtlas_V3v.mat'
-%     'WangAtlas_hV4.mat'
-%     'WangAtlas_VO1.mat'
 %     'WangAtlas_VO2.mat'
 %     'WangAtlas_VO2_left.mat'
 %     'temporalblob'
@@ -58,21 +59,21 @@ list_roiNames = {
 % ret model dts
 list_dtNames = {
     'Words'
-    'Words'
+    'Checkers'
 %     'NoScaling'
 %     'ScaleFactor2'
     };
 
 % ret model names
 list_rmNames = {
-    'retModel-Words.mat'
-    'retModel-Words-oval.mat'
+    'retModel-Words-css.mat'
+    'retModel-Checkers-css.mat'
     };
 
 % ret model comments
 list_rmDescripts = {
-    'Words Circular'
-    'Words Ellipse'
+    'Words'
+    'Checkers'
     };
 
 % HOW TO COLOR. 
@@ -93,17 +94,17 @@ colorMethod = 'bySubject';
 % 'numvoxels' for number of voxels in roi
 % fieldToPlotDescript is for axis labels and plot titles
 list_fieldNames  = {
-    'co'
-    'sigma2'
-%     'ecc'
+%     'co'
+%     'sigma2'
+    'ecc'
 %     'co'
 %     'exponent'
     }; 
 
 list_fieldDescripts = {
-    'varExp'
-    'sigma minor'
-%     'eccentricity'
+%     'varExp'
+%     'sigma minor'
+    'eccentricity'
 %     'varExp'
 %     'exponent'
     }; 
@@ -120,10 +121,10 @@ cmapRange = [0 pi];
 cmapValues = flipud(jetCmap(0,128));
 
 % which plots do we want? lots we can make ...
-plot_scatter = false; 
-plot_heat = true; 
+plot_scatter = true; 
+plot_heat = false; 
 plot_fitFixed = false; % fit a line to the pooled voxels
-plot_fitMixed = false; % fit a line to individual subjects
+plot_fitMixed = true; % bootstrapped CI from the line fit to individual subjects
 
 % transparency of the plots
 alphaValue = 0.4; 
@@ -272,6 +273,9 @@ for jj = 1:numRois
                 
                 xp = linspace(0, maxValue); 
                 if plot_scatter
+                    if ii == 1
+                        figure; hold on; 
+                    end
                     % individual dots
                     scatter(x1, x2, 100*ones(1,length(x1)), voxelColor, 'filled', ...
                         'linewidth',1)
@@ -295,6 +299,7 @@ for jj = 1:numRois
             ylabel(rm2Descript, 'FontSize', 14)
             set(gca,'fontweight', 'bold')
             axis([0 maxValue 0 maxValue])
+            axis square
 
             % identity
             ff_identityLine(gca, [.5 .5 .5]);  
@@ -372,7 +377,9 @@ for jj = 1:numRois
             [ci, bootstat] = bootci(1000, @mean, slopes);
             
             % the plotting 
-            scatter(BarData1, BarData2, 'filled'); alpha(0.3); 
+            scatter(BarData1, BarData2, 'filled', ...
+                'markerfacecolor', [0.65, 0.47, 0.52]); 
+            alpha(0.3); 
             axis([0 maxValue 0 maxValue]); 
             ff_identityLine(gca, [.5 .5 .5])
             

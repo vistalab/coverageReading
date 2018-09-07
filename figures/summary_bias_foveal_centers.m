@@ -30,6 +30,7 @@ hemiArea = pi*vfc.fieldRange^2 / 2;
 hemiAreaHalf = hemiArea/2; 
 radHalfDeg = sqrt(2*hemiAreaHalf/pi);
 
+
 %% make the rmroi
 rmroiCell = ff_rmroiCell(list_subInds, list_roiNames, dtName, rmName);
 

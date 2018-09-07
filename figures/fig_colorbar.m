@@ -6,19 +6,19 @@ close all;
 figure;
 
 % save name
-saveName = 'AutumnHorizontalColorbar';
+saveName = 'pink';
 
 % horizontal or vertical colorbar
 c = colorbar('eastoutside'); % -- vertical
 % c = colorbar('southoutside') % -- horizontal
 
 % colormap
-colormap('autumn') % hot % autumn
+colormap('pink') % hot % autumn
 % newcolormap = gray(21); 
 % set(gcf, 'colormap', newcolormap)
 
 % limits of colorbar
-caxis([3 10]) % [0 1]
+caxis([0 0.15]) % [0 1]
 
 % labels of the colorbar -- left right top bottom?
 set(c, 'YAxisLocation', 'right');
@@ -26,15 +26,7 @@ set(c, 'YAxisLocation', 'right');
 % font size
 set(gca, 'fontSize', 16)
 
-% where to save
-saveDir = '/home/rkimle/Dropbox/TRANSFERIMAGES/';
-
 
 %% save!
 
 axis off
-
-% save path
-savePath = fullfile(saveDir, saveName); 
-saveas(gcf, [savePath '.png'], 'png')
-saveas(gcf, [savePath '.fig'], 'fig')

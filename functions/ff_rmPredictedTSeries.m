@@ -58,18 +58,6 @@ verbose = false;
 % get variance explained
 varexp = rmCoordsGet(vw.viewType, model, 'varexp', coords);
 
-switch modelName
-        
-    case {'css','2D nonlinear pRF fit (x,y,sigma,exponent, positive only)'}
-        
-    case {'2D pRF fit (x,y,sigma_major,sigma_minor)' ...
-			'oval 2D pRF fit (x,y,sigma_major,sigma_minor,theta)', 'oval'}
-       
-    otherwise
-        error('Unknown modelName: %s',modelName{modelId});
-       
-end
-
 % rfParams 
 % % rfParams = rmPlotGUI_getRFParams(model, modelName, viewType, coords, params)
 rfParams = ff_rfParams(model, params, coords);

@@ -7,7 +7,7 @@
 clc; bookKeeping; 
 %% modify here
 
-list_subInds = 1:20; %[1:3 5:7];%[31:36 38:44]; 
+list_subInds = [31:36 38:44]; %[1:3 5:7];%[31:36 38:44]; 
 % list_subInds = [ 3     4     6     7     8     9    13    15    17];
 % list_subInds = [2     3     4     5     6     7     8     9    10    13    14    15    16    17    18];
 
@@ -15,13 +15,13 @@ list_subInds = 1:20; %[1:3 5:7];%[31:36 38:44];
 % list_sessionTiledLoc, list_session, list_sessionLocPath, list_sessionTiledLoc
 % list_sessionAfq
 % list_sessionRoryFace
-list_paths = list_sessionRet; 
+list_paths = list_anatomy; 
 
 % file location relative to list_paths
 % LiFEStructs
 % ROIsNiftis
 % 'ROIs' 'ROIsConnectomes'
-fLoc = 'Gray/Checkers';
+fLoc = 'ROIs/';
 
 % file name
 % fName = 'V1.nii.gz';
@@ -40,8 +40,9 @@ fLoc = 'Gray/Checkers';
 % fName = 'right_FFAFace_rl.mat';
 % fName = 'rV3v_all_nw.mat';
 % fName = 'lVOTRC-threshBy-WordsAndCheckers-co0p2.mat';
-fName = 'retModel-Checkers-one oval gaussian-fFit.mat';
+% fName = 'retModel-Checkers-one oval gaussian-fFit.mat';
 % fName = 'retModel-Checkers-oval.mat'
+fName = 'lVOTRC-threshBy-Words_Hebrew-co0p2.mat';
 
 %% checking
 

@@ -9,16 +9,16 @@ bookKeeping;
 
 %% modify here
 
-titleDescript = 'lVOTRC. Half-max contour. Checkers';
+titleDescript = 'lVOTRC. Half-max contour. Words Falsefont Checkers';
 
 % vfc
 vfc = ff_vfcDefault;
 
 % THE UNDERLAY -------------
-und_subInds = [1:20] ; % if more than one, will be group average
+und_subInds = [1:12] ; % if more than one, will be group average
 und_roiName = {'lVOTRC.mat'};
-und_dtName = {'Checkers'};
-und_rmName = {'retModel-Checkers-css.mat'};
+und_dtName = {'FalseFont'};
+und_rmName = {'retModel-FalseFont-css.mat'};
 
 % THE CONTOURS ----------------
 % can have many contours.
@@ -29,27 +29,43 @@ und_rmName = {'retModel-Checkers-css.mat'};
 individualContours = false; 
 
 con_subInds = {
-    [1:17 19 20]
+    [1:20]
+    [1:12]
+    [1:20]
     };
 con_roiNames = {
     {'lVOTRC.mat'}
+    {'lVOTRC.mat'}
+    {'lVOTRC.mat'}
     };
 con_dtNames = {
+    {'Words'}
+    {'FalseFont'}
     {'Checkers'}
     };
 con_rmNames = {
+    {'retModel-Words-css.mat'}
+    {'retModel-FalseFont-css.mat'}
     {'retModel-Checkers-css.mat'}
     };
 con_contourLevels = {
     0.5
+    0.5
+    0.5
     };
 con_contourColors = {
+    [0 0 0]
+    [0 0 0]
     [0 0 0]
     };
 con_contourMarkers = {
     '--'
+    '--'
+    '--'
     };
 con_contourMarkerSizes = {
+    [2]
+    [2]
     [2]
     };
 
@@ -70,9 +86,13 @@ else
     numContours = length(con_subInds);
 end
 
+
+
 for cc = 1:numContours
     
     %% 
+    figure; 
+    
     if individualContours
         conSubIndsList = con_subInds{1};
         

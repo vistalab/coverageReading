@@ -14,7 +14,7 @@ bookKeeping;
 
 % for the actual tSeries. independent from the retModels that are on the x
 % and y axis
-list_subInds = 1:20; 
+list_subInds = [3 20]; 
 list_roiNames = {
     'LV1_rl'
     'LV2v_rl'
@@ -22,19 +22,21 @@ list_roiNames = {
     'LhV4_rl'
     'lVOTRC'
     };
-dtIndependent = 'Words2'; 
+dtIndependent = 'Imported_Words'; 
 stimParams = ff_stimParams('knk');
 
 % we need rmParams. grab it from ret models 
 % corresponding to x and y axis respectively
 list_dtNames = {
-    'Words1'
-    'Words1'
+    'Words'
+    'Words'
     };
 list_rmNames = {
-    'retModel-Words1-css.mat'
-    'retModel-Words1-oval.mat';
+    'retModel-Words-css.mat'
+    'retModel-Words-oval.mat';
     };
+
+% 'css' | 'oval'
 list_modelNames = {
     'css'
     'oval'

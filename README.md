@@ -2,13 +2,13 @@
 
 **figures**         - code that generates figures, including figures for papers, posters, presentations
 
-**functions**       - functions
+**functions**       - all functions live here
 
-**organization**    - code related to subject organization, naming conventions
+**organization**    - scripts that keep track of the workflow, bookKeeping scripts
 
-**tractography**    - tractography. just getting started with this
+**tractography**    - tractography-related code
 
-**tutorials**       - tutorials for preprocessing, processing pipeline
+**tutorials**       - tutorials for preprocessing, for running a pRF model, etc
 
 
 
@@ -48,7 +48,7 @@
 
 **rm**          - Ret model related code
 
-**rmroi**       - See below for what an rmroi is. Might expire this code actually
+**rmroi**       - Ret model data for an roi
 
 **s**           - Stands for scripts. We like to save these into the subject's directory. 
                 Includes things like the script used to prf models, info we want to keep around
@@ -58,8 +58,4 @@
 **tSeries**     - tSeries related code.
 
 
-
-## Notes
-
-#### About bookKeeping.m
 

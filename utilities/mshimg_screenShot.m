@@ -10,19 +10,19 @@ bookKeeping;
 
 % for screenshots, close mesh and view afterwards
 % for roi drawing purposes, do not close
-keepMeshOpen = false; 
+keepMeshOpen = true; 
 
 % dropbox save name
-saveName = 'Localizer and Tal and MNI VWFA 8mm. ventral_lh'
+saveName = 'Dorsal surface ROIs'
 
-list_subInds = 31:38; % 1:20; 
+list_subInds = 20; % 1:20; 
 list_path = list_sessionRet;  % list_sessionTiledLoc % list_sessionRet % list_sessionLocPath
 
 % 'ventral_rh'
-meshView = 'ventral_lh';
+meshView = 'ventral_rh';
 
 % 'lh_inflated400_smooth1.mat'
-meshName = 'lh_inflated400_smooth1.mat';
+meshName = 'rh_inflated400_smooth1.mat';
 
 % rois to load. specify empty string if we don't want rois
 % list_roiNames = {
@@ -33,39 +33,54 @@ meshName = 'lh_inflated400_smooth1.mat';
 %     'Cohen2002VWFA_5mm.mat'
 %     };
 list_roiNames = {
-    'Cohen2002VWFA_8mm.mat'
-    'VWFA_mni_-45_-57_-12_8mm.mat'
-    'rVOTRC.mat'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+%     'LhV4_rl'
+%     'LVO1_rl'
+%     'lVOTRC'
+%
+    'RV1_rl'
+    'RV2d_rl'
+    'RV3d_rl'
+    'RV3ab_rl'
+    'RIPS0_rl'
+    'RIPS1_rl'
     };
-
 
 % correspond to rois
 % list_roiColors = list_colorsWangRois; 
 list_roiColors = [
-    [0.2588    0.0961    0.9569]
-    [0.2588    0.9961    0.1569]
-    [1 1 1]
-    ]
+%     [0.3490    0.1765    0.0706]
+%     [0.6275    0.0863    0.6196]
+%     [0.0863    0.0863    0.6275]
+%     [0.1294    0.5529    0.7765]
+%     [0.0667    0.4784    0.2784]     
 %     [1 0 0]
-%     [1 0 0]
-%     [1 0 0]
-%     [1 0 0]
-    
+    [0.3490    0.1765    0.0706]
+    [0.6275    0.0863    0.6196]
+    [0.0863    0.0863    0.6275]
+    [0.1294    0.5529    0.7765]
+    [0.0667    0.4784    0.2784] 
+    [0.5451    0.5882    0.0824]
+    ];
 
 % 'patches' 'boxes' 'perimeter' 'filled perimeter'
 % patches will only show one color even if multiple ROIs are at the voxel
-roiDrawMethod = 'filled perimeter';
+% perimeter -- outline
+% filled perimeter | filled -- thick outline
+roiDrawMethod = 'boxes';
    
 % parameter maps. specify empty string if we don't want pmap
 % 'WordVFace_Scrambled.mat'; % 'WordVAll.mat' % 'HebrewVScrambled.mat'
-pmapName = 'HebrewVScrambled.mat'; 
-pmapDt = 'Original'; % 'GLMs' % Original
+pmapName = ''; % 'WordVFace_Scrambled.mat'; 
+pmapDt = ''; %'GLMs'; % 'GLMs' % Original
 
 % show these values of the pmap on the mesh
 % [mapWinMin, mapWinMax] % respectively. 
 % only show values greater than mapWinMin AND less than mapWinMax
 % if mapWinMin > mapWinMax, then it will do the OR condition
-pmapWinThresh = [2 10]; % [3 10]; % for GLM 
+pmapWinThresh = [3 10]; % [3 10]; % for GLM 
 
 % clip the colors of the parameter map
 pmapClipmode = []; % [-0.3 0.3]; % for even bicolor
@@ -179,8 +194,7 @@ for ii = list_subInds
     % screenshot and save!
     titleName = [saveName '. ' subInitials];
     img = meshMultiAngle(msh, theSetting, [], 'cbarFlag', 1, 'titleText', titleName);
-    ff_dropboxSave('title', titleName); 
-    
+    % ff_dropboxSave('title', titleName); 
     
     % -------------------------------------
     % delete the mesh once we are finished

@@ -6,7 +6,7 @@ list_colors = list_colorsPerSub;
 
 %% define coloring here
 textColor = [0 0 0];
-legColor = [.9 .9 .9];
+legColor = [1 1 1];
 
 %% define things
 numSubs = length(list_subInds);
@@ -24,7 +24,8 @@ for ii = 1:numSubs
         'Marker', 'o', ...
         'MarkerSize', 10, ...
         'MarkerFaceColor', subColor, ...
-        'MarkerEdgeColor', [0 0 0]);
+        'MarkerEdgeColor', [0 0 0], ...
+        'Color', [0 0 0]);
     hvec(ii) = p; 
 end
 

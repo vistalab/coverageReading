@@ -1,15 +1,16 @@
+
 %% Reading circuitry field of view paper (2016). Making figures.
 % Uses this script: coverage_plotGroupAverage.m (should make into a
 % function)
 % (this script used to be called: figScript_coverage_maxProfile_group)
 
-clear all; % close all; clc; 
+clear all; close all; clc; 
 bookKeeping;
     
 %% modify here
 
 % visual field plotting thresholds
-vfc = ff_vfcDefault_Hebrew; 
+vfc = ff_vfcDefault; 
 vfc.cothresh = 0.2; 
 vfc.method = 'max'; % avg | 'max'
 
@@ -17,7 +18,8 @@ vfc.method = 'max'; % avg | 'max'
 list_path = list_sessionRet; 
 
 % subjects to do this for, see bookKeeping
-list_subInds =  [31:36 38 39:44]; 
+% %[31:36 38 39:44] % Hebrew
+list_subInds = 1:20; 
 
 % whether we want to plot the half max contour
 plotContour = true; 
@@ -25,7 +27,13 @@ contourLevel = 0.5;
 
 % rois we want to look at
 list_roiNames = {
-    'rVOTRC'
+%     'LV2v_rl'
+%     'WangAtlas_V1d_left'
+%     'WangAtlas_V2v_left'
+%     'WangAtlas_V3v_left'
+%     'WangAtlas_hV4_left'
+%     'WangAtlas_VO1_left'
+    'lVOTRC'
 %     'WangAtlas_V1v.mat'
 %     'WangAtlas_V2v.mat'
 %     'WangAtlas_V3v.mat'
@@ -62,9 +70,11 @@ list_roiNames = {
 
 % data types we want to look at
 list_dtNames = {
+    'Checkers'
 %     'Words_Hebrew'
-    'Words_English'
-%     'Checkers'
+%     'Words_English'
+%     'Words'
+%     'Checkers'   
 %     'WordLarge'
 %     'WordSmall'
 %     'FaceSmall'
@@ -77,8 +87,10 @@ list_dtNames = {
 
 % names of the rm in each dt
 list_rmNames = {
+    'retModel-Checkers-css.mat'
+%     'retModel-Checkers-css.mat'
 %     'retModel-Words_Hebrew-css.mat'
-    'retModel-Words_English-css.mat'
+%     'retModel-Words_English-css.mat'
 %     'retModel-Checkers-css.mat'
 %     'retModel-WordLarge-css.mat'
 %     'retModel-WordSmall-css.mat';
@@ -90,10 +102,7 @@ list_rmNames = {
 %      'retModel-Words_scale1mu0sig1p5-css-rVOTRC.mat'
     };
 
-% save
-% saveDir = '/biac4/wandell/data/reading_prf/forAnalysis/images/working/';
-saveDir = '/sni-storage/wandell/data/reading_prf/forAnalysis/images/group/coverages';
-saveDropbox = false; 
+
 
 %% define things
 numRois = length(list_roiNames);
@@ -113,7 +122,7 @@ for jj = 1:numRois
     roiName = list_roiNames{jj};
     
     % loop over dts
-    for kk = 1%:numRms
+    for kk = numRms
         figure; 
         
         % name of this dt and rm
@@ -142,7 +151,7 @@ for jj = 1:numRois
             contourY = contourCoordsY/vfc.nSamples*(2*vfc.fieldRange) - vfc.fieldRange; 
             
             % plotting
-            plot(contourX, contourY, '--', 'LineWidth',2, 'Color', [0 0 0])
+            plot(contourX, contourY, ':', 'LineWidth',2, 'Color', [0 0 0])
         end
         
         axis([-vfc.fieldRange vfc.fieldRange -vfc.fieldRange vfc.fieldRange])

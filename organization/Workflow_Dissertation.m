@@ -54,4 +54,48 @@ edit summary_rmseCrossValidation.m;
 edit hashing_rmPredictedTSeries.m
 edit hashing_rmPredictedTSeries_nanError.m
 
+%% The percent of voxels above the identity line
+edit summary_pairwise_heatMapWithFittedLine.m
+
+%% histogram with error bars across subjects
+% also calculate whether any of the bars differ by more than [nlarger] 
+% standard deviations and indicate those bins with an asterick
+edit summary_histogram_compare_errorBars.m;
+
+%% test roi for afni elliptical
+% LV3v_rl-reallyGood.mat -- Sub20s
+edit tSeries_roiSaveAsNifti.m
+
+%% look at afni pRF parameters and tSeries
+% May 24th - uploaded to Google Drive the tSeries for:
+% 'WangAtlas_V1v_left-threshBy-Words-co0p2.mat';
+edit afni_comparePredictedTSeries.m;
+
+%% Plotting the a rmField (size) vs. the difference of rmFields (ecc)
+% With the idea being that the word pRF may be a subset of the checkerboard
+% one
+edit summary_rmFieldVsrmFieldDifference.m; 
+
+%% Plotting pRFs for different models in the same plot
+edit summary_pRFs_overlapping.m; 
+
+%% Histogram: the amount that rm1's pRF is contained in rm2's pRF
+edit summary_pRFs_overlapping_histogram.m;
+
+%% Scatter plot: eccentricity difference vs. % coverage
+edit summary_eccDifference_vs_pRFsOverlapping.m; 
+
+%% The percent of voxels above the identity line
+% the last cell in this long script
+edit summary_pairwise_heatMapWithFittedLine.m;
+
+%% Kolmogorov-Smirnov test for comparing 2 distributions -- pooled
+edit summary_pairwise_kstest.m
+
+%% The percent of voxels that fall within the the 3-5 degree range
+% Bootstrapped across subjects
+edit summary_percentVoxelsWithinRange.m
+
+
+
 

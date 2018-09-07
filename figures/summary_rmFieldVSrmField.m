@@ -8,11 +8,17 @@ list_path = list_sessionRet;
 list_subInds = [1:20];
 
 list_roiNames = {
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
-    'LhV4_rl'
+    'WangAtlas_V1v_left'
+    'WangAtlas_V2v_left'
+    'WangAtlas_V3v_left'
+    'WangAtlas_hV4_left'
+    'WangAtlas_VO1_left'
     'lVOTRC'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+%     'LhV4_rl'
+%     'lVOTRC'
 %     'RV2d_rl'
 %     'RV3d_rl'
 %     'RV3ab_rl'
@@ -20,21 +26,20 @@ list_roiNames = {
 %     'RIPS1_rl'
     };
 list_dtNames = {
-    'Words'
 %     'WordSmall'
 %     'Words_Hebrew'
 %     'Checkers'
 %     'Words'
 %     'FalseFont'
-%     'Checkers'
+    'Words'
+    'Checkers'
     };
 list_rmNames = {
-    'retModel-Words-oval.mat'
+%     'retModel-Words-oval.mat'
 %     'retModel-Words_Hebrew-css.mat'
 %     'retModel-Checkers-css.mat'
-%     'retModel-Words-css.mat'
-%     'retModel-FalseFont-css.mat'
-%     'retModel-Checkers-css.mat'
+    'retModel-Words-css.mat'
+    'retModel-Checkers-css.mat'
     };
 
 list_colors = list_colorsPerSub; 
@@ -46,10 +51,10 @@ vfc.cothresh = 0.2;
 % field to plot. Ex:  
 % variance explained (co), eccentricity (ecc), size (sigma1)
 % 'numvoxels' for number of voxels in roi
-rmFieldX = 'sigma1'; 
-rmFieldY = 'sigma2';
-rmFieldXDescript = 'sigma1';
-rmFieldYDescript = 'sigma2';
+rmFieldX = 'ecc'; 
+rmFieldY = 'sigma';
+rmFieldXDescript = 'eccentricity';
+rmFieldYDescript = 'size';
 
 % histogram maximum
 % Might want to change around if we want the axes to be comparable to
@@ -149,7 +154,7 @@ for jj = 1:numRois
         
         titleName = {
             [rmFieldY  ' by ' rmFieldX]
-            [roiName]            
+            [roiName '. ' dtName]            
             ['slope: ' num2str(meanSlope)];
             ['ci: ' num2str(ci')];    
             };

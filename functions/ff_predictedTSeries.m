@@ -60,7 +60,9 @@ switch modelName
         end
 
     case {'2D pRF fit (x,y,sigma_major,sigma_minor)' ...
-			'oval 2D pRF fit (x,y,sigma_major,sigma_minor,theta)', 'oval'}
+			'oval 2D pRF fit (x,y,sigma_major,sigma_minor,theta)', 'oval', ...
+            '2D pRF fit (x,y,sigma, positive only)'} 
+        % ^ the last one was quickly added to get it to run. TODO: double check  
         
          % % RFs = rmPlotGUI_makeRFs(modelName, rfParams, M.params.analysis.X, M.params.analysis.Y);       
         % % { Line below is from rmPlotGUI_makeRFs } 

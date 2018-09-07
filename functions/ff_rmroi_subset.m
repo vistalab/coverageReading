@@ -23,7 +23,7 @@ rmroiCoord.rss = rmroi.rss(indx);
 rmroiCoord.thetaCenters = rmroi.thetaCenters(indx);
 rmroiCoord.ph = rmroi.ph(indx);
 rmroiCoord.ecc = rmroi.ecc(indx);
-
+rmroiCoord.betaScale = rmroi.betaScale(indx);
 
 % these fields are not always computed because it takes a while
 if isfield(rmroi, 'betaScale')

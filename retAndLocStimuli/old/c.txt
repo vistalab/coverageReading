@@ -1,0 +1,20 @@
+%% with no dependencies, need to define some things
+
+
+%% modify here
+
+% full path of knk's stimuli file
+pathOriginal = '/Users/rosemaryle/Dropbox/RESEARCH/fmriExperiments/knkretsetup/originalVersion/';
+nameOriginal = '/workspace_retinotopyCaltsmash.mat'; 
+
+
+
+%% no need to modify here
+
+% this should load the following:
+% masksimages
+cd(pathOriginal)
+load([pathOriginal nameOriginal])
+clear -except maskimages
+
+save('maskimages.mat','maskimages')

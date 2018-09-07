@@ -8,10 +8,10 @@ bookKeeping;
 list_subInds = 1:20; % 1:20; 
 
 list_roiNames = {
-    'LV1_rl'
-    'LV2v_rl'
-    'LV3v_rl'
-    'LhV4_rl'
+%     'LV1_rl'
+%     'LV2v_rl'
+%     'LV3v_rl'
+%     'LhV4_rl'
     'lVOTRC'
     };
 

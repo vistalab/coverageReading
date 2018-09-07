@@ -8,14 +8,14 @@ bookKeeping;
 list_path = list_sessionRet; 
 
 % subjects to do this for
-list_subInds = 1:20; %[1:20]; 
+list_subInds = 39:44; %[1:20]; 
 
 roisToCombine = {
-    'lVOTRC-threshBy-Words-co0p2'
-    'lVOTRC-threshBy-Checkers-co0p2'
+    'lVOTRC-threshBy-Words_Hebrew-co0p05'
+    'lVOTRC-threshBy-Words_English-co0p05'
     }; 
 
-roiNewName  = 'lVOTRC-threshBy-WordsAndCheckers-co0p2'; % 'cVOTRC-threshByWordModel'; 
+roiNewName  = 'lVOTRC-threshBy-Words_HebrewAndWords_English-co0p05'; % 'cVOTRC-threshByWordModel'; 
 roiNewColor = 'w'; 
 
 % IMPORTANT CHECK THIS!!!!

@@ -1,7 +1,9 @@
 function rmroiCellSameVox = ff_rmroiGetSameVoxels(rmroiCell, vfc)
 %
 % sameVoxRmroi = ff_rmroiGetSameVoxels(rmroiCell, vfc)
-% We want to be sure that we're looking at the same voxels.
+% We want to be sure that we're looking at the same voxels for each ROI,
+% across all ret models.
+%
 % INPUTS:
 % - rmroiCell (cell array of rmrois (corresponding to different stimuli, e.g.) for a subject)
 % - vfc
@@ -13,8 +15,8 @@ function rmroiCellSameVox = ff_rmroiGetSameVoxels(rmroiCell, vfc)
 % OUTPUTS: 
 % sameVoxRmroi: a cell of the same dimension as rmroiCell. Each element is an
 % rmroi struct
+%
 %%
-
 % initialize
 rmroiCellSameVox = cell(size(rmroiCell)); 
 
@@ -62,7 +64,6 @@ rmroi = rmroiCell{1};
         indxMaster = indx & indxMaster; 
         
     end
-
 
         %% the same voxels
         for kk = 1:numRms

@@ -9,13 +9,13 @@ bookKeeping;
 
 % name to give newly defined ROI
 % NOTE that this usually refers to a dt!!
-threshDescript = 'threshBy-Checkers-co0p5';
+threshDescript = 'threshBy-Words_Hebrew-co0p2';
 
 % make new roi with voxels that pass this threshold
-vfc = ff_vfcDefault;
-vfc.cothresh = 0.5; 
+vfc = ff_vfcDefault_Hebrew;
+vfc.cothresh = 0.2; 
 
-subInds = [1:20]; 
+subInds = 39:44; % [31:36 38 39:44]; 
 list_roiNames = {
     'lVOTRC'
 %     'WangAtlas_FEF_left'
@@ -71,10 +71,10 @@ list_roiNames = {
 
 % the ret model that we will apply thresholds to
 list_dtNames = {
-    'Checkers'
+    'Words_Hebrew'
     };
 list_rmNames = {
-    'retModel-Checkers-css.mat'
+    'retModel-Words_Hebrew-css.mat'
     };
 
 %% make rmroi cell

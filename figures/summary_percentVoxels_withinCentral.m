@@ -6,6 +6,7 @@ bookKeeping;
 %% modify here
 
 list_subInds = 1:20; 
+% roiName = {'lVOTRC-threshBy-WordsAndCheckers-co0p2'};
 roiName = {'lVOTRC'};
 dtName = {'Words'};
 rmName = {'retModel-Words-css.mat'};
@@ -46,4 +47,11 @@ subs_percentInCenter = subs_numInCenter ./ subs_numInFOV
 minPercent = min(subs_percentInCenter)
 maxPercent = max(subs_percentInCenter)
 
-%% pool all subjects
+%% fixed effects
+
+ldata = ff_rmroiLinearize(rmroiCell, 'ecc');
+numVoxelsTotal = length(ldata);
+numVoxelsPass = sum(ldata <= centerDeg); 
+
+perVoxelsCentral = numVoxelsPass / numVoxelsTotal
+
