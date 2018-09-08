@@ -53,7 +53,7 @@ E.g. Figure 6B in pRF paper
 ### Relevant publications
 Le, R., Witthoft, N., Ben-Shachar, M., & Wandell, B. (2017). The field of view available to the ventral occipito-temporal reading circuitry. Journal of vision, 17(4), 6-6. In preparation. 
 
-Le, R., Gafni, C., Ben-Shachar, M., & Wandell, B. (2017). Stimulus dependence of population receptive fields in the visual reading circuitry. In preparation. 
+Le, R., Gafni, C., Ben-Shachar, M., & Wandell, B. (2018). Stimulus dependence of population receptive fields in the visual reading circuitry. In preparation. 
 
 
 ## Directories
