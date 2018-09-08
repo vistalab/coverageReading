@@ -10,42 +10,38 @@
 
 **tutorials**       - tutorials for preprocessing, for running a pRF model, etc
 
-## Paper Figures 
-Scripts used to generate paper figures (if applicable).
+## Key Figures
 
-### FOV paper
-Le, R., Witthoft, N., Ben-Shachar, M., & Wandell, B. (2017). The field of view available to the ventral occipito-temporal reading circuitry. Journal of vision, 17(4), 6-6.
+**Individual FOV (with pRF centers and half max contour)**
 
-**Figure 1** -- NA
+figScript_coverage_individual.m
+E.g. Figure 4 in FOV paper
 
-**Figure 2** -- figScript_coverage_individual.m
+**Group average FOV (with half max contour)**
 
-**Figure 3** -- 
-* B: figScript_coverage_contours_generic_individual.m 
-* C: figScript_coverage_contours_generic.m
+figScript_coverage_contours_generic.m
+E.g. Figure 3C in FOV paper
 
-**Figure 4** -- figScript_coverage_contours_generic_individual.m
+**Group average FOV with bootstrapped confidence interval**
 
-**Figure 5** -- figScript_coverage_contours_generic.m
+figScript_coverage_bootstrapOverIndividuals.m
+E.g. Figure 8B and D in FOV paper
 
-**Figure 6** -- 
-* A: summary_individual_varExp.m
-* B: tSeries_plotVoxelMultipleRms.m
-* C: figScript_coverage_contours_generic.m
+**Variance explained for each subject**
+summary_individual_varExp.m
+E.g. Figure 6A in FOV paper
 
-**Figure 7** -- 
-* A: meshimg_screenShot.m
-* B: figScript_coverage_bootstrapOverIndividuals.m and  figScript_coverage_contours_generic.m 
+**Time series for a single voxel, multiple data types** 
+tSeries_plotVoxelMultipleRms.m
+E.g. Figure 6B in FOV paper
 
-**Figure 8** -- 
-* A and C: figScript_coverage_contours_generic_individual.m
-* B and D: figScript_coverage_bootstrapOverIndividuals.m and figScript_coverage_contours_generic.m
+**ROI definition on the mesh**
+meshimg_screenShot.m
+E.g. Figure 7A in FOV paper
 
-**Figure 9** -- figScript_coverage_contours_generic.m
-
-**Figure 10** -- 
-* B: tSeries_plotVoxeltipleRms.m
-* C: summary_modelPred_vs_testRetest.m
+**Distribution of Relative_rmse in an ROI**
+summary_modelPred_vs_testRetest.m
+E.g. Figure 10C in FOV paper
 
 
 ### pRF paper
