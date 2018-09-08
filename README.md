@@ -12,10 +12,12 @@
 
 ## Key Figures
 
-**Individual FOV (with pRF centers and half max contour)**
-
+**Individual FOV (with pRF centers and half max contour)** 
 figScript_coverage_individual.m
+
 E.g. Figure 4 in FOV paper
+
+
 
 **Group average FOV (with half max contour)**
 
