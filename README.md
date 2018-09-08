@@ -35,6 +35,20 @@ summary_modelPred_vs_testRetest.m
 E.g. Figure 10C in FOV paper  
  
 
+**PRF centers, colored by subjects**  
+figScript_coverage_centers_group.m  
+E.g. Figure 2 in pRF paper  
+
+**Pairwise comparison of a ret model parameter in a heat map**  
+summary_pairwise_heatMapWithFittedLine.m  
+E.g. Figure 3 in pRF paper  
+
+**Overlapping histograms of a ret model parameter**  
+summary_histogram_spline.m  
+E.g. Figure 6B in pRF paper  
+
+
+
 
 ### Relevant publications
 Le, R., Witthoft, N., Ben-Shachar, M., & Wandell, B. (2017). The field of view available to the ventral occipito-temporal reading circuitry. Journal of vision, 17(4), 6-6. In preparation. 
