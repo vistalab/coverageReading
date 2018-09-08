@@ -1,15 +1,3 @@
-## Directories
-
-**figures**         - code that generates figures, including figures for papers, posters, presentations
-
-**functions**       - all functions live here
-
-**organization**    - scripts that keep track of the workflow, bookKeeping scripts
-
-**tractography**    - tractography-related code
-
-**tutorials**       - tutorials for preprocessing, for running a pRF model, etc
-
 ## Key Figures
 
 **Individual FOV (with pRF centers and half max contour)**   
@@ -22,30 +10,51 @@ figScript_coverage_contours_generic.m
 E.g. Figure 3C in FOV paper   
 
 
-**Group average FOV with bootstrapped confidence interval**
-
-figScript_coverage_bootstrapOverIndividuals.m
-E.g. Figure 8B and D in FOV paper
-
-**Variance explained for each subject**
-summary_individual_varExp.m
-E.g. Figure 6A in FOV paper
-
-**Time series for a single voxel, multiple data types** 
-tSeries_plotVoxelMultipleRms.m
-E.g. Figure 6B in FOV paper
-
-**ROI definition on the mesh**
-meshimg_screenShot.m
-E.g. Figure 7A in FOV paper
-
-**Distribution of Relative_rmse in an ROI**
-summary_modelPred_vs_testRetest.m
-E.g. Figure 10C in FOV paper
+**Group average FOV with bootstrapped confidence interval**  
+figScript_coverage_bootstrapOverIndividuals.m  
+E.g. Figure 8B and D in FOV paper  
 
 
-### pRF paper
-Le, R., Ben-Shachar, M., & Wandell, B. (2017). Le, R., Witthoft, N., Ben-Shachar, M., & Wandell, B. (2017). The field of view available to the ventral occipito-temporal reading circuitry. Journal of vision, 17(4), 6-6. In preparation. 
+**Variance explained for each subject**  
+summary_individual_varExp.m  
+E.g. Figure 6A in FOV paper  
+
+
+**Time series for a single voxel, multiple data types**   
+tSeries_plotVoxelMultipleRms.m  
+E.g. Figure 6B in FOV paper  
+
+
+**ROI definition on the mesh**  
+meshimg_screenShot.m  
+E.g. Figure 7A in FOV paper  
+
+
+**Distribution of Relative_rmse in an ROI**  
+summary_modelPred_vs_testRetest.m  
+E.g. Figure 10C in FOV paper  
+ 
+
+
+### Relevant publications
+Le, R., Witthoft, N., Ben-Shachar, M., & Wandell, B. (2017). The field of view available to the ventral occipito-temporal reading circuitry. Journal of vision, 17(4), 6-6. In preparation. 
+
+Le, R., Gafni, C., Ben-Shachar, M., & Wandell, B. (2017). Stimulus dependence of population receptive fields in the visual reading circuitry. In preparation. 
+
+
+## Directories
+
+**figures**         - code that generates figures, including figures for papers, posters, presentations
+
+**functions**       - all functions live here
+
+**organization**    - scripts that keep track of the workflow, bookKeeping scripts
+
+**tractography**    - tractography-related code
+
+**tutorials**       - tutorials for preprocessing, for running a pRF model, etc
+
+
 
 
 ## Namespaces 
